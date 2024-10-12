@@ -1,4 +1,7 @@
-# Nu primesc notă pentru că nu am pus titlu și descriere
+# Music manager
+
+### Descriere
+Acest music manager iti permite sa creezi playlist-uri, sa adaugi melodii sau artisti la favorite, shuffle si repeat.
 
 ### Important!
 Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar în folder-ul `generated`.
