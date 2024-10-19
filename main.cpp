@@ -52,7 +52,7 @@ private:
     std::vector<Song> songs;
     float length;
 public:
-    Playlist(const std::string& title_, const std::vector<Song> &songs_, float length = 0) : title(title_), songs(songs_) {
+    Playlist(const std::string& title_, const std::vector<Song> &songs_, const float length_ = 0) : title(title_), songs(songs_), length(length_) {
         std::cout << "Playlist: " << title << "\n";
     }
     friend std::ostream& operator<<(std::ostream& os, const Playlist& playlist) {
@@ -73,7 +73,7 @@ private:
     std::string name;
     std::vector<Song> songs;
 public:
-    Artist(const std::string& name_, std::vector<Song> songs_) : name(name_), songs(songs_) {
+    Artist(const std::string& name_, const std::vector<Song> &songs_) : name(name_), songs(songs_) {
         std::cout << "Artist(+songs): " << name << std::endl;
     }
     explicit Artist(const std::string& name) {
