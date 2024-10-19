@@ -1,5 +1,3 @@
-#pragma once
-
 #include <iostream>
 #include <string>
 #include <vector>
@@ -8,11 +6,11 @@ class Song;
 class Playlist;
 class Artist;
 
-struct time {
+/*struct time {
     int hours;
     int minutes;
     int seconds;
-};
+};*/
 //TODO: implementare length cu struct asta
 
 class Song {
@@ -21,7 +19,7 @@ private:
     float length;
     std::vector<Artist> artists;
 public:
-    Song(const std::string& title_, const float length_, std::vector<Artist> artists_) : title(title_), length(length_), artists(artists_) {
+    Song(const std::string& title_, const float length_, const std::vector<Artist> &artists_) : title(title_), length(length_), artists(artists_) {
         std::cout << "Song(+artist): " << title << std::endl;
     }
     Song(const std::string& title_, const float length_) : title(title_), length(length_) {
@@ -54,7 +52,7 @@ private:
     std::vector<Song> songs;
     float length;
 public:
-    Playlist(const std::string& title_, std::vector<Song> songs_) : title(title_), songs(songs_) {
+    Playlist(const std::string& title_, const std::vector<Song> &songs_, float length = 0) : title(title_), songs(songs_) {
         std::cout << "Playlist: " << title << "\n";
     }
     friend std::ostream& operator<<(std::ostream& os, const Playlist& playlist) {
@@ -64,7 +62,7 @@ public:
     float getLength() const {return length;}
     void calculateLength() {
         float aux = 0;
-        for(auto& song : songs)
+        for(const auto& song : songs)
             aux += song.getLength();
         length = aux;
     }
