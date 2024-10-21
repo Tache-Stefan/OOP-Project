@@ -55,6 +55,12 @@ add_executable(${PROJECT_NAME}
     generated/src/Helper.cpp
     env_fixes.h
         main.cpp
+        includes/Song.cpp
+        includes/Song.h
+        includes/Playlist.cpp
+        includes/Playlist.h
+        includes/Artist.cpp
+        includes/Artist.h
 )
 
 include(cmake/CompilerFlags.cmake)
