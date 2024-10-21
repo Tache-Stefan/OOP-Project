@@ -6,6 +6,8 @@
 #include <vector>
 #include "Artist.h"
 
+class Artist;
+
 class Song {
 private:
     std::string title;
