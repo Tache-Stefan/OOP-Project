@@ -6,16 +6,9 @@
 #include "includes/Playlist.h"
 #include "includes/Artist.h"
 
-/*struct time {
-    int hours;
-    int minutes;
-    int seconds;
-};*/
-//TODO: implementare length cu struct asta
-
 int main() {
-    Song TalkingToTheMoon{"Talking to the moon", 3.35f};
-    Song DieWithASmile{"Die with a smile", 4.13f};
+    Song TalkingToTheMoon{"Talking to the moon", "00:3:35"};
+    Song DieWithASmile{"Die with a smile", "00:04:13"};
     Artist BrunoMars{"Bruno Mars"};
     Artist LadyGaga{"Lady Gaga"};
 
@@ -33,5 +26,6 @@ int main() {
     Playlist Favorites{"Favorites", songs};
     Favorites.calculateLength();
     std::cout << Favorites.getLength() << std::endl;
+
     return 0;
 }

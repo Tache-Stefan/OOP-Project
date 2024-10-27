@@ -1,12 +1,15 @@
 #include "Song.h"
 #include "Artist.h"
+#include "Utility.h"
 
-Song::Song(const std::string& title_, const float length_, const std::vector<Artist> &artists_) : title(title_), length(length_), artists(artists_) {
+Song::Song(const std::string& title_, const std::string& length_, const std::vector<Artist> &artists_) : title(title_), artists(artists_) {
     std::cout << "Song(+artist): " << title << std::endl;
+    length = Utils::stringToTime(length_);
 }
 
-Song::Song(const std::string& title_, const float length_) : title(title_), length(length_) {
+Song::Song(const std::string& title_, const std::string& length_) : title(title_) {
     std::cout << "Song: " << title << std::endl;
+    length = Utils::stringToTime(length_);
 }
 
 Song::Song(const Song& other) : title(other.title), length(other.length), artists(other.artists) {
@@ -22,11 +25,11 @@ Song& Song::operator=(const Song& other) {
 }
 
 std::ostream& operator<<(std::ostream& os, const Song& song) {
-    os << "Song: " << song.title << ", " << song.length << "\n";
+    os << "Song: " << song.title << ", " << Utils::timeToString(song.length) << "\n";
     return os;
 }
 
-float Song::getLength() const {return length;}
+std::string Song::getLength() const {return Utils::timeToString(length);}
 
 void Song::addArtist(const Artist& artist) {
     artists.push_back(artist);

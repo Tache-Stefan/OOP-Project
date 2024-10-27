@@ -3,16 +3,18 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <ctime>
 #include "Song.h"
 
 class Playlist {
 private:
     std::string title;
     std::vector<Song> songs;
-    float length;
+    struct tm length = {0, 0, 0, 1, 0, 0};
 public:
-    Playlist(const std::string& title_, const std::vector<Song> &songs_, const float length_ = 0);
+    Playlist(const std::string& title_, const std::vector<Song> &songs_, const std::string& length_);
+    Playlist(const std::string& title_, const std::vector<Song> &songs_);
     friend std::ostream& operator<<(std::ostream& os, const Playlist& playlist);
-    float getLength() const;
+    std::string getLength() const;
     void calculateLength();
 };
