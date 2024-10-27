@@ -2,14 +2,13 @@
 #include "Artist.h"
 #include "Utility.h"
 
-Song::Song(const std::string& title_, const std::string& length_, const std::vector<Artist> &artists_) : title(title_), artists(artists_) {
+Song::Song(const std::string& title_, const std::string& length_, const std::vector<Artist> &artists_) : title(title_), artists(artists_),
+           length(Utils::stringToTime(length_)) {
     std::cout << "Song(+artist): " << title << std::endl;
-    length = Utils::stringToTime(length_);
 }
 
-Song::Song(const std::string& title_, const std::string& length_) : title(title_) {
+Song::Song(const std::string& title_, const std::string& length_) : title(title_), length(Utils::stringToTime(length_)) {
     std::cout << "Song: " << title << std::endl;
-    length = Utils::stringToTime(length_);
 }
 
 Song::Song(const Song& other) : title(other.title), length(other.length), artists(other.artists) {

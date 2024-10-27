@@ -10,7 +10,7 @@ class Playlist {
 private:
     std::string title;
     std::vector<Song> songs;
-    struct tm length = {0, 0, 0, 1, 0, 0};
+    struct tm length = {0, 0, 0, 1, 0, 0, 0, 0, 0};
 public:
     Playlist(const std::string& title_, const std::vector<Song> &songs_, const std::string& length_);
     Playlist(const std::string& title_, const std::vector<Song> &songs_);

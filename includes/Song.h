@@ -9,8 +9,8 @@
 class Song {
 private:
     std::string title;
+    struct tm length = {0, 0, 0, 1, 0, 0, 0, 0, 0};
     std::vector<Artist> artists;
-    struct tm length = {0, 0, 0, 1, 0, 0};
 public:
     Song(const std::string& title_, const std::string& length_, const std::vector<Artist> &artists_);
     Song(const std::string& title_, const std::string& length_);
