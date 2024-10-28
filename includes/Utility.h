@@ -5,6 +5,7 @@
 #include <sstream>
 #include <ctime>
 #include <iostream>
+#include <cstring>
 
 namespace Utils {
     inline std::vector<std::string> split(const std::string& s, const char delimiter) {
@@ -19,14 +20,12 @@ namespace Utils {
 
     inline struct tm stringToTime(const std::string& length_) {
         struct tm timeStruct = {};
+        timeStruct.tm_mday = 1;
 
         if (const std::vector<std::string> timeParts = split(length_, ':'); timeParts.size() == 3) {
             timeStruct.tm_hour = std::stoi(timeParts[0]);
             timeStruct.tm_min = std::stoi(timeParts[1]);
             timeStruct.tm_sec = std::stoi(timeParts[2]);
-            timeStruct.tm_year = 0;
-            timeStruct.tm_mon = 0;
-            timeStruct.tm_mday = 1;
         } else {
             std::cerr << "Invalid time: " << length_ << std::endl;
         }

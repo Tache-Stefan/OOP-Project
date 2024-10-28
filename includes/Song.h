@@ -9,7 +9,7 @@
 class Song {
 private:
     std::string title;
-    struct tm length = {0, 0, 0, 1, 0, 0, 0, 0, 0};
+    struct tm length = {};
     std::vector<Artist> artists;
 public:
     Song(const std::string& title_, const std::string& length_, const std::vector<Artist> &artists_);
@@ -17,8 +17,7 @@ public:
     Song(const Song& other);
     Song& operator=(const Song& other);
     friend std::ostream& operator<<(std::ostream& os, const Song& song);
-    ~Song() {std::cout << "Song(destr)" << std::endl; }
+    ~Song() = default;
     std::string getLength() const;
     void addArtist(const Artist& artist);
 };
-

@@ -27,5 +27,7 @@ int main() {
     Favorites.calculateLength();
     std::cout << Favorites.getLength() << std::endl;
 
+    std::cout << TalkingToTheMoon.getLength() << std::endl;
+
     return 0;
 }

@@ -1,15 +1,17 @@
 #include "Playlist.h"
 
 #include "Utility.h"
+#include <cstring>
 
 Playlist::Playlist(const std::string& title_, const std::vector<Song> &songs_, const std::string& length_) : title(title_),
                    songs(songs_), length(Utils::stringToTime(length_)) {
-
     std::cout << "Playlist: " << title << "\n";
 }
 
 Playlist::Playlist(const std::string& title_, const std::vector<Song> &songs_) : title(title_), songs(songs_) {
 
+    std::memset(&length, 0, sizeof(length));
+    length.tm_mday = 1;
     std::cout << "Playlist: " << title << "\n";
 }
 

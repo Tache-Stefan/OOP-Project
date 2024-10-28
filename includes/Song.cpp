@@ -1,6 +1,7 @@
 #include "Song.h"
 #include "Artist.h"
 #include "Utility.h"
+#include <cstring>
 
 Song::Song(const std::string& title_, const std::string& length_, const std::vector<Artist> &artists_) : title(title_),
            length(Utils::stringToTime(length_)), artists(artists_) {
