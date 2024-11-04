@@ -1,7 +1,9 @@
 # Music manager
 
 ### Descriere
-Acest music manager iti permite sa creezi playlist-uri, sa adaugi melodii sau artisti la favorite, shuffle si repeat.
+Acest proiect este un music manager iti permite sa creezi playlist-uri, sa adaugi melodii sau artisti la favorite.
+Utilizatorii vor putea sa caute melodii dupa nume, artist sau gen. Playlist-urile au functionalitati de repeat si shuffle. Utilizatorul are un 
+profil cu informatii legate de ascultarile sale. Proiectul are si o interfata grafica usoara de utilizat.
 
 ### Important!
 Aveți voie cu cod generat de modele de limbaj la care nu ați contribuit semnificativ doar în folder-ul `generated`.
@@ -59,7 +61,7 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
   - [ ] utilizare cu sens: de exemplu, `throw` în constructor (sau funcție care întoarce un obiect), `try`/`catch` în `main`
   - această ierarhie va fi complet independentă de ierarhia cu funcții virtuale
 - [ ] funcții și atribute `static`
-- [ ] STL
+- [x] STL
 - [ ] cât mai multe `const`
 - [ ] funcții *de nivel înalt*, de eliminat cât mai mulți getters/setters/funcții low-level
 - [ ] la sfârșit: commit separat cu adăugarea unei noi clase derivate fără a modifica restul codului, **pe lângă cele 3 derivate deja adăugate** din aceeași ierarhie

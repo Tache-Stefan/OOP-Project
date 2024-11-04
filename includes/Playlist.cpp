@@ -10,8 +10,7 @@ Playlist::Playlist(const std::string& title_, const std::vector<Song> &songs_, c
 
 Playlist::Playlist(const std::string& title_, const std::vector<Song> &songs_) : title(title_), songs(songs_) {
 
-    std::memset(&length, 0, sizeof(length));
-    length.tm_mday = 1;
+    length = {};
     std::cout << "Playlist: " << title << "\n";
 }
 
