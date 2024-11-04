@@ -63,6 +63,8 @@ add_executable(${PROJECT_NAME}
         includes/Artist.h
         includes/Utility.h
         includes/Utility.cpp
+        includes/Media.cpp
+        includes/Media.h
 )
 
 include(cmake/CompilerFlags.cmake)
