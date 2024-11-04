@@ -29,5 +29,7 @@ int main() {
 
     std::cout << TalkingToTheMoon.getLength() << std::endl;
 
+    TalkingToTheMoon.play();
+
     return 0;
 }
