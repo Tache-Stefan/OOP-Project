@@ -1,18 +1,18 @@
 #pragma once
 
 #include <ctime>
+#include <memory>
 #include <string>
 #include <vector>
-
-class Artist;
+#include "Artist.h"
 
 class Media {
 protected:
     std::string title;
-    std::vector<Artist> artists;
+    std::vector<std::shared_ptr<Artist>> artists;
     struct tm length = {};
 public:
-    Media(const std::string& title_, const std::vector<Artist>& artists_, const std::string& length_);
+    Media(const std::string& title_, const std::vector<std::shared_ptr<Artist>>& artists_, const std::string& length_);
     Media(const std::string& title_, const std::string& length_);
     Media(const Media& other);
     virtual void play() = 0;
