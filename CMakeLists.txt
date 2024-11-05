@@ -37,6 +37,11 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(SFML)
 
+set(ASIO_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Asio/include")
+set(CROW_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Crow/include")
+include_directories(${ASIO_INCLUDE_DIR})
+include_directories(${CROW_INCLUDE_DIR})
+
 ###############################################################################
 
 # external dependencies with find_package
