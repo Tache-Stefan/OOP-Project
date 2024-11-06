@@ -1,1 +1,15 @@
 generated/** linguist-generated
+
+*.h text eol=lf
+*.cpp text eol=lf
+*.hpp text eol=lf
+
+*.cmake text eol=lf
+
+*.sh text eol=lf
+
+*.txt text eol=lf
+
+*.png binary
+*.jpg binary
+*.exe binary
