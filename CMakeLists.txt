@@ -38,10 +38,18 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(SFML)
 
 FetchContent_Declare(
-        cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git
+        cpr
+        GIT_REPOSITORY https://github.com/libcpr/cpr.git
         GIT_TAG 1.11.0
 )
 FetchContent_MakeAvailable(cpr)
+
+FetchContent_Declare(
+        nlohmann_json
+        GIT_REPOSITORY https://github.com/nlohmann/json.git
+        GIT_TAG v3.11.3
+)
+FetchContent_MakeAvailable(nlohmann_json)
 
 ###############################################################################
 
@@ -80,9 +88,12 @@ include(cmake/CompilerFlags.cmake)
 # use SYSTEM so cppcheck and clang-tidy do not report warnings from these directories
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE generated/include)
 # target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ext/<SomeHppLib>/include)
-target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${SFML_SOURCE_DIR}/include)
+target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE
+        ${SFML_SOURCE_DIR}/include
+        ${cpr_SOURCE_DIR}/include
+)
 target_link_directories(${PROJECT_NAME} PRIVATE ${SFML_BINARY_DIR}/lib)
-target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics sfml-window sfml-system Threads::Threads)
+target_link_libraries(${PROJECT_NAME} PRIVATE cpr::cpr sfml-graphics sfml-window sfml-system Threads::Threads nlohmann_json::nlohmann_json)
 
 if(APPLE)
 elseif(UNIX)

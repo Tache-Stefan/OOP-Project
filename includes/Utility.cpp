@@ -1,6 +1,8 @@
 #include "Utility.h"
 #include <sstream>
 #include <iostream>
+#include <cpr/cpr.h>
+#include <nlohmann/json.hpp>
 
 namespace Utils {
     std::vector<std::string> split(const std::string& s, const char delimiter) {
@@ -52,5 +54,57 @@ namespace Utils {
         }
 
         return timeStruct1;
+    }
+
+    std::string base64_encode(const std::string& input) {
+        const std::string base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+        std::string encoded;
+        int val = 0, valb = -6;
+        for (const unsigned char c : input) {
+            val = (val << 8) + c;
+            valb += 8;
+            while (valb >= 0) {
+                encoded.push_back(base64_chars[(val >> valb) & 0x3F]);
+                valb -= 6;
+            }
+        }
+        if (valb > -6) {
+            encoded.push_back(base64_chars[((val << 8) >> (valb + 8)) & 0x3F]);
+        }
+        while (encoded.size() % 4) {
+            encoded.push_back('=');
+        }
+        return encoded;
+    }
+
+    std::string getSpotifyAccessToken(const std::string& client_id, const std::string& client_secret) {
+        const std::string auth = client_id + ":" + client_secret;
+        const std::string auth_encoded = base64_encode(auth);
+
+        cpr::Header headers = {
+            {"Authorization", "Basic " + auth_encoded},
+            {"Content-Type", "application/x-www-form-urlencoded"}
+        };
+        cpr::Payload payload = {
+            {"grant_type", "client_credentials"}
+        };
+
+        cpr::Response r = cpr::Post(cpr::Url{"https://accounts.spotify.com/api/token"},
+                                     headers, payload);
+
+        if (r.status_code == 200) {
+            try {
+                nlohmann::json jsonData = nlohmann::json::parse(r.text);
+
+                return jsonData["access_token"].get<std::string>();
+            } catch (const std::exception& e) {
+                std::cerr << "Error parsing JSON response: " << e.what() << std::endl;
+                return "";
+            }
+        } else {
+            std::cerr << "Error: " << r.status_code << " " << r.text << std::endl;
+            return "";
+        }
     }
 }

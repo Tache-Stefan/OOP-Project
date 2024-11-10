@@ -9,4 +9,6 @@ namespace Utils {
     struct tm stringToTime(const std::string& length_);
     std::string timeToString(const struct tm& timeStruct);
     struct tm addTimes(struct tm timeStruct1, const struct tm &timeStruct2);
+    std::string base64_encode(const std::string& input);
+    std::string getSpotifyAccessToken(const std::string& client_id, const std::string& client_secret);
 }

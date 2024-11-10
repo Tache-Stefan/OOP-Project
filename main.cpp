@@ -1,10 +1,12 @@
 #include <iostream>
+#include <cstdlib>
 #include <string>
 #include <vector>
 
 #include "includes/Song.h"
 #include "includes/Playlist.h"
 #include "includes/Artist.h"
+#include "includes/Utility.h"
 
 int main() {
     const std::shared_ptr<Song> TalkingToTheMoon = std::make_shared<Song>("Talking to the moon", "00:3:35");
@@ -37,6 +39,21 @@ int main() {
 
     Favorites.shuffle();
     std::cout << Favorites;
+
+    const char* client_id = std::getenv("SPOTIFY_CLIENT_ID");
+    const char* client_secret = std::getenv("SPOTIFY_CLIENT_SECRET");
+
+    if (!client_id || !client_secret) {
+        std::cerr << "Error: Environment variables for Spotify credentials are not set." << std::endl;
+        return 1;
+    }
+
+    std::string access_token = Utils::getSpotifyAccessToken(client_id, client_secret);
+    if (!access_token.empty()) {
+        std::cout << "Access token retrieved successfully." << std::endl;
+    } else {
+        std::cerr << "Error: Failed to retrieve access token." << std::endl;
+    }
 
     return 0;
 }
