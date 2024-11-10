@@ -32,7 +32,7 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
 <!-- - [ ] pentru o altă clasă: toate cele 5 funcții membru speciale -->
 - [x] `operator<<` pentru toate clasele pentru afișare (std::ostream)
 - [x] cât mai multe `const` (unde este cazul)
-- [ ] implementarea a minim 3 funcții membru publice pentru funcționalități specifice temei alese, dintre care cel puțin 1-2 funcții mai complexe
+- [x] implementarea a minim 3 funcții membru publice pentru funcționalități specifice temei alese, dintre care cel puțin 1-2 funcții mai complexe
   - nu doar citiri/afișări sau adăugat/șters elemente într-un/dintr-un vector
 - [x] scenariu de utilizare a claselor definite:
   - crearea de obiecte și apelarea tuturor funcțiilor membru publice în main
@@ -51,7 +51,7 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
     - minim o funcție virtuală va fi **specifică temei** (e.g. nu simple citiri/afișări)
     - constructori virtuali (clone): sunt necesari, dar nu se consideră funcții specifice temei
     - afișare virtuală, interfață non-virtuală
-  - [ ] apelarea constructorului din clasa de bază din constructori din derivate
+  - [x] apelarea constructorului din clasa de bază din constructori din derivate
   - [ ] clasă cu atribut de tip pointer la o clasă de bază cu derivate; aici apelați funcțiile virtuale prin pointer de bază, eventual prin interfața non-virtuală din bază
     - [ ] suprascris cc/op= pentru copieri/atribuiri corecte, copy and swap
     - [ ] `dynamic_cast`/`std::dynamic_pointer_cast` pentru downcast cu sens
@@ -132,6 +132,4 @@ Vezi și [`scripts/cmake.sh`](scripts/cmake.sh).
 
 - [SFML](https://github.com/SFML/SFML/tree/2.6.1) (Zlib)
   - [OpenAL](https://openal-soft.org/) (LGPL): din cauza licenței, trebuie distribuită ca shared library
-- [Crow](https://github.com/CrowCpp/Crow/releases/tag/v1.2.0)
-  - [Asio](https://think-async.com/Asio/)
-- adăugați trimiteri către resursele externe care v-au ajutat sau pe care le-ați folosit
+- [CPR](https://github.com/libcpr/cpr)

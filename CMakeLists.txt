@@ -37,10 +37,11 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(SFML)
 
-set(ASIO_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Asio/include")
-set(CROW_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Crow/include")
-include_directories(${ASIO_INCLUDE_DIR})
-include_directories(${CROW_INCLUDE_DIR})
+FetchContent_Declare(
+        cpr GIT_REPOSITORY https://github.com/libcpr/cpr.git
+        GIT_TAG 1.11.0
+)
+FetchContent_MakeAvailable(cpr)
 
 ###############################################################################
 
@@ -82,10 +83,6 @@ target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE generated/include)
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${SFML_SOURCE_DIR}/include)
 target_link_directories(${PROJECT_NAME} PRIVATE ${SFML_BINARY_DIR}/lib)
 target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics sfml-window sfml-system Threads::Threads)
-
-if(WIN32)
-    target_link_libraries(${PROJECT_NAME} PRIVATE Ws2_32 Mswsock)
-endif()
 
 if(APPLE)
 elseif(UNIX)

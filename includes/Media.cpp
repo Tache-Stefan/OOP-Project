@@ -9,4 +9,4 @@ Media::Media(const std::string& title_, const std::string& length_) : title(titl
 
 Media::Media(const Media& other) : title(other.title), artists(other.artists), length(other.length) {}
 
-std::string Media::getTitle() const {return title;}
+const std::string& Media::getTitle() const {return title;}

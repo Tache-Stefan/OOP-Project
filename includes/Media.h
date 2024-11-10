@@ -15,7 +15,7 @@ public:
     Media(const std::string& title_, const std::vector<std::shared_ptr<Artist>>& artists_, const std::string& length_);
     Media(const std::string& title_, const std::string& length_);
     Media(const Media& other);
-    std::string getTitle() const;
+    const std::string& getTitle() const;
     virtual void play() = 0;
     virtual ~Media() = default;
 };
