@@ -17,4 +17,5 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Playlist& playlist);
     std::string getLength() const;
     void calculateLength();
+    void shuffle();
 };

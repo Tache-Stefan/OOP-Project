@@ -8,3 +8,5 @@ Media::Media(const std::string& title_, const std::vector<std::shared_ptr<Artist
 Media::Media(const std::string& title_, const std::string& length_) : title(title_), length(Utils::stringToTime(length_)) {}
 
 Media::Media(const Media& other) : title(other.title), artists(other.artists), length(other.length) {}
+
+std::string Media::getTitle() const {return title;}
