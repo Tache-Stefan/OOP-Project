@@ -37,10 +37,16 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(SFML)
 
+if(GITHUB_ACTIONS)
+    set(CPR_VERSION "1.10.5")
+else()
+    set(CPR_VERSION "1.11.0")
+endif()
+
 FetchContent_Declare(
         cpr
         GIT_REPOSITORY https://github.com/libcpr/cpr.git
-        GIT_TAG 1.10.5
+        GIT_TAG ${CPR_VERSION}
 )
 FetchContent_MakeAvailable(cpr)
 
