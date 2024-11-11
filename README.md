@@ -134,3 +134,4 @@ Vezi și [`scripts/cmake.sh`](scripts/cmake.sh).
   - [OpenAL](https://openal-soft.org/) (LGPL): din cauza licenței, trebuie distribuită ca shared library
 - [CPR](https://github.com/libcpr/cpr)
 - [nlohmann/json](https://github.com/nlohmann/json)
+- [Spotify API](https://developer.spotify.com/)

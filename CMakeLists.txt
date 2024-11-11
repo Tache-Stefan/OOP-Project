@@ -61,6 +61,13 @@ elseif(UNIX)
     find_package(X11)
 endif()
 
+if(APPLE)
+    find_package(PkgConfig REQUIRED)
+    pkg_check_modules(IDN2 REQUIRED libidn2)
+    include_directories(${IDN2_INCLUDE_DIRS})
+    link_libraries(${IDN2_LIBRARIES})
+endif()
+
 ###############################################################################
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
