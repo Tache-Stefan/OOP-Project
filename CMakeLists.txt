@@ -64,8 +64,8 @@ endif()
 if(APPLE)
     find_package(PkgConfig REQUIRED)
     pkg_check_modules(IDN2 REQUIRED libidn2)
-    include_directories(${IDN2_INCLUDE_DIRS})
-    link_libraries(${IDN2_LIBRARIES})
+    target_include_directories(${PROJECT_NAME} PRIVATE ${IDN2_INCLUDE_DIRS})
+    target_link_libraries(${PROJECT_NAME} PRIVATE ${IDN2_LIBRARIES})
 endif()
 
 ###############################################################################
