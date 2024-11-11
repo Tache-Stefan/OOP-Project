@@ -100,14 +100,6 @@ elseif(UNIX)
     target_link_libraries(${PROJECT_NAME} PRIVATE X11)
 endif()
 
-if(APPLE)
-    find_package(PkgConfig REQUIRED)
-    pkg_check_modules(IDN2 REQUIRED libidn2)
-    target_include_directories(${PROJECT_NAME} PRIVATE ${IDN2_INCLUDE_DIRS})
-    link_directories(${IDN2_LIBRARY_DIRS})
-    target_link_libraries(${PROJECT_NAME} PRIVATE ${IDN2_LIBRARIES})
-endif()
-
 ###############################################################################
 
 # copy binaries to "bin" folder; these are uploaded as artifacts on each release
