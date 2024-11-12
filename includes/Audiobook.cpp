@@ -11,7 +11,7 @@ Audiobook::Audiobook(const std::string &title_, const std::string &length_)
 
 std::ostream& operator<<(std::ostream& os, const Audiobook& audiobook) {
         os << "Audiobook: " << audiobook.title << ", chapters: " << audiobook.chapter_count << ", length: "
-        << Utils::timeToString(audiobook.length) << "\n";
+        << Utils::timeToString(audiobook.length) << ", language: " << audiobook.language << "\n";
         return os;
 }
 
