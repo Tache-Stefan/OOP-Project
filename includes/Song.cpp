@@ -1,3 +1,4 @@
+#include <iostream>
 #include "Song.h"
 #include "Artist.h"
 #include "Utility.h"
@@ -6,6 +7,9 @@ Song::Song(const std::string& title_, const std::vector<std::shared_ptr<Artist>>
      length_) {
     std::cout << "Created Song(+artist): " << title << std::endl;
 }
+
+Song::Song(const std::string &title_, const std::string &length_, const std::string &genre)
+        : Media(title_, length_), genre(genre) {}
 
 Song::Song(const std::string& title_, const std::string& length_) : Media(title_, length_) {
     std::cout << "Created Song: " << title << std::endl;
@@ -34,6 +38,6 @@ void Song::addArtist(const std::shared_ptr<Artist>& artist) {
     artists.push_back(artist);
 }
 
-void Song::play() {
-    std::cout << "Playing: " << title <<std::endl;
+void Song::play() const {
+    std::cout << "Playing song: " << title <<std::endl;
 }

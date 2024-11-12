@@ -16,6 +16,6 @@ public:
     Media(const std::string& title_, const std::string& length_);
     Media(const Media& other);
     const std::string& getTitle() const;
-    virtual void play() = 0;
+    virtual void play() const = 0;
     virtual ~Media() = default;
 };
