@@ -87,6 +87,8 @@ add_executable(${PROJECT_NAME}
         includes/Media.h
         includes/Podcast.cpp
         includes/Podcast.h
+        includes/Audiobook.cpp
+        includes/Audiobook.h
 )
 
 include(cmake/CompilerFlags.cmake)

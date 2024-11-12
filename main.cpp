@@ -6,6 +6,8 @@
 #include "includes/Song.h"
 #include "includes/Playlist.h"
 #include "includes/Artist.h"
+#include "includes/Audiobook.h"
+#include "includes/Podcast.h"
 #include "includes/Utility.h"
 
 int main() {
@@ -39,6 +41,10 @@ int main() {
 
     Favorites.shuffle();
     std::cout << Favorites;
+
+    const Podcast TheJoeRoganExperience{"The Joe Rogan Experience", "3:37:59", 2000};
+    std::cout << TheJoeRoganExperience;
+    TheJoeRoganExperience.play();
 
     const char* client_id = std::getenv("SPOTIFY_CLIENT_ID");
     const char* client_secret = std::getenv("SPOTIFY_CLIENT_SECRET");
