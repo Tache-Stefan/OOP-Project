@@ -30,4 +30,47 @@ namespace API {
             return "";
         }
     }
+    std::string searchSpotify(const std::string& access_token, const std::string& query, const std::string& type) {
+        if(type != "album" && type != "artist" && type != "playlist" && type != "track" && type != "show" && type != "episode" && type != "audiobook") {
+            std::cerr << "Invalid type specified.";
+            return "";
+        }
+
+        cpr::Header headers = {
+            {"Authorization", "Bearer " + access_token},
+            {"Content-Type", "application/json"}
+        };
+
+        const std::string url = "https://api.spotify.com/v1/search?q=" + cpr::util::urlEncode(query) + "&type=" + type;
+
+        cpr::Response r = cpr::Get(cpr::Url{url}, headers);
+
+        if (r.status_code == 200) {
+            try {
+                nlohmann::json jsonData = nlohmann::json::parse(r.text);
+
+                if (!jsonData["tracks"]["items"].empty()) {
+                    auto first_result = jsonData["tracks"]["items"][0];
+                    std::string track_name = first_result["name"];
+                    std::string artist_name = first_result["artists"][0]["name"];
+                    std::string track_url = first_result["external_urls"]["spotify"];
+
+                    std::cout << "Track: " << track_name << "\n"
+                              << "Artist: " << artist_name << "\n"
+                              << "URL: " << track_url << "\n";
+
+                    return track_url;
+                } else {
+                    std::cerr << "No results found for query: " << query << std::endl;
+                    return "";
+                }
+            } catch (const std::exception& e) {
+                std::cerr << "Error parsing JSON: " << e.what() << std::endl;
+                return "";
+            }
+        } else {
+            std::cerr << "Error: " << r.status_code << " " << r.text << std::endl;
+            return "";
+        }
+    }
 }

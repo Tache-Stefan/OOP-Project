@@ -60,5 +60,11 @@ int main() {
         std::cerr << "Error: Failed to retrieve access token." << std::endl;
     }
 
+    std::string song_url = API::searchSpotify(access_token, "Talking to the moon", "track");
+
+    if(!song_url.empty()) {
+        std::cout << song_url;
+    }
+
     return 0;
 }
