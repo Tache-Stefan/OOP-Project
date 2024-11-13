@@ -3,12 +3,11 @@
 #include <string>
 #include <vector>
 
+#include "includes/API.h"
 #include "includes/Song.h"
 #include "includes/Playlist.h"
 #include "includes/Artist.h"
-#include "includes/Audiobook.h"
 #include "includes/Podcast.h"
-#include "includes/Utility.h"
 
 int main() {
     const std::shared_ptr<Song> TalkingToTheMoon = std::make_shared<Song>("Talking to the moon", "00:3:35");
@@ -54,7 +53,7 @@ int main() {
         return 1;
     }
 
-    std::string access_token = Utils::getSpotifyAccessToken(client_id, client_secret);
+    std::string access_token = API::getSpotifyAccessToken(client_id, client_secret);
     if (!access_token.empty()) {
         std::cout << "Access token retrieved successfully." << std::endl;
     } else {
