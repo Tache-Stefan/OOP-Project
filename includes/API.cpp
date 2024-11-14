@@ -1,3 +1,8 @@
+#include <iostream>
+#include "Utility.h"
+#include <cpr/cpr.h>
+#include <nlohmann/json.hpp>
+
 #include "API.h"
 
 namespace API {

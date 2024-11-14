@@ -1,7 +1,6 @@
 #include "Utility.h"
 #include <sstream>
 #include <iostream>
-#include <cpr/cpr.h>
 #include <nlohmann/json.hpp>
 
 namespace Utils {
