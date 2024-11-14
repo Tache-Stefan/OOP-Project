@@ -57,6 +57,24 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(nlohmann_json)
 
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
+
+execute_process(
+        COMMAND ${Python3_EXECUTABLE} -m pip show yt-dlp
+        RESULT_VARIABLE YT_DLP_NOT_FOUND
+        OUTPUT_QUIET
+        ERROR_QUIET
+)
+
+if(YT_DLP_NOT_FOUND)
+    message(STATUS "yt-dlp not found, installing with pip.")
+    execute_process(
+            COMMAND ${Python3_EXECUTABLE} -m pip install yt-dlp
+    )
+else()
+    message(STATUS "yt-dlp is already installed.")
+endif()
+
 ###############################################################################
 
 # external dependencies with find_package
