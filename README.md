@@ -135,3 +135,5 @@ Vezi și [`scripts/cmake.sh`](scripts/cmake.sh).
 - [CPR](https://github.com/libcpr/cpr)
 - [nlohmann/json](https://github.com/nlohmann/json)
 - [Spotify API](https://developer.spotify.com/)
+- [yt-dlp](https://github.com/yt-dlp/yt-dlp)
+- [libenvpp](https://github.com/ph3at/libenvpp)

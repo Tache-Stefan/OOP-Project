@@ -75,6 +75,14 @@ else()
     message(STATUS "yt-dlp is already installed.")
 endif()
 
+FetchContent_Declare(
+        libenvpp
+        GIT_REPOSITORY https://github.com/ph3at/libenvpp.git
+        GIT_TAG v1.4.2
+)
+
+FetchContent_MakeAvailable(libenvpp)
+
 ###############################################################################
 
 # external dependencies with find_package
@@ -125,7 +133,7 @@ target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE
 
 target_link_directories(${PROJECT_NAME} PRIVATE ${SFML_BINARY_DIR}/lib)
 target_link_libraries(${PROJECT_NAME} PRIVATE cpr::cpr sfml-graphics sfml-window sfml-system sfml-audio Threads::Threads
-        nlohmann_json::nlohmann_json
+        nlohmann_json::nlohmann_json libenvpp::libenvpp
 )
 
 if(APPLE)
