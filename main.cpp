@@ -3,11 +3,44 @@
 #include <string>
 #include <vector>
 
+#include <SFML/Audio.hpp>
+
 #include "includes/API.h"
 #include "includes/Song.h"
 #include "includes/Playlist.h"
 #include "includes/Artist.h"
 #include "includes/Podcast.h"
+
+bool downloadAudio(const std::string &youtubeUrl, const std::string &outputFile) {
+    const std::string command = "yt-dlp -f bestaudio --extract-audio --audio-format mp3 -o " + outputFile + " " + youtubeUrl;
+
+    std::cout << "Downloading audio from YouTube..." << std::endl;
+    const int result = std::system(command.c_str());
+    if (result != 0) {
+        std::cerr << "Error: Failed to download audio!" << std::endl;
+        return false;
+    }
+
+    std::cout << "Audio downloaded to: " << outputFile << std::endl;
+    return true;
+}
+
+void playAudio(const std::string &filePath) {
+    sf::Music music;
+    if (!music.openFromFile(filePath)) {
+        std::cerr << "Error: Failed to open audio file!" << std::endl;
+        return;
+    }
+
+    std::cout << "Playing audio..." << std::endl;
+    music.play();
+
+    while (music.getStatus() == sf::SoundSource::Playing) {
+        sf::sleep(sf::milliseconds(100));
+    }
+
+    std::cout << "Audio finished!" << std::endl;
+}
 
 int main() {
     const std::shared_ptr<Song> TalkingToTheMoon = std::make_shared<Song>("Talking to the moon", "00:3:35");
@@ -65,6 +98,14 @@ int main() {
     if(!song_url.empty()) {
         std::cout << song_url;
     }
+
+    const std::string youtubeUrl = "https://www.youtube.com/watch?v=qrO4YZeyl0I&";
+    const std::string outputFile = "downloaded_audio.mp3";
+    if (!downloadAudio(youtubeUrl, outputFile)) {
+        return 1;
+    }
+
+    playAudio(outputFile);
 
     return 0;
 }
