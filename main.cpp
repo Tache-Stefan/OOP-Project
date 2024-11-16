@@ -44,7 +44,7 @@ void playAudio(const std::string &filePath) {
 }
 
 int main() {
-    auto pre = env::prefix("SPOTIFY");
+    /*auto pre = env::prefix("SPOTIFY");
 
     const auto client_id_pre = pre.register_variable<std::string>("CLIENT_ID");
     const auto client_secret_pre = pre.register_variable<std::string>("CLIENT_SECRET");
@@ -60,7 +60,10 @@ int main() {
         std::cout << "Warnings: " << parsed_and_validated_pre.warning_message() << std::endl;
         std::cout << "Errors: " << parsed_and_validated_pre.error_message() << std::endl;
         return 1;
-    }
+    }*/
+
+    std::string client_id = getenv("SPOTIFY_CLIENT_ID");
+    std::string client_secret = getenv("SPOTIFY_CLIENT_SECRET");
 
     const std::shared_ptr<Song> TalkingToTheMoon = std::make_shared<Song>("Talking to the moon", "00:3:35");
     const std::shared_ptr<Song> DieWithASmile = std::make_shared<Song>("Die with a smile", "00:04:13");
