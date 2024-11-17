@@ -1,7 +1,9 @@
 #include "Podcast.h"
 
 #include <iostream>
+#include <thread>
 
+#include "API.h"
 #include "Utility.h"
 
 Podcast::Podcast(const std::string &title_, const std::vector<std::shared_ptr<Artist>> &artists_, const std::string &length_,
@@ -17,5 +19,14 @@ std::ostream& operator<<(std::ostream& os, const Podcast& podcast) {
 }
 
 void Podcast::play(const std::string& youtube_api) const {
-    std::cout << "Playing podcast: " << title <<std::endl;
+    const std::string youtubeURL = API::searchYouTube(youtube_api, title);
+    const std::string outputFile = "audio.mp3";
+    if (!Utils::downloadAudio(youtubeURL, outputFile)) {
+        return;
+    }
+
+    std::atomic<bool> stopPlayback(false);
+    std::thread inputThread(Utils::monitorInput, std::ref(stopPlayback));
+    Utils::playAudio(outputFile, stopPlayback);
+    inputThread.join();
 }

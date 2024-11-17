@@ -43,14 +43,14 @@ void Song::addArtist(const std::shared_ptr<Artist>& artist) {
 }
 
 void Song::play(const std::string& youtube_api) const {
+    std::atomic<bool> stopPlayback(false);
+    std::thread inputThread(Utils::monitorInput, std::ref(stopPlayback));
     const std::string youtubeURL = API::searchYouTube(youtube_api, title);
     const std::string outputFile = "audio.mp3";
     if (!Utils::downloadAudio(youtubeURL, outputFile)) {
         return;
     }
 
-    std::atomic<bool> stopPlayback(false);
-    std::thread inputThread(Utils::monitorInput, std::ref(stopPlayback));
     Utils::playAudio(outputFile, stopPlayback);
     inputThread.join();
 }

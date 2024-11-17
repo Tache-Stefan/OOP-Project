@@ -1,6 +1,9 @@
-#include <iostream>
 #include "Audiobook.h"
 
+#include <iostream>
+#include <thread>
+
+#include "API.h"
 #include "Utility.h"
 
 Audiobook::Audiobook(const std::string &title_, const std::string &length_, const int chapter_count, const std::string &language)
@@ -16,5 +19,14 @@ std::ostream& operator<<(std::ostream& os, const Audiobook& audiobook) {
 }
 
 void Audiobook::play(const std::string& youtube_api) const {
-        std::cout << "Playing audiobook: " << title <<std::endl;
+        const std::string youtubeURL = API::searchYouTube(youtube_api, title);
+        const std::string outputFile = "audio.mp3";
+        if (!Utils::downloadAudio(youtubeURL, outputFile)) {
+                return;
+        }
+
+        std::atomic<bool> stopPlayback(false);
+        std::thread inputThread(Utils::monitorInput, std::ref(stopPlayback));
+        Utils::playAudio(outputFile, stopPlayback);
+        inputThread.join();
 }

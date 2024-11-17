@@ -64,19 +64,32 @@ int main() {
     sharedSongs.push_back(DieWithASmile);
     sharedSongs.push_back(ThatWhatILike);
 
-    Playlist Favorites{"Favorites", sharedSongs};
-    Favorites.calculateLength();
-    std::cout << Favorites.getLength() << std::endl;
+    //Playlist Favorites{"Favorites", sharedSongs};
+    //Favorites.calculateLength();
+    //std::cout << Favorites.getLength() << std::endl;
 
-    std::cout << TalkingToTheMoon->getLength() << std::endl;
+    //std::cout << TalkingToTheMoon->getLength() << std::endl;
 
-    Favorites.shuffle();
-    std::cout << Favorites;
+    //Favorites.shuffle();
+    //std::cout << Favorites;
 
-    const Podcast TheJoeRoganExperience{"The Joe Rogan Experience", "3:37:59", 2000};
-    std::cout << TheJoeRoganExperience;
+    //const Podcast TheJoeRoganExperience{"The Joe Rogan Experience", "3:37:59", 2000};
+    //std::cout << TheJoeRoganExperience;
 
-    TalkingToTheMoon->play(youtube_api);
+    std::cout << "Choose a song to play (Talking To The Moon - 1, Die with a smile - 2, That's What I Like - 3) or 0 for exit: " << std::endl;
+    int userInput = 0;
+    while(true) {
+        std::cin >> userInput;
+        if(userInput == 0)
+            break;
+        if(userInput == 1)
+            TalkingToTheMoon->play(youtube_api);
+        if(userInput == 2)
+            DieWithASmile->play(youtube_api);
+        if(userInput == 3)
+            ThatWhatILike->play(youtube_api);
+    }
 
+    std::cout << "App closed!" << std::endl;
     return 0;
 }
