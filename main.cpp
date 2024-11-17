@@ -44,26 +44,22 @@ void playAudio(const std::string &filePath) {
 }
 
 int main() {
-    /*auto pre = env::prefix("SPOTIFY");
+    const char* client_id_env = getenv("SPOTIFY_CLIENT_ID");
+    const char* client_secret_env = getenv("SPOTIFY_CLIENT_SECRET");
+    std::string client_id;
+    std::string client_secret;
+    bool envSet = false;
 
-    const auto client_id_pre = pre.register_variable<std::string>("CLIENT_ID");
-    const auto client_secret_pre = pre.register_variable<std::string>("CLIENT_SECRET");
-    const auto parsed_and_validated_pre = pre.parse_and_validate();
-
-    std::string client_id = "";
-    std::string client_secret = "";
-
-    if (parsed_and_validated_pre.ok()) {
-        client_id = parsed_and_validated_pre.get_or(client_id_pre, "default_client_id");
-        client_secret = parsed_and_validated_pre.get_or(client_secret_pre, "default_client_secret");
-    } else {
-        std::cout << "Warnings: " << parsed_and_validated_pre.warning_message() << std::endl;
-        std::cout << "Errors: " << parsed_and_validated_pre.error_message() << std::endl;
-        return 1;
-    }*/
-
-    std::string client_id = getenv("SPOTIFY_CLIENT_ID");
-    std::string client_secret = getenv("SPOTIFY_CLIENT_SECRET");
+    if(!client_id_env || !client_secret_env) {
+        std::cerr << "Error: Environment variables not set!" << std::endl;
+        client_id = "";
+        client_secret = "";
+    }
+    else {
+        client_id = client_id_env;
+        client_secret = client_secret_env;
+        envSet = true;
+    }
 
     const std::shared_ptr<Song> TalkingToTheMoon = std::make_shared<Song>("Talking to the moon", "00:3:35");
     const std::shared_ptr<Song> DieWithASmile = std::make_shared<Song>("Die with a smile", "00:04:13");
@@ -100,22 +96,19 @@ int main() {
     std::cout << TheJoeRoganExperience;
     TheJoeRoganExperience.play();
 
-    if (client_id == "" || client_secret == "") {
-        std::cerr << "Error: Environment variables for Spotify credentials are not set." << std::endl;
-        return 1;
-    }
+    if(envSet) {
+        std::string access_token = API::getSpotifyAccessToken(client_id, client_secret);
+        if (!access_token.empty()) {
+            std::cout << "Access token retrieved successfully." << std::endl;
+        } else {
+            std::cerr << "Error: Failed to retrieve access token." << std::endl;
+        }
 
-    std::string access_token = API::getSpotifyAccessToken(client_id, client_secret);
-    if (!access_token.empty()) {
-        std::cout << "Access token retrieved successfully." << std::endl;
-    } else {
-        std::cerr << "Error: Failed to retrieve access token." << std::endl;
-    }
+        std::string song_url = API::searchSpotify(access_token, "Talking to the moon", "track");
 
-    std::string song_url = API::searchSpotify(access_token, "Talking to the moon", "track");
-
-    if(!song_url.empty()) {
-        std::cout << song_url;
+        if(!song_url.empty()) {
+            std::cout << song_url;
+        }
     }
 
     const std::string youtubeUrl = "https://www.youtube.com/watch?v=qrO4YZeyl0I&";
