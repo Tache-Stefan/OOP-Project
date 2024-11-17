@@ -1,10 +1,13 @@
 #include <iostream>
+#include <filesystem>
 #include <cstdlib>
 #include <string>
 #include <vector>
-#include <libenvpp/env.hpp>
+#include <atomic>
+#include <thread>
 
 #include <SFML/Audio.hpp>
+#include <SFML/System.hpp>
 
 #include "includes/API.h"
 #include "includes/Song.h"
@@ -26,21 +29,53 @@ bool downloadAudio(const std::string &youtubeUrl, const std::string &outputFile)
     return true;
 }
 
-void playAudio(const std::string &filePath) {
-    sf::Music music;
-    if (!music.openFromFile(filePath)) {
-        std::cerr << "Error: Failed to open audio file!" << std::endl;
-        return;
+void playAudio(const std::string &filePath, std::atomic<bool> &stopPlayback) {
+    {
+        sf::Music music;
+        if (!music.openFromFile(filePath)) {
+            std::cerr << "Error: Failed to open audio file!" << std::endl;
+            stopPlayback = true;
+            return;
+        }
+
+        std::cout << "Playing audio... Type 'stop' to stop playback." << std::endl;
+        music.play();
+
+        while (music.getStatus() == sf::SoundSource::Playing) {
+            if(stopPlayback.load()) {
+                std::cout << "Stopping playback..." << std::endl;
+                music.stop();
+                break;
+            }
+            sf::sleep(sf::milliseconds(100));
+        }
+
+        stopPlayback.store(true);
+        std::cout << "Audio finished!" << std::endl;
     }
 
-    std::cout << "Playing audio..." << std::endl;
-    music.play();
-
-    while (music.getStatus() == sf::SoundSource::Playing) {
-        sf::sleep(sf::milliseconds(100));
+    if (std::filesystem::exists(filePath)) {
+        try {
+            std::filesystem::remove(filePath);
+            std::cout << "File removed: " << filePath << std::endl;
+        } catch (const std::exception& e) {
+            std::cerr << e.what() << std::endl;
+        }
+    } else {
+        std::cerr << "Error: File does not exist: " << filePath << std::endl;
     }
+}
 
-    std::cout << "Audio finished!" << std::endl;
+void monitorInput(std::atomic<bool> &stopPlayback) {
+    std::string input;
+    while(!stopPlayback.load()) {
+        std::getline(std::cin, input);
+        if(input == "stop") {
+            stopPlayback.store(true);
+            break;
+        }
+    }
+    std::cin.clear();
 }
 
 int main() {
@@ -105,19 +140,19 @@ int main() {
         }
 
         std::string song_url = API::searchSpotify(access_token, "Talking to the moon", "track");
-
-        if(!song_url.empty()) {
-            std::cout << song_url;
-        }
     }
 
     const std::string youtubeUrl = "https://www.youtube.com/watch?v=qrO4YZeyl0I&";
-    const std::string outputFile = "downloaded_audio.mp3";
+    const std::string outputFile = "audio.mp3";
     if (!downloadAudio(youtubeUrl, outputFile)) {
         return 1;
     }
 
-    playAudio(outputFile);
+    std::atomic<bool> stopPlayback(false);
+    std::thread inputThread(monitorInput, std::ref(stopPlayback));
+    playAudio(outputFile, stopPlayback);
+
+    inputThread.join();
 
     return 0;
 }
