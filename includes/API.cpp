@@ -56,8 +56,8 @@ namespace API {
 
                 if (!jsonData["tracks"]["items"].empty()) {
                     auto first_result = jsonData["tracks"]["items"][0];
-                    std::string track_name = first_result["name"];
-                    std::string artist_name = first_result["artists"][0]["name"];
+                    const std::string track_name = first_result["name"];
+                    const std::string artist_name = first_result["artists"][0]["name"];
                     std::string track_url = first_result["external_urls"]["spotify"];
 
                     std::cout << "Track: " << track_name << "\n"

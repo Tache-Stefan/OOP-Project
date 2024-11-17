@@ -25,6 +25,7 @@ env:
   EXECUTABLE_NAME: "oop"
   SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
   SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+  YOUTUBE_DATA_API: ${{ secrets.YOUTUBE_DATA_API }}
   INPUT_FILENAME: "tastatura.txt"
   BIN_DIR: "bin"       # update in cmake/Options.cmake:6 if changing name here
   BUILD_DIR: "build"

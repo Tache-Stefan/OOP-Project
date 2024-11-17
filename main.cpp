@@ -81,18 +81,22 @@ void monitorInput(std::atomic<bool> &stopPlayback) {
 int main() {
     const char* client_id_env = getenv("SPOTIFY_CLIENT_ID");
     const char* client_secret_env = getenv("SPOTIFY_CLIENT_SECRET");
+    const char* youtube_api_env = getenv("YOUTUBE_DATA_API");
     std::string client_id;
     std::string client_secret;
+    std::string youtube_api;
     bool envSet = false;
 
-    if(!client_id_env || !client_secret_env) {
+    if(!client_id_env || !client_secret_env || !youtube_api_env) {
         std::cerr << "Error: Environment variables not set!" << std::endl;
         client_id = "";
         client_secret = "";
+        youtube_api_env = "";
     }
     else {
         client_id = client_id_env;
         client_secret = client_secret_env;
+        youtube_api = youtube_api_env;
         envSet = true;
     }
 
@@ -139,7 +143,7 @@ int main() {
             std::cerr << "Error: Failed to retrieve access token." << std::endl;
         }
 
-        std::string song_url = API::searchSpotify(access_token, "Talking to the moon", "track");
+        API::searchSpotify(access_token, "Talking to the moon", "track");
     }
 
     const std::string youtubeUrl = "https://www.youtube.com/watch?v=qrO4YZeyl0I&";
