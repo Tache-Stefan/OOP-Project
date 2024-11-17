@@ -97,6 +97,16 @@ winget install --id=yt-dlp.yt-dlp  -e
 winget install --id=Gyan.FFmpeg  -e
 ```
 
+## Obtinere chei API
+
+Cheile API se vor introduce in envconfig.txt.
+
+Cheile pentru Spotify API se obtin de [aici](https://developer.spotify.com/). Este necesar un cont. Apoi, 
+se intra in dashboard, apasati create app si se copiaza client id si client secret in fisier.
+
+Cheile pentru Youtube Data API se obtin de [aici](https://console.cloud.google.com/).
+Se selecteaza sus din search create a project. Apoi la APIs se selecteaza Youtube Data API v3, se
+da enable si se copiaza cheia in fisier.
 
 ## Instrucțiuni de compilare
 
