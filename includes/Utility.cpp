@@ -1,7 +1,10 @@
 #include "Utility.h"
 #include <sstream>
 #include <iostream>
+#include <fstream>
+#include <filesystem>
 #include <nlohmann/json.hpp>
+#include <SFML/Audio.hpp>
 
 namespace Utils {
     std::vector<std::string> split(const std::string& s, const char delimiter) {
@@ -75,5 +78,95 @@ namespace Utils {
             encoded.push_back('=');
         }
         return encoded;
+    }
+
+    bool downloadAudio(const std::string &youtubeUrl, const std::string &outputFile) {
+        const std::string command = "yt-dlp -f bestaudio --extract-audio --audio-format mp3 -o " + outputFile + " " + youtubeUrl;
+
+        std::cout << "Downloading audio from YouTube..." << std::endl;
+        const int result = std::system(command.c_str());
+        if (result != 0) {
+            std::cerr << "Error: Failed to download audio!" << std::endl;
+            return false;
+        }
+
+        std::cout << "Audio downloaded to: " << outputFile << std::endl;
+        return true;
+    }
+
+    void monitorInput(std::atomic<bool> &stopPlayback) {
+        std::string input;
+        while(!stopPlayback.load()) {
+            std::getline(std::cin, input);
+            if(input == "stop") {
+                stopPlayback.store(true);
+                break;
+            }
+        }
+        std::cin.clear();
+    }
+
+    void playAudio(const std::string &filePath, std::atomic<bool> &stopPlayback) {
+        {
+            sf::Music music;
+            if (!music.openFromFile(filePath)) {
+                std::cerr << "Error: Failed to open audio file!" << std::endl;
+                stopPlayback = true;
+                return;
+            }
+
+            std::cout << "Playing audio... Type 'stop' to stop playback." << std::endl;
+            music.play();
+
+            while (music.getStatus() == sf::SoundSource::Playing) {
+                if(stopPlayback.load()) {
+                    std::cout << "Stopping playback..." << std::endl;
+                    music.stop();
+                    break;
+                }
+                sleep(sf::milliseconds(100));
+            }
+
+            stopPlayback.store(true);
+            std::cout << "Audio finished!" << std::endl;
+        }
+
+        if (std::filesystem::exists(filePath)) {
+            try {
+                std::filesystem::remove(filePath);
+                std::cout << "File removed: " << filePath << std::endl;
+            } catch (const std::exception& e) {
+                std::cerr << e.what() << std::endl;
+            }
+        } else {
+            std::cerr << "Error: File does not exist: " << filePath << std::endl;
+        }
+    }
+
+    void loadEnvFile() {
+        const std::string filename = "envconfig.txt";
+        std::ifstream env_file(filename);
+        if (!env_file.is_open()) {
+            std::cerr << "Error: Unable to open envconfig.txt" << std::endl;
+            return;
+        }
+
+        std::string line;
+        while (std::getline(env_file, line)) {
+            if (line.empty()) continue;
+
+            const size_t separator_pos = line.find('=');
+            if (separator_pos == std::string::npos) continue;
+
+            std::string key = line.substr(0, separator_pos);
+            std::string value = line.substr(separator_pos + 1);
+
+#ifdef _WIN32
+            _putenv((key + "=" + value).c_str());
+#else
+            setenv(key.c_str(), value.c_str(), 1);
+#endif
+        }
+        env_file.close();
     }
 }

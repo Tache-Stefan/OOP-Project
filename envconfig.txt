@@ -1,0 +1,3 @@
+SPOTIFY_CLIENT_ID=client-id-here
+SPOTIFY_CLIENT_SECRET=client-secret-here
+YOUTUBE_DATA_API=youtube-api-here

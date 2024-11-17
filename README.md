@@ -62,7 +62,7 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
   - această ierarhie va fi complet independentă de ierarhia cu funcții virtuale
 - [ ] funcții și atribute `static`
 - [x] STL
-- [ ] cât mai multe `const`
+- [x] cât mai multe `const`
 - [ ] funcții *de nivel înalt*, de eliminat cât mai mulți getters/setters/funcții low-level
 - [ ] la sfârșit: commit separat cu adăugarea unei noi clase derivate fără a modifica restul codului, **pe lângă cele 3 derivate deja adăugate** din aceeași ierarhie
   - noua derivată nu poate fi una existentă care a fost ștearsă și adăugată din nou
@@ -76,6 +76,27 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
   - [ ] preferabil și o funcție șablon (template) cu sens; minim 2 instanțieri
 <!-- - [ ] o specializare pe funcție/clasă șablon -->
 - [ ] tag de `git`: de exemplu `v0.3` sau `v1.0`
+
+## Instalari necesare
+
+Linux:
+```sh
+sudo apt-get update && sudo apt-get install yt-dlp
+sudo apt-get update && sudo apt-get install ffmpeg
+```
+
+macOS:
+```sh
+brew install yt-dlp
+brew install ffmpeg
+```
+
+Windows:
+```sh
+winget install --id=yt-dlp.yt-dlp  -e
+winget install --id=Gyan.FFmpeg  -e
+```
+
 
 ## Instrucțiuni de compilare
 
@@ -136,4 +157,5 @@ Vezi și [`scripts/cmake.sh`](scripts/cmake.sh).
 - [nlohmann/json](https://github.com/nlohmann/json)
 - [Spotify API](https://developer.spotify.com/)
 - [yt-dlp](https://github.com/yt-dlp/yt-dlp)
-- [libenvpp](https://github.com/ph3at/libenvpp)
+- [ffmpeg](https://www.ffmpeg.org/)
+- [Youtube Data API](https://developers.google.com/youtube/v3)

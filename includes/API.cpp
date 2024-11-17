@@ -65,17 +65,43 @@ namespace API {
                               << "URL: " << track_url << "\n";
 
                     return track_url;
-                } else {
-                    std::cerr << "No results found for query: " << query << std::endl;
-                    return "";
                 }
+                std::cerr << "No results found for query: " << query << std::endl;
+                return "";
+
             } catch (const std::exception& e) {
                 std::cerr << "Error parsing JSON: " << e.what() << std::endl;
                 return "";
             }
-        } else {
-            std::cerr << "Error: " << r.status_code << " " << r.text << std::endl;
-            return "";
         }
+
+        std::cerr << "Error: " << r.status_code << " " << r.text << std::endl;
+        return "";
+    }
+    std::string searchYouTube(const std::string& youtube_api, const std::string& query) {
+        const std::string url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" +
+            cpr::util:: urlEncode(query) + "&type=video&maxResults=1&key=" + youtube_api;
+
+        cpr::Response r = cpr::Get(cpr::Url{url});
+
+        if(r.status_code == 200) {
+            try {
+                nlohmann::json jsonData = nlohmann::json::parse(r.text);
+
+                if (jsonData.contains("items") && !jsonData["items"].empty()) {
+                    const std::string videoId = jsonData["items"][0]["id"]["videoId"];
+                    return "https://www.youtube.com/watch?v=" + videoId;
+                }
+                std::cerr << "No videos found for query: " << query << std::endl;
+                return "";
+
+            } catch (const std::exception& e) {
+                std::cerr << "JSON parsing error: " << e.what() << std::endl;
+                return "";
+            }
+        }
+
+        std::cerr << "Error: " << r.status_code << " " << r.error.message << std::endl;
+        return "";
     }
 }
