@@ -27,7 +27,7 @@ int main() {
         std::cerr << "Error: Spotify or Youtube API keys missing!" << std::endl;
         client_id = "";
         client_secret = "";
-        youtube_api_env = "";
+        youtube_api = "";
     }
     else {
         client_id = client_id_env;
