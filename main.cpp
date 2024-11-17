@@ -36,7 +36,7 @@ int main() {
     }
 
     if(envSet) {
-        std::string access_token = API::getSpotifyAccessToken(client_id, client_secret);
+        const std::string access_token = API::getSpotifyAccessToken(client_id, client_secret);
         if (!access_token.empty()) {
             std::cout << "Access token retrieved successfully." << std::endl;
         } else {
@@ -64,8 +64,8 @@ int main() {
     sharedSongs.push_back(DieWithASmile);
     sharedSongs.push_back(ThatWhatILike);
 
-    //Playlist Favorites{"Favorites", sharedSongs};
-    //Favorites.calculateLength();
+    Playlist Favorites{"Favorites", sharedSongs};
+    Favorites.calculateLength();
     //std::cout << Favorites.getLength() << std::endl;
 
     //std::cout << TalkingToTheMoon->getLength() << std::endl;
