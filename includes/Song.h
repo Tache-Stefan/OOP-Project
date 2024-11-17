@@ -19,5 +19,5 @@ public:
     ~Song() override = default;
     std::string getLength() const;
     void addArtist(const std::shared_ptr<Artist>& artist);
-    void play() const override;
+    void play(const std::string& youtube_api) const override;
 };

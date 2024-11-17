@@ -16,6 +16,6 @@ std::ostream& operator<<(std::ostream& os, const Podcast& podcast) {
     return os;
 }
 
-void Podcast::play() const {
+void Podcast::play(const std::string& youtube_api) const {
     std::cout << "Playing podcast: " << title <<std::endl;
 }

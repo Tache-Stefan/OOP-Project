@@ -1,5 +1,9 @@
-#include <iostream>
 #include "Song.h"
+
+#include <iostream>
+#include <thread>
+
+#include "API.h"
 #include "Artist.h"
 #include "Utility.h"
 
@@ -38,6 +42,15 @@ void Song::addArtist(const std::shared_ptr<Artist>& artist) {
     artists.push_back(artist);
 }
 
-void Song::play() const {
-    std::cout << "Playing song: " << title <<std::endl;
+void Song::play(const std::string& youtube_api) const {
+    const std::string youtubeURL = API::searchYouTube(youtube_api, title);
+    const std::string outputFile = "audio.mp3";
+    if (!Utils::downloadAudio(youtubeURL, outputFile)) {
+        return;
+    }
+
+    std::atomic<bool> stopPlayback(false);
+    std::thread inputThread(Utils::monitorInput, std::ref(stopPlayback));
+    Utils::playAudio(outputFile, stopPlayback);
+    inputThread.join();
 }

@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include <string>
 #include <vector>
-#include <atomic>
 #include <thread>
 
 #include "includes/API.h"
@@ -13,7 +12,7 @@
 #include "includes/Utility.h"
 
 int main() {
-    Utils::loadEnvFile();
+    //Utils::loadEnvFile();
 
     const char* client_id_env = getenv("SPOTIFY_CLIENT_ID");
     const char* client_secret_env = getenv("SPOTIFY_CLIENT_SECRET");
@@ -34,6 +33,15 @@ int main() {
         client_secret = client_secret_env;
         youtube_api = youtube_api_env;
         envSet = true;
+    }
+
+    if(envSet) {
+        std::string access_token = API::getSpotifyAccessToken(client_id, client_secret);
+        if (!access_token.empty()) {
+            std::cout << "Access token retrieved successfully." << std::endl;
+        } else {
+            std::cerr << "Error: Failed to retrieve access token." << std::endl;
+        }
     }
 
     const std::shared_ptr<Song> TalkingToTheMoon = std::make_shared<Song>("Talking to the moon", "00:3:35");
@@ -62,37 +70,13 @@ int main() {
 
     std::cout << TalkingToTheMoon->getLength() << std::endl;
 
-    TalkingToTheMoon->play();
-
     Favorites.shuffle();
     std::cout << Favorites;
 
     const Podcast TheJoeRoganExperience{"The Joe Rogan Experience", "3:37:59", 2000};
     std::cout << TheJoeRoganExperience;
-    TheJoeRoganExperience.play();
 
-    if(envSet) {
-        std::string access_token = API::getSpotifyAccessToken(client_id, client_secret);
-        if (!access_token.empty()) {
-            std::cout << "Access token retrieved successfully." << std::endl;
-        } else {
-            std::cerr << "Error: Failed to retrieve access token." << std::endl;
-        }
-
-        API::searchSpotify(access_token, "Talking to the moon", "track");
-    }
-
-    const std::string youtubeURL = API::searchYouTube(youtube_api, "Talking To The Moon");
-    const std::string outputFile = "audio.mp3";
-    if (!Utils::downloadAudio(youtubeURL, outputFile)) {
-        return 1;
-    }
-
-    std::atomic<bool> stopPlayback(false);
-    std::thread inputThread(Utils::monitorInput, std::ref(stopPlayback));
-    Utils::playAudio(outputFile, stopPlayback);
-
-    inputThread.join();
+    TalkingToTheMoon->play(youtube_api);
 
     return 0;
 }

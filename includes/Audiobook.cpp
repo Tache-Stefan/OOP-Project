@@ -15,6 +15,6 @@ std::ostream& operator<<(std::ostream& os, const Audiobook& audiobook) {
         return os;
 }
 
-void Audiobook::play() const {
+void Audiobook::play(const std::string& youtube_api) const {
         std::cout << "Playing audiobook: " << title <<std::endl;
 }

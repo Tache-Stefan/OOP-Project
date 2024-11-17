@@ -9,5 +9,5 @@ public:
     Audiobook(const std::string &title_, const std::string &length_, int chapter_count, const std::string &language);
     Audiobook(const std::string &title_, const std::string &length_);
     friend std::ostream& operator<<(std::ostream& os, const Audiobook& audiobook);
-    void play() const override;
+    void play(const std::string& youtube_api) const override;
 };
