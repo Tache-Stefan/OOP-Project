@@ -99,7 +99,7 @@ winget install --id=Gyan.FFmpeg  -e
 
 ## Obtinere chei API
 
-Cheile API se vor introduce in envconfig.txt.
+Cheile API se vor introduce in **envconfig.txt**.
 
 Cheile pentru Spotify API se obtin de [aici](https://developer.spotify.com/). Este necesar un cont. Apoi, 
 se intra in dashboard, apasati create app si se copiaza client id si client secret in fisier.

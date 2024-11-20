@@ -10,45 +10,31 @@
 #include "includes/Artist.h"
 #include "includes/Podcast.h"
 #include "includes/Utility.h"
+#include "includes/EnvironmentSetup.h"
+
+//verificat .. / in downloadAudio
+//folosit playlist si tot ce am etc.
 
 int main() {
-    Utils::loadEnvFile();
+    const EnvironmentSetup envSetup;
+    std::string access_token = "";
 
-    const char* client_id_env = getenv("SPOTIFY_CLIENT_ID");
-    const char* client_secret_env = getenv("SPOTIFY_CLIENT_SECRET");
-    const char* youtube_api_env = getenv("YOUTUBE_DATA_API");
-    std::string client_id;
-    std::string client_secret;
-    std::string youtube_api;
-    bool envSet = false;
-
-    if(!client_id_env || !client_secret_env || !youtube_api_env) {
-        std::cerr << "Error: Spotify or Youtube API keys missing!" << std::endl;
-        client_id = "";
-        client_secret = "";
-        youtube_api = "";
-    }
-    else {
-        client_id = client_id_env;
-        client_secret = client_secret_env;
-        youtube_api = youtube_api_env;
-        envSet = true;
-    }
-
-    if(envSet) {
-        const std::string access_token = API::getSpotifyAccessToken(client_id, client_secret);
-        if (!access_token.empty()) {
+    if(envSetup.isEnvSet()) {
+        access_token = envSetup.retrieveSpotifyAccessToken();
+        if(!access_token.empty()) {
             std::cout << "Access token retrieved successfully." << std::endl;
-        } else {
+        }
+        else {
             std::cerr << "Error: Failed to retrieve access token." << std::endl;
         }
     }
 
-    const std::shared_ptr<Song> TalkingToTheMoon = std::make_shared<Song>("Talking to the moon", "00:3:35");
+    const std::shared_ptr<Song> TalkingToTheMoon = std::make_shared<Song>("when i was older", "00:03:35");
     const std::shared_ptr<Song> DieWithASmile = std::make_shared<Song>("Die with a smile", "00:04:13");
     const std::shared_ptr<Song> ThatWhatILike = std::make_shared<Song>("That's What I Like", "00:03:30");
     const std::shared_ptr<Artist> BrunoMars = std::make_shared<Artist>("Bruno Mars");
     const std::shared_ptr<Artist> LadyGaga = std::make_shared<Artist>("Lady Gaga");
+
 
     BrunoMars->addSong(TalkingToTheMoon);
     BrunoMars->addSong(DieWithASmile);
@@ -83,11 +69,11 @@ int main() {
         if(userInput == 0)
             break;
         if(userInput == 1)
-            TalkingToTheMoon->play(youtube_api);
+            TalkingToTheMoon->play(envSetup.getYoutubeAPI());
         if(userInput == 2)
-            DieWithASmile->play(youtube_api);
+            DieWithASmile->play(envSetup.getYoutubeAPI());
         if(userInput == 3)
-            ThatWhatILike->play(youtube_api);
+            ThatWhatILike->play(envSetup.getYoutubeAPI());
     }
 
     std::cout << "App closed!" << std::endl;

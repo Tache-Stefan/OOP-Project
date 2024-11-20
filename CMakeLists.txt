@@ -109,6 +109,8 @@ add_executable(${PROJECT_NAME}
         includes/Audiobook.h
         includes/API.cpp
         includes/API.h
+        includes/EnvironmentSetup.cpp
+        includes/EnvironmentSetup.h
 )
 
 include(cmake/CompilerFlags.cmake)
