@@ -1,7 +1,7 @@
 # Music manager
 
 ### Descriere
-Acest proiect este un music manager iti permite sa creezi playlist-uri, sa adaugi melodii sau artisti la favorite.
+Acest proiect este un music manager care iti permite sa creezi playlist-uri, sa adaugi melodii sau artisti la favorite.
 Utilizatorii vor putea sa caute melodii dupa nume, artist sau gen. Playlist-urile au functionalitati de repeat si shuffle. Utilizatorul are un 
 profil cu informatii legate de ascultarile sale. Proiectul are si o interfata grafica usoara de utilizat.
 
