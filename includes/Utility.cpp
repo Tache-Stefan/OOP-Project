@@ -41,6 +41,20 @@ namespace Utils {
         return oss.str();
     }
 
+    struct tm durationToTm(const int duration_ms) {
+        struct tm time_struct = {};
+
+        int total_seconds = duration_ms / 1000;
+
+        time_struct.tm_hour = total_seconds / 3600;
+        total_seconds %= 3600;
+
+        time_struct.tm_min = total_seconds / 60;
+        time_struct.tm_sec = total_seconds % 60;
+
+        return time_struct;
+    }
+
     struct tm addTimes(struct tm timeStruct1, const struct tm &timeStruct2) {
         timeStruct1.tm_sec += timeStruct2.tm_sec;
         timeStruct1.tm_min += timeStruct2.tm_min;

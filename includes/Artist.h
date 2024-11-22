@@ -12,7 +12,8 @@ private:
     std::vector<std::shared_ptr<Song>> songs;
 public:
     Artist(const std::string& name_, const std::vector<std::shared_ptr<Song>>& songs_);
-    explicit Artist(const std::string& name);
+    explicit Artist(const std::string& name_);
     friend std::ostream& operator<<(std::ostream& os, const Artist& artist);
     void addSong(const std::shared_ptr<Song>& song);
+    std::string getName() const;
 };

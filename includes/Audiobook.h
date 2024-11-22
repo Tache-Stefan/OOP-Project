@@ -1,7 +1,7 @@
 #pragma once
 #include "Media.h"
 
-class Audiobook final : public Media {
+class Audiobook : public Media {
 private:
     int chapter_count = 0;
     std::string language = "None";

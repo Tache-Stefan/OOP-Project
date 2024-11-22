@@ -5,7 +5,7 @@
 Artist::Artist(const std::string& name_, const std::vector<std::shared_ptr<Song>>& songs_) : name(name_), songs(songs_) {
     std::cout << "Created Artist(+songs): " << name << std::endl;
 }
-Artist::Artist(const std::string& name) {
+Artist::Artist(const std::string& name_) : name(name_) {
     std::cout << "Created Artist: " << name << std::endl;
 }
 std::ostream& operator<<(std::ostream& os, const Artist& artist) {
@@ -15,3 +15,5 @@ std::ostream& operator<<(std::ostream& os, const Artist& artist) {
 void Artist::addSong(const std::shared_ptr<Song>& song) {
     songs.push_back(song);
 }
+
+std::string Artist::getName() const {return name;}

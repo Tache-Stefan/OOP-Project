@@ -10,6 +10,7 @@ namespace Utils {
     struct tm stringToTime(const std::string& length_);
     std::string timeToString(const struct tm& timeStruct);
     struct tm addTimes(struct tm timeStruct1, const struct tm &timeStruct2);
+    struct tm durationToTm(const int duration_ms);
     std::string base64_encode(const std::string& input);
     bool downloadAudio(const std::string &youtubeUrl, const std::string &outputFile);
     void monitorInput(std::atomic<bool> &stopPlayback);

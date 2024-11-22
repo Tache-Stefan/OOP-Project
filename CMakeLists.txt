@@ -111,6 +111,10 @@ add_executable(${PROJECT_NAME}
         includes/API.h
         includes/EnvironmentSetup.cpp
         includes/EnvironmentSetup.h
+        includes/SongCollection.cpp
+        includes/SongCollection.h
+        includes/ArtistCollection.cpp
+        includes/ArtistCollection.h
 )
 
 include(cmake/CompilerFlags.cmake)

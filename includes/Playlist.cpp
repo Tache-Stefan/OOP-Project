@@ -5,15 +5,16 @@
 #include <random>
 #include <chrono>
 
-Playlist::Playlist(const std::string& title_, const std::vector<std::shared_ptr<Song>> &songs_, const std::string& length_) : title(title_),
-                   songs(songs_), length(Utils::stringToTime(length_)) {
-    std::cout << "Created Playlist: " << title << "\n";
-}
-
 Playlist::Playlist(const std::string& title_, const std::vector<std::shared_ptr<Song>> &songs_) : title(title_), songs(songs_), length({}) {
 
     std::cout << "Created Playlist: " << title << "\n";
 }
+
+Playlist::Playlist(const std::string &title_) : title(title_) {
+    std::cout << "Created Playlist: " << title << "\n";
+}
+
+void Playlist::addSong(const std::shared_ptr<Song>& song) {songs.push_back(song);}
 
 std::ostream& operator<<(std::ostream& os, const Playlist& playlist) {
     os << "Playlist: " << playlist.title << "\n";

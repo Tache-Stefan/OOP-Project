@@ -6,9 +6,9 @@
 #include "API.h"
 #include "Utility.h"
 
-Podcast::Podcast(const std::string &title_, const std::vector<std::shared_ptr<Artist>> &artists_, const std::string &length_,
+Podcast::Podcast(const std::string &title_, const std::shared_ptr<Artist> &artist_, const std::string &length_,
                  const int episode_number)
-        : Media(title_, artists_, length_), episode_number(episode_number) {}
+        : Media(title_, artist_, length_), episode_number(episode_number) {}
 
 Podcast::Podcast(const std::string &title_, const std::string &length_, const int episode_number)
         : Media(title_, length_), episode_number(episode_number) {}
