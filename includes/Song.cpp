@@ -38,7 +38,7 @@ Song& Song::operator=(const Song& other) {
 }
 
 std::ostream& operator<<(std::ostream& os, const Song& song) {
-    os << "Song: " << song.title << ", " << Utils::timeToString(song.length) << "\n";
+    os << "Song: " << song.title << ", " << Utils::timeToString(song.length) << ", " << "id: " << song.id << std::endl;
     return os;
 }
 

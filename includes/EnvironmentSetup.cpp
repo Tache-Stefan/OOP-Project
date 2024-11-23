@@ -38,10 +38,6 @@ EnvironmentSetup::EnvironmentSetup() : envSet(false) {
     }
 }
 
-const std::string& EnvironmentSetup::getClientID() const {return client_id;}
-
-const std::string& EnvironmentSetup::getClientSecret() const {return client_secret;}
-
 const std::string& EnvironmentSetup::getYoutubeAPI() const {return youtube_api;}
 
 const std::string& EnvironmentSetup::getAccessToken() const {return access_token;}

@@ -10,8 +10,6 @@ private:
     bool envSet;
 public:
     EnvironmentSetup();
-    const std::string& getClientID() const;
-    const std::string& getClientSecret() const;
     const std::string& getYoutubeAPI() const;
     const std::string& getAccessToken() const;
 };

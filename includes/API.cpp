@@ -54,9 +54,15 @@ namespace API {
 
                 if (!jsonData["tracks"]["items"].empty()) {
                     auto first_result = jsonData["tracks"]["items"][0];
-
                     ArtistCollection artist_collection;
                     SongCollection song_collection;
+                    const std::string song_id = first_result["id"];
+                    std::shared_ptr<Song> song = song_collection.searchSongByID(song_id);
+
+                    if (song != nullptr) {
+                        return song;
+                    }
+
                     const std::string artist_id = first_result["artists"][0]["id"];
                     const std::shared_ptr<Artist> artist = artist_collection.getArtist(artist_id);
                     if (artist == nullptr) {
@@ -66,8 +72,7 @@ namespace API {
                         const std::string track_name = first_result["name"];
                         const struct tm length_tm = Utils::durationToTm(first_result["duration_ms"]);
                         const std::string length = Utils::timeToString(length_tm);
-                        const std::string song_id = first_result["id"];
-                        const std::shared_ptr<Song> song = std::make_shared<Song>(track_name, artist_api, length, song_id);
+                        song = std::make_shared<Song>(track_name, artist_api, length, song_id);
                         song_collection.addSong(song);
                         return song;
                     }
@@ -75,8 +80,7 @@ namespace API {
                     const std::string track_name = first_result["name"];
                     const struct tm length_tm = Utils::durationToTm(first_result["duration_ms"]);
                     const std::string length = Utils::timeToString(length_tm);
-                    const std::string song_id = first_result["id"];
-                    const std::shared_ptr<Song> song = std::make_shared<Song>(track_name, artist, length, song_id);
+                    song = std::make_shared<Song>(track_name, artist, length, song_id);
                     song_collection.addSong(song);
                     return song;
                 }

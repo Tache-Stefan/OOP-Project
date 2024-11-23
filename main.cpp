@@ -18,11 +18,13 @@
 int main() {
     const EnvironmentSetup envSetup;
 
+    constexpr SongCollection song_collection;
+
     std::string input;
     Playlist playlist("User");
     while(true) {
         std::cout << "Enter the name of the song you want to play, type 'playlist' to add songs to the playlist, "
-                  << "'play playlist' or type 'exit' to quit: " << std::endl;
+                  << "'play playlist', 'info song' for info about a song or type 'exit' to quit: " << std::endl;
         std::getline(std::cin, input);
 
         if(input == "exit") {
@@ -50,6 +52,19 @@ int main() {
         }
 
         if (input == "play playlist") { playlist.play(envSetup.getYoutubeAPI()); continue; }
+
+        if (input.substr(0,4) == "info") {
+            std::string song_name = input.substr(5);
+
+            std::shared_ptr<Song> song = song_collection.searchSongByName(song_name);
+            if (song == nullptr) {
+                song = API::searchSpotifySong(envSetup.getAccessToken(), song_name);
+                std::cout << *song << std::endl;
+                continue;
+            }
+            std::cout << *song << std::endl;
+            continue;
+        }
 
         const std::shared_ptr<Song> song = API::searchSpotifySong(envSetup.getAccessToken(), input);
         song->play(envSetup.getYoutubeAPI());
