@@ -1,7 +1,5 @@
 #include <iostream>
-#include <cstdlib>
 #include <string>
-#include <vector>
 
 #include "includes/API.h"
 #include "includes/Song.h"

@@ -3,7 +3,6 @@
 #include <atomic>
 #include <vector>
 #include <string>
-#include <ctime>
 
 namespace Utils {
     std::vector<std::string> split(const std::string& s, const char delimiter);

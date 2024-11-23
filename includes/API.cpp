@@ -1,9 +1,9 @@
 #include <iostream>
-#include "Utility.h"
 #include <cpr/cpr.h>
 #include <nlohmann/json.hpp>
 
 #include "API.h"
+#include "Utility.h"
 #include "ArtistCollection.h"
 #include "SongCollection.h"
 
