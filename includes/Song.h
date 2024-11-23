@@ -19,6 +19,6 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Song& song);
     ~Song() override = default;
     std::string getLength() const;
-    std::string getID() const;
+    const std::string& getID() const;
     void play(const std::string& youtube_api) const override;
 };

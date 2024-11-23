@@ -23,9 +23,20 @@ EnvironmentSetup::EnvironmentSetup() : envSet(false) {
         youtube_api = youtube_api_env;
         envSet = true;
     }
-}
 
-bool EnvironmentSetup::isEnvSet() const {return envSet;}
+    if(envSet) {
+        access_token = API::getSpotifyAccessToken(client_id, client_secret);
+        if(!access_token.empty()) {
+            std::cout << "Access token retrieved successfully." << std::endl;
+        }
+        else {
+            std::cerr << "Error: Failed to retrieve access token." << std::endl;
+        }
+    }
+    else {
+        std::cerr << "Error: Environment variables not set up correctly." << std::endl;
+    }
+}
 
 const std::string& EnvironmentSetup::getClientID() const {return client_id;}
 
@@ -33,10 +44,4 @@ const std::string& EnvironmentSetup::getClientSecret() const {return client_secr
 
 const std::string& EnvironmentSetup::getYoutubeAPI() const {return youtube_api;}
 
-std::string EnvironmentSetup::retrieveSpotifyAccessToken() const {
-    if(!envSet) {
-        std::cerr << "Error: Environment variables not set up correctly." << std::endl;
-        return "";
-    }
-    return API::getSpotifyAccessToken(client_id, client_secret);
-}
+const std::string& EnvironmentSetup::getAccessToken() const {return access_token;}

@@ -6,9 +6,9 @@
 
 class SongCollection {
 private:
-    std::unordered_map<std::string, std::shared_ptr<Song>> songMap;
+    static std::unordered_map<std::string, std::shared_ptr<Song>> songMap;
 public:
-    void addSong(const std::shared_ptr<Song>& song);
-    bool searchSong(const std::string& id);
+    static void addSong(const std::shared_ptr<Song>& song);
+    static bool searchSong(const std::string& id);
     friend std::ostream& operator<<(std::ostream& os, const SongCollection& song_collection);
 };

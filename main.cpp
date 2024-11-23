@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include <string>
 #include <vector>
-#include <thread>
 
 #include "includes/API.h"
 #include "includes/Song.h"
@@ -14,46 +13,46 @@
 #include "includes/SongCollection.h"
 #include "includes/ArtistCollection.h"
 
-//verificat .. / in downloadAudio
-//folosit playlist si tot ce am etc.
+///verificat .. / in downloadAudio
 
 int main() {
     const EnvironmentSetup envSetup;
-    std::string access_token = "";
 
-    if(envSetup.isEnvSet()) {
-        access_token = envSetup.retrieveSpotifyAccessToken();
-        if(!access_token.empty()) {
-            std::cout << "Access token retrieved successfully." << std::endl;
-        }
-        else {
-            std::cerr << "Error: Failed to retrieve access token." << std::endl;
-        }
-    }
-
-    const std::shared_ptr<Artist> BrunoMars = std::make_shared<Artist>("Bruno Mars");
-    const std::shared_ptr<Artist> LadyGaga = std::make_shared<Artist>("Lady Gaga");
-    const std::shared_ptr<Song> TalkingToTheMoon = std::make_shared<Song>("Talking To The Moon", BrunoMars, "00:03:35", "0");
-    const std::shared_ptr<Song> DieWithASmile = std::make_shared<Song>("Die with a smile", BrunoMars, "00:04:13", "1");
-    const std::shared_ptr<Song> ThatWhatILike = std::make_shared<Song>("That's What I Like", BrunoMars, "00:03:30", "2");
-
-    BrunoMars->addSong(TalkingToTheMoon);
-    BrunoMars->addSong(DieWithASmile);
-    BrunoMars->addSong(ThatWhatILike);
-    LadyGaga->addSong(DieWithASmile);
-
-    std::cout << "Choose a song to play (Talking To The Moon - 1, Die with a smile - 2, That's What I Like - 3) or 0 for exit: " << std::endl;
-    int userInput = 0;
+    std::string input;
+    Playlist playlist("User");
     while(true) {
-        std::cin >> userInput;
-        if(userInput == 0)
+        std::cout << "Enter the name of the song you want to play, type 'playlist' to add songs to the playlist, "
+                  << "'play playlist' or type 'exit' to quit: " << std::endl;
+        std::getline(std::cin, input);
+
+        if(input == "exit") {
             break;
-        if(userInput == 1)
-            TalkingToTheMoon->play(envSetup.getYoutubeAPI());
-        if(userInput == 2)
-            DieWithASmile->play(envSetup.getYoutubeAPI());
-        if(userInput == 3)
-            ThatWhatILike->play(envSetup.getYoutubeAPI());
+        }
+
+        if(input == "playlist") {
+            while(true) {
+                std::cout << "Type the name of a song that you want to add or type 'exit': " << std::endl;
+                std::getline(std::cin, input);
+
+                if(input == "exit") {
+                    break;
+                }
+
+                std::shared_ptr<Song> song = API::searchSpotifySong(envSetup.getAccessToken(), input);
+                playlist.addSong(song);
+            }
+            playlist.calculateLength();
+            std::cout << "Playlist modified! The length is: " << playlist.getLength()
+                      << ". If you want to shuffle it type 'Y' or if not 'N': " << std::endl;
+            std::getline(std::cin, input);
+            if(input == "Y") { playlist.shuffle(); }
+            continue;
+        }
+
+        if (input == "play playlist") { playlist.play(envSetup.getYoutubeAPI()); continue; }
+
+        const std::shared_ptr<Song> song = API::searchSpotifySong(envSetup.getAccessToken(), input);
+        song->play(envSetup.getYoutubeAPI());
     }
 
     std::cout << "App closed!" << std::endl;

@@ -18,5 +18,6 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Playlist& playlist);
     std::string getLength() const;
     void calculateLength();
+    void play(const std::string& youtube_api) const;
     void shuffle();
 };

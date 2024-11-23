@@ -32,6 +32,12 @@ void Playlist::calculateLength() {
         length = Utils::addTimes(length, Utils::stringToTime(song->getLength()));
 }
 
+void Playlist::play(const std::string& youtube_api) const {
+    for (const auto& song : songs) {
+        song->play(youtube_api);
+    }
+}
+
 void Playlist::shuffle() {
     const unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     std::ranges::shuffle(songs, std::default_random_engine(seed));
