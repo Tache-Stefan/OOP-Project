@@ -10,4 +10,5 @@ cppcheck --enable=all \
     --suppress=unmatchedSuppression \
     --suppress=useStlAlgorithm \
     --check-level=exhaustive \
+    --suppress=unusedFunction ; false pozitive \
     --error-exitcode=1

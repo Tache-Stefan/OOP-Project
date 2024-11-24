@@ -11,6 +11,8 @@
 #include "includes/SongCollection.h"
 #include "includes/ArtistCollection.h"
 
+#include <SFML/Window.hpp>
+
 ///verificat .. / in downloadAudio
 
 int main() {
@@ -69,5 +71,18 @@ int main() {
     }
 
     std::cout << "App closed!" << std::endl;
+
+    /*sf::Window window(sf::VideoMode(800, 600), "Music Manager");
+    window.setVerticalSyncEnabled(true);
+
+    while (window.isOpen()) {
+
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+    }*/
+
     return 0;
 }
