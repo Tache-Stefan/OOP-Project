@@ -1,1 +1,1 @@
-1 stop 0
+softcore stop exit
