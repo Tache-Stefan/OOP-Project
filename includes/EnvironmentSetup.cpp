@@ -5,7 +5,10 @@
 #include <iostream>
 
 EnvironmentSetup::EnvironmentSetup() : envSet(false) {
-    Utils::loadEnvFile();
+    const char* githubActions = std::getenv("GITHUB_ACTIONS");
+    if (githubActions == nullptr) {
+        Utils::loadEnvFile();
+    }
 
     const char* client_id_env = getenv("SPOTIFY_CLIENT_ID");
     const char* client_secret_env = getenv("SPOTIFY_CLIENT_SECRET");
