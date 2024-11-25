@@ -11,9 +11,7 @@
 #include "includes/SongCollection.h"
 #include "includes/ArtistCollection.h"
 
-#include <SFML/Window.hpp>
-
-///verificat .. / in downloadAudio
+#include <SFML/Graphics.hpp>
 
 int main() {
     const EnvironmentSetup envSetup;
@@ -72,8 +70,22 @@ int main() {
 
     std::cout << "App closed!" << std::endl;
 
-    /*sf::Window window(sf::VideoMode(800, 600), "Music Manager");
+    /*sf::RenderWindow window(sf::VideoMode(1200, 700), "Music Manager", sf::Style::Default);
     window.setVerticalSyncEnabled(true);
+
+    sf::Font font;
+    if (!font.loadFromFile("fonts/Franie-Regular.otf")) {
+        std::cerr << "Failed to load font." << std::endl;
+    }
+
+    sf::Text text("Hello World", font, 50);
+    text.setFillColor(sf::Color::White);
+
+    sf::FloatRect textBounds = text.getLocalBounds();
+    text.setOrigin(textBounds.left + textBounds.width / 2.0f,
+                   textBounds.top + textBounds.height / 2.0f);
+
+    text.setPosition(window.getSize().x / 2.0f, window.getSize().y / 2.0f);
 
     while (window.isOpen()) {
 
@@ -82,6 +94,9 @@ int main() {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+        window.clear();
+        window.draw(text);
+        window.display();
     }*/
 
     return 0;

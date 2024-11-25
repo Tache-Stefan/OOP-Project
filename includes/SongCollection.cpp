@@ -9,6 +9,7 @@ void SongCollection::addSong(const std::shared_ptr<Song>& song) {
     std::cout << "Added \"" << song->getTitle() << "\" to the song collection. \n";
 }
 
+// cppcheck-suppress unusedFunction ; false positive
 std::shared_ptr<Song> SongCollection::searchSongByID(const std::string& id) {
     const auto it = songMap.find(id);
     if (it == songMap.end()) { return nullptr; }
