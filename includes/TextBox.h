@@ -16,6 +16,4 @@ public:
     void centerShape(const sf::RenderWindow& window);
     void setText(const std::string& userInput);
     virtual void draw(sf::RenderWindow& window) const;
-    virtual void handleEvents(sf::RenderWindow& window, const sf::Event& event, std::atomic<bool>& stopPlayback,
-                              std::atomic<bool>& isMusicPlaying, std::string& userInput);
 };

@@ -17,8 +17,6 @@ bool TextBoxWrite::containsClick(const sf::Vector2f& mousePosition) {
     return false;
 }
 
-bool TextBoxWrite::getActive() const { return isActive; }
-
 void TextBoxWrite::handleEvents(sf::RenderWindow& window, const sf::Event& event, std::atomic<bool>& stopPlayback,
                                 std::atomic<bool>& isMusicPlaying, std::string& userInput) {
     if (event.type == sf::Event::MouseButtonPressed) {

@@ -30,8 +30,3 @@ void TextBox::draw(sf::RenderWindow& window) const {
     window.draw(box);
     window.draw(text);
 }
-
-void TextBox::handleEvents(sf::RenderWindow& window, const sf::Event& event, std::atomic<bool>& stopPlayback,
-                              std::atomic<bool>& isMusicPlaying, std::string& userInput) {
-    std::cout << "Test" << std::endl;
-}
