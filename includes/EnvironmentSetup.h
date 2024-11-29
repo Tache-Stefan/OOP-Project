@@ -5,11 +5,11 @@ class EnvironmentSetup {
 private:
     std::string client_id;
     std::string client_secret;
-    std::string youtube_api;
-    std::string access_token;
+    static std::string youtube_api;
+    static std::string access_token;
     bool envSet;
 public:
     EnvironmentSetup();
-    const std::string& getYoutubeAPI() const;
-    const std::string& getAccessToken() const;
+    static const std::string& getYoutubeAPI();
+    static const std::string& getAccessToken();
 };

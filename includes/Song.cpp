@@ -9,17 +9,17 @@
 
 Song::Song() {};
 
-Song::Song(const std::string& title_, const std::shared_ptr<Artist> &artist_, const std::string& length_, const std::string& id_)
+Song::Song(const std::string& title_, const std::shared_ptr<Artist> &artist_, const struct tm& length_, const std::string& id_)
     : Media(title_, artist_, length_), id(id_) {
     std::cout << "Created Song: " << title << std::endl;
 }
 
-Song::Song(const std::string &title_, const std::string &length_, const std::string &genre_, const std::string& id_)
+Song::Song(const std::string& title_, const struct tm& length_, const std::string& genre_, const std::string& id_)
         : Media(title_, length_), genre(genre_), id(id_) {
     std::cout << "Created Song: " << title << std::endl;
 }
 
-Song::Song(const std::string& title_, const std::string& length_, const std::string& id_) : Media(title_, length_), id(id_) {
+Song::Song(const std::string& title_, const struct tm& length_, const std::string& id_) : Media(title_, length_), id(id_) {
     std::cout << "Created Song: " << title << std::endl;
 }
 
@@ -48,6 +48,7 @@ const std::string& Song::getID() const {return id;}
 
 void Song::play(const std::string& youtube_api) const {
     std::atomic<bool> stopPlayback(false);
+    std::atomic<bool> isMusicPlaying(false);
     std::thread inputThread(Utils::monitorInput, std::ref(stopPlayback));
     const std::string youtubeURL = API::searchYouTube(youtube_api, title);
     const std::string outputFile = "audio.mp3";
@@ -55,6 +56,21 @@ void Song::play(const std::string& youtube_api) const {
         return;
     }
 
-    Utils::playAudio(outputFile, stopPlayback);
+    Utils::playAudio(outputFile, stopPlayback, isMusicPlaying);
     inputThread.join();
+}
+
+void Song::play(const std::string& youtube_api, std::atomic<bool>& stopPlayback, std::atomic<bool>& isMusicPlaying) const {
+
+    std::thread playbackThread([this, youtube_api, &stopPlayback, &isMusicPlaying]() {
+        const std::string youtubeURL = API::searchYouTube(youtube_api, title);
+        const std::string outputFile = "audio.mp3";
+        if (!Utils::downloadAudio(youtubeURL, outputFile)) {
+            return;
+        }
+
+        Utils::playAudio(outputFile, stopPlayback, isMusicPlaying);
+    });
+
+    playbackThread.detach();
 }

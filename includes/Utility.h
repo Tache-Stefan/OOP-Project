@@ -13,6 +13,6 @@ namespace Utils {
     std::string base64_encode(const std::string& input);
     bool downloadAudio(const std::string &youtubeUrl, const std::string &outputFile);
     void monitorInput(std::atomic<bool> &stopPlayback);
-    void playAudio(const std::string &filePath, std::atomic<bool> &stopPlayback);
+    void playAudio(const std::string &filePath, std::atomic<bool> &stopPlayback, std::atomic<bool> &isMusicPlaying);
     void loadEnvFile();
 }

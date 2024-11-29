@@ -96,6 +96,9 @@ namespace Utils {
     }
 
     bool downloadAudio(const std::string &youtubeUrl, const std::string &outputFile) {
+        if (std::filesystem::exists(outputFile))
+            std::filesystem::remove(outputFile);
+
         const std::string command = "yt-dlp -f bestaudio --extract-audio --audio-format mp3 -o " + outputFile + " " + youtubeUrl;
 
         std::cout << "Downloading audio from YouTube..." << std::endl;
@@ -121,7 +124,7 @@ namespace Utils {
         std::cin.clear();
     }
 
-    void playAudio(const std::string &filePath, std::atomic<bool> &stopPlayback) {
+    void playAudio(const std::string &filePath, std::atomic<bool> &stopPlayback, std::atomic<bool> &isMusicPlaying) {
         {
             sf::Music music;
             if (!music.openFromFile(filePath)) {
@@ -131,6 +134,7 @@ namespace Utils {
             }
 
             std::cout << "Playing audio... Type 'stop' to stop playback." << std::endl;
+            isMusicPlaying.store(true);
             music.play();
 
             while (music.getStatus() == sf::SoundSource::Playing) {
@@ -142,6 +146,7 @@ namespace Utils {
                 sleep(sf::milliseconds(100));
             }
 
+            isMusicPlaying.store(false);
             stopPlayback.store(true);
             std::cout << "Audio finished!" << std::endl;
         }

@@ -5,7 +5,7 @@
 #include <random>
 #include <chrono>
 
-Playlist::Playlist(const std::string& title_, const std::vector<std::shared_ptr<Song>> &songs_) : title(title_), songs(songs_), length({}) {
+Playlist::Playlist(const std::string& title_, const std::vector<std::shared_ptr<Song>>& songs_) : title(title_), songs(songs_), length({}) {
 
     std::cout << "Created Playlist: " << title << "\n";
 }

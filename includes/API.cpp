@@ -67,19 +67,17 @@ namespace API {
                     const std::shared_ptr<Artist> artist = artist_collection.getArtist(artist_id);
                     if (artist == nullptr) {
                         const std::string artist_name = first_result["artists"][0]["name"];
-                        const std::shared_ptr<Artist> artist_api = API::searchSpotifyArtist(access_token, artist_name);
+                        const std::shared_ptr<Artist> artist_api = searchSpotifyArtist(access_token, artist_name);
                         artist_collection.addArtist(artist_api);
                         const std::string track_name = first_result["name"];
-                        const struct tm length_tm = Utils::durationToTm(first_result["duration_ms"]);
-                        const std::string length = Utils::timeToString(length_tm);
+                        const struct tm length = Utils::durationToTm(first_result["duration_ms"]);
                         song = std::make_shared<Song>(track_name, artist_api, length, song_id);
                         song_collection.addSong(song);
                         return song;
                     }
 
                     const std::string track_name = first_result["name"];
-                    const struct tm length_tm = Utils::durationToTm(first_result["duration_ms"]);
-                    const std::string length = Utils::timeToString(length_tm);
+                    const struct tm length = Utils::durationToTm(first_result["duration_ms"]);
                     song = std::make_shared<Song>(track_name, artist, length, song_id);
                     song_collection.addSong(song);
                     return song;

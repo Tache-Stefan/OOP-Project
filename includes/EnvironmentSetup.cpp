@@ -4,6 +4,9 @@
 
 #include <iostream>
 
+std::string EnvironmentSetup::youtube_api;
+std::string EnvironmentSetup::access_token;
+
 EnvironmentSetup::EnvironmentSetup() : envSet(false) {
     const char* githubActions = std::getenv("GITHUB_ACTIONS");
     if (githubActions == nullptr) {
@@ -41,6 +44,6 @@ EnvironmentSetup::EnvironmentSetup() : envSet(false) {
     }
 }
 
-const std::string& EnvironmentSetup::getYoutubeAPI() const {return youtube_api;}
+const std::string& EnvironmentSetup::getYoutubeAPI() {return youtube_api;}
 
-const std::string& EnvironmentSetup::getAccessToken() const {return access_token;}
+const std::string& EnvironmentSetup::getAccessToken() {return access_token;}

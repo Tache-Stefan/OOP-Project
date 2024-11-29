@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <atomic>
+#include <filesystem>
 
 #include "includes/API.h"
 #include "includes/Song.h"
@@ -12,11 +14,18 @@
 #include "includes/ArtistCollection.h"
 
 #include <SFML/Graphics.hpp>
+#include "includes/TextBoxTab.h"
+#include "includes/TextBoxWrite.h"
+
+//clasa TextBox devine doar un rectangle cu text
+//fac derivata TextBoxWrite care e un fel de search music
+//fac derivata TextBoxTab care e ca un tab
+//cum fac currenttab?
 
 int main() {
     const EnvironmentSetup envSetup;
 
-    constexpr SongCollection song_collection;
+    /*constexpr SongCollection song_collection;
 
     std::string input;
     Playlist playlist("User");
@@ -68,36 +77,85 @@ int main() {
         song->play(envSetup.getYoutubeAPI());
     }
 
-    std::cout << "App closed!" << std::endl;
+    std::cout << "App closed!" << std::endl;*/
 
-    /*sf::RenderWindow window(sf::VideoMode(1200, 700), "Music Manager", sf::Style::Default);
-    window.setVerticalSyncEnabled(true);
+    sf::RenderWindow window(sf::VideoMode(1200, 700), "Music Manager", sf::Style::Default);
+    window.setFramerateLimit(30);
+
+    int currentTab = 1;
 
     sf::Font font;
     if (!font.loadFromFile("fonts/Franie-Regular.otf")) {
         std::cerr << "Failed to load font." << std::endl;
     }
 
-    sf::Text text("Hello World", font, 50);
-    text.setFillColor(sf::Color::White);
+    TextBoxWrite inputMusic(sf::RectangleShape(sf::Vector2f(400, 50)), sf::Color::White, font,
+        sf::Text("", font, 24), sf::Color::Black);
 
-    sf::FloatRect textBounds = text.getLocalBounds();
-    text.setOrigin(textBounds.left + textBounds.width / 2.0f,
-                   textBounds.top + textBounds.height / 2.0f);
+    sf::RectangleShape searchBox(sf::Vector2f(200, 50));
+    searchBox.setPosition(0, 0);
+    sf::Text searchText("Search music", font, 20);
+    searchText.setPosition(20, 12);
 
-    text.setPosition(window.getSize().x / 2.0f, window.getSize().y / 2.0f);
+    TextBoxTab searchTab(searchBox, sf::Color::Green, font, searchText, sf::Color::Black);
+
+    searchTab.setOnClickCallback([&currentTab] {
+        currentTab = 1;
+    });
+
+    sf::RectangleShape playlistsBox(sf::Vector2f(200, 50));
+    playlistsBox.setPosition(200, 0);
+    sf::Text playlistsText("Playlists", font, 20);
+    playlistsText.setPosition(250, 12);
+
+    TextBoxTab playlistsTab(playlistsBox, sf::Color::Green, font, playlistsText, sf::Color::Black);
+
+    playlistsTab.setOnClickCallback([&currentTab] {
+        currentTab = 2;
+    });
+
+    std::string userInput;
+    std::atomic<bool> stopPlayback(false);
+    std::atomic<bool> isMusicPlaying(false);
 
     while (window.isOpen()) {
 
         sf::Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed) {
+                stopPlayback = true;
                 window.close();
+            }
+            if (currentTab == 1) {
+                inputMusic.handleEvents(window, event, stopPlayback, isMusicPlaying, userInput);
+            }
+            searchTab.handleEvents(event, window);
+            playlistsTab.handleEvents(event, window);
         }
-        window.clear();
-        window.draw(text);
-        window.display();
-    }*/
+
+        switch (currentTab) {
+            case 1:
+                window.clear();
+                inputMusic.centerShape(window);
+                inputMusic.draw(window);
+                searchTab.draw(window);
+                playlistsTab.draw(window);
+                window.display();
+            break;
+            case 2:
+                window.clear();
+                searchTab.draw(window);
+                playlistsTab.draw(window);
+                window.display();
+            break;
+            default:
+                window.clear();
+                searchTab.draw(window);
+                playlistsTab.draw(window);
+                window.display();
+            break;
+        }
+    }
 
     return 0;
 }
