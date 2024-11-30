@@ -2,7 +2,7 @@
 #include "Artist.h"
 #include "Song.h"
 
-Artist::Artist() {};
+Artist::Artist() {}
 
 Artist::Artist(const std::string& name_, const std::vector<std::shared_ptr<Song>>& songs_) : name(name_), songs(songs_) {
     std::cout << "Created Artist(+songs): " << name << std::endl;
@@ -21,3 +21,11 @@ void Artist::addSong(const std::shared_ptr<Song>& song) {
 const std::string& Artist::getName() const {return name;}
 
 const std::string& Artist::getID() const {return id;}
+
+void to_json(nlohmann::json& j, const Artist& artist) {
+    j["name"] = artist.name;
+}
+
+void from_json(nlohmann::json& j, Artist& artist) {
+    j.at("name").get_to(artist.name);
+}

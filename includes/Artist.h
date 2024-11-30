@@ -3,6 +3,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <nlohmann/json.hpp>
 
 class Song;
 
@@ -19,4 +20,6 @@ public:
     void addSong(const std::shared_ptr<Song>& song);
     const std::string& getName() const;
     const std::string& getID() const;
+    friend void to_json(nlohmann::json& j, const Artist& artist);
+    friend void from_json(nlohmann::json& j, Artist& artist);
 };

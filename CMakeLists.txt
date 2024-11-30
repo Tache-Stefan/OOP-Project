@@ -121,6 +121,10 @@ add_executable(${PROJECT_NAME}
         includes/TextBox.h
         includes/TextBoxTab.cpp
         includes/TextBoxTab.h
+        includes/PlaylistDisplay.cpp
+        includes/PlaylistDisplay.h
+        includes/TextBoxPlaylist.cpp
+        includes/TextBoxPlaylist.h
 )
 
 include(cmake/CompilerFlags.cmake)
@@ -167,6 +171,6 @@ endif()
 
 
 include(cmake/CopyHelper.cmake)
-copy_files(FILES tastatura.txt envconfig.txt DIRECTORY fonts)
+copy_files(FILES tastatura.txt envconfig.txt playlists.json DIRECTORY fonts)
 # copy_files(FILES tastatura.txt config.json DIRECTORY images sounds)
 # copy_files(DIRECTORY images sounds)

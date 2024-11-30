@@ -1,12 +1,10 @@
 #include "TextBoxWrite.h"
 
-#include <iostream>
-
 #include "API.h"
 #include "EnvironmentSetup.h"
 
 TextBoxWrite::TextBoxWrite(const sf::RectangleShape& box_, const sf::Color& boxColor, const sf::Font& font_, const sf::Text& text_,
-                 const sf::Color& textColor) : TextBox(box_, boxColor, font_, text_, textColor) {}
+                           const sf::Color& textColor) : TextBox(box_, boxColor, font_, text_, textColor) {}
 
 bool TextBoxWrite::containsClick(const sf::Vector2f& mousePosition) {
     if (box.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
@@ -48,10 +46,6 @@ void TextBoxWrite::handleEvents(sf::RenderWindow& window, const sf::Event& event
             stopPlayback.store(false);
             searchAndPlay(stopPlayback, isMusicPlaying);
         }
-        if (!isActive && isMusicPlaying && event.key.code == sf::Keyboard::S) {
-            stopPlayback.store(true);
-            std::cout << "Playback stopped!" << std::endl;
-        }
     }
 }
 
@@ -60,3 +54,13 @@ void TextBoxWrite::searchAndPlay(std::atomic<bool>& stopPlayback, std::atomic<bo
     text.setString("");
     song->play(EnvironmentSetup::getYoutubeAPI(), stopPlayback, isMusicPlaying);
 }
+
+void TextBoxWrite::draw(sf::RenderWindow& window) const {
+    TextBox::draw(window);
+    sf::Text query("Enter the song name", font, 24);
+    query.setFillColor(sf::Color::White);
+    query.setPosition(box.getPosition().x + 60, box.getPosition().y - 50);
+    window.draw(query);
+}
+
+bool TextBoxWrite::getActive() const { return isActive; }

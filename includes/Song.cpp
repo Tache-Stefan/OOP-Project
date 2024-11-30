@@ -74,3 +74,11 @@ void Song::play(const std::string& youtube_api, std::atomic<bool>& stopPlayback,
 
     playbackThread.detach();
 }
+
+void to_json(nlohmann::json& j, const Song& song) {
+    j["title"] = song.title;
+}
+
+void from_json(nlohmann::json& j, Song& song) {
+    j.at("title").get_to(song.title);
+}

@@ -6,7 +6,7 @@ TextBoxTab::TextBoxTab(const sf::RectangleShape& box_, const sf::Color& boxColor
     box.setOutlineColor(textColor);
 }
 
-bool TextBoxTab::handleEvents(const sf::Event& event, const sf::RenderWindow& window) {
+bool TextBoxTab::handleEvents(const sf::RenderWindow& window, const sf::Event& event) {
     if (event.type == sf::Event::MouseButtonPressed) {
         const sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
         if (box.getGlobalBounds().contains(mousePos)) {

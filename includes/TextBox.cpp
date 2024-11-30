@@ -1,13 +1,13 @@
 #include "TextBox.h"
 
-#include <iostream>
-
 TextBox::TextBox(const sf::RectangleShape& box_, const sf::Color& boxColor, const sf::Font& font_, const sf::Text& text_,
                  const sf::Color& textColor) : font(font_), box(box_), text(text_) {
     box.setFillColor(boxColor);
     text.setFont(font);
     text.setFillColor(textColor);
 }
+
+TextBox::TextBox() {}
 
 void TextBox::centerShape(const sf::RenderWindow& window) {
     const sf::FloatRect boxBounds = box.getGlobalBounds();

@@ -1,9 +1,10 @@
 #pragma once
 
-#include <iostream>
 #include <string>
 #include <vector>
 #include <ctime>
+#include <nlohmann/json.hpp>
+
 #include "Song.h"
 
 class Playlist {
@@ -17,7 +18,10 @@ public:
     void addSong(const std::shared_ptr<Song>& song);
     friend std::ostream& operator<<(std::ostream& os, const Playlist& playlist);
     std::string getLength() const;
+    std::string getTitle() const;
     void calculateLength();
     void play(const std::string& youtube_api) const;
     void shuffle();
+    friend void to_json(nlohmann::json& j, const Playlist& playlist);
+    friend void from_json(nlohmann::json& j, Playlist& playlist);
 };

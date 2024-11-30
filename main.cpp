@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <atomic>
 #include <filesystem>
@@ -14,6 +15,8 @@
 #include "includes/ArtistCollection.h"
 
 #include <SFML/Graphics.hpp>
+
+#include "includes/PlaylistDisplay.h"
 #include "includes/TextBoxTab.h"
 #include "includes/TextBoxWrite.h"
 
@@ -114,6 +117,7 @@ int main() {
         currentTab = 2;
     });
 
+    PlaylistDisplay playlistDisplay(font);
     std::string userInput;
     std::atomic<bool> stopPlayback(false);
     std::atomic<bool> isMusicPlaying(false);
@@ -126,11 +130,21 @@ int main() {
                 stopPlayback = true;
                 window.close();
             }
+
+            if (!inputMusic.getActive() && isMusicPlaying && event.type == sf::Event::KeyPressed &&
+                event.key.code == sf::Keyboard::S) {
+                stopPlayback = true;
+                std::cout << "Playback stopped!" << std::endl;
+            }
+
             if (currentTab == 1) {
                 inputMusic.handleEvents(window, event, stopPlayback, isMusicPlaying, userInput);
             }
-            searchTab.handleEvents(event, window);
-            playlistsTab.handleEvents(event, window);
+            if (currentTab == 2) {
+                playlistDisplay.handleEvents(window, event);
+            }
+            searchTab.handleEvents(window, event);
+            playlistsTab.handleEvents(window, event);
         }
 
         switch (currentTab) {
@@ -144,6 +158,7 @@ int main() {
             break;
             case 2:
                 window.clear();
+                playlistDisplay.draw(window);
                 searchTab.draw(window);
                 playlistsTab.draw(window);
                 window.display();
