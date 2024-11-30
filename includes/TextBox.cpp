@@ -9,6 +9,7 @@ TextBox::TextBox(const sf::RectangleShape& box_, const sf::Color& boxColor, cons
 
 TextBox::TextBox() {}
 
+// cppcheck-suppress unusedFunction ; false positive
 void TextBox::centerShape(const sf::RenderWindow& window) {
     const sf::FloatRect boxBounds = box.getGlobalBounds();
     box.setPosition(
@@ -24,6 +25,7 @@ void TextBox::centerShape(const sf::RenderWindow& window) {
     );
 }
 
+// cppcheck-suppress unusedFunction ; false positive
 void TextBox::setText(const std::string& userInput) { text.setString(userInput); }
 
 void TextBox::draw(sf::RenderWindow& window) const {

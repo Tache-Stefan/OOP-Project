@@ -18,6 +18,7 @@ PlaylistDisplay::PlaylistDisplay(const sf::Font &font_) : font(font_), scrollSpe
 
     nlohmann::json j;
     file >> j;
+    file.close();
 
     for (const auto &playlistData : j) {
         Playlist playlist(playlistData["title"]);
