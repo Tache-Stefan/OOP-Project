@@ -55,6 +55,8 @@ void TextBoxWrite::searchAndPlay(std::atomic<bool>& stopPlayback, std::atomic<bo
     song->play(EnvironmentSetup::getYoutubeAPI(), stopPlayback, isMusicPlaying);
 }
 
+void TextBoxWrite::draw(sf::RenderWindow& window) const { TextBox::draw(window); }
+
 void TextBoxWrite::draw(sf::RenderWindow& window, std::atomic<bool>& isMusicPlaying) const {
     TextBox::draw(window);
     sf::Text query("Enter the song name", font, 24);
