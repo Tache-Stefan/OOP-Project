@@ -9,6 +9,8 @@
 #include "API.h"
 #include "EnvironmentSetup.h"
 
+Playlist::Playlist() {}
+
 Playlist::Playlist(const std::string& title_, const std::vector<std::shared_ptr<Song>>& songs_) : title(title_), songs(songs_), length({}) {
 
     std::cout << "Created Playlist: " << title << "\n";
@@ -54,6 +56,7 @@ void to_json(nlohmann::json& j, const Playlist& playlist) {
     j["title"] = playlist.title;
 
     std::vector<std::string> song_titles;
+    song_titles.reserve(playlist.songs.size());
     for (const auto& song_ptr : playlist.songs) {
         song_titles.push_back(song_ptr->getTitle());
     }
@@ -61,11 +64,11 @@ void to_json(nlohmann::json& j, const Playlist& playlist) {
     j["songs"] = song_titles;
 }
 
-void from_json(nlohmann::json& j, Playlist& playlist) {
-    j.at("title").get_to(playlist.title);
-
-    for (const auto& song_name : j.at("songs")) {
-        std::shared_ptr<Song> song = API::searchSpotifySong(EnvironmentSetup::getAccessToken(), song_name);
-        playlist.addSong(song);
+void from_json(const nlohmann::json& j, Playlist& playlist) {
+    playlist.title = j["title"];
+    std::vector<std::string> songs = j["songs"].get<std::vector<std::string>>();
+    for (const auto &song : songs) {
+        std::shared_ptr<Song> song_ptr = API::searchSpotifySong(EnvironmentSetup::getAccessToken(), song);
+        playlist.addSong(song_ptr);
     }
 }

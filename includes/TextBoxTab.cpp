@@ -1,5 +1,7 @@
 #include "TextBoxTab.h"
 
+TextBoxTab::TextBoxTab() = default;
+
 TextBoxTab::TextBoxTab(const sf::RectangleShape& box_, const sf::Color& boxColor, const sf::Font& font_, const sf::Text& text_,
                        const sf::Color& textColor) : TextBox(box_, boxColor, font_, text_, textColor) {
     box.setOutlineThickness(1.0f);

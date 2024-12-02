@@ -9,10 +9,11 @@
 
 class Playlist {
 private:
-    std::string title;
+    std::string title = "";
     std::vector<std::shared_ptr<Song>> songs;
     struct tm length = {};
 public:
+    Playlist();
     Playlist(const std::string& title_, const std::vector<std::shared_ptr<Song>> &songs_);
     explicit Playlist(const std::string& title_);
     void addSong(const std::shared_ptr<Song>& song);
@@ -23,5 +24,5 @@ public:
     void play(const std::string& youtube_api) const;
     void shuffle();
     friend void to_json(nlohmann::json& j, const Playlist& playlist);
-    friend void from_json(nlohmann::json& j, Playlist& playlist);
+    friend void from_json(const nlohmann::json& j, Playlist& playlist);
 };

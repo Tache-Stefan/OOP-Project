@@ -4,6 +4,8 @@
 #include <vector>
 #include <string>
 
+#include "TextBoxTab.h"
+
 namespace Utils {
     std::vector<std::string> split(const std::string& s, const char delimiter);
     struct tm stringToTime(const std::string& length_);
@@ -15,4 +17,6 @@ namespace Utils {
     void monitorInput(std::atomic<bool> &stopPlayback);
     void playAudio(const std::string &filePath, std::atomic<bool> &stopPlayback, std::atomic<bool> &isMusicPlaying);
     void loadEnvFile();
+    TextBoxTab initSearchTab(const sf::Font& font);
+    TextBoxTab initPlaylistsTab(const sf::Font& font);
 }

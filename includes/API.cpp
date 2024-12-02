@@ -54,32 +54,30 @@ namespace API {
 
                 if (!jsonData["tracks"]["items"].empty()) {
                     auto first_result = jsonData["tracks"]["items"][0];
-                    ArtistCollection artist_collection;
-                    SongCollection song_collection;
                     const std::string song_id = first_result["id"];
-                    std::shared_ptr<Song> song = song_collection.searchSongByID(song_id);
+                    std::shared_ptr<Song> song = SongCollection::searchSongByID(song_id);
 
                     if (song != nullptr) {
                         return song;
                     }
 
                     const std::string artist_id = first_result["artists"][0]["id"];
-                    const std::shared_ptr<Artist> artist = artist_collection.getArtist(artist_id);
+                    const std::shared_ptr<Artist> artist = ArtistCollection::getArtist(artist_id);
                     if (artist == nullptr) {
                         const std::string artist_name = first_result["artists"][0]["name"];
                         const std::shared_ptr<Artist> artist_api = searchSpotifyArtist(access_token, artist_name);
-                        artist_collection.addArtist(artist_api);
+                        ArtistCollection::addArtist(artist_api);
                         const std::string track_name = first_result["name"];
                         const struct tm length = Utils::durationToTm(first_result["duration_ms"]);
                         song = std::make_shared<Song>(track_name, artist_api, length, song_id);
-                        song_collection.addSong(song);
+                        SongCollection::addSong(song);
                         return song;
                     }
 
                     const std::string track_name = first_result["name"];
                     const struct tm length = Utils::durationToTm(first_result["duration_ms"]);
                     song = std::make_shared<Song>(track_name, artist, length, song_id);
-                    song_collection.addSong(song);
+                    SongCollection::addSong(song);
                     return song;
                 }
                 std::cerr << "No results found for query: " << query << std::endl;

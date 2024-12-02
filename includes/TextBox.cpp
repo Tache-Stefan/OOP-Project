@@ -7,7 +7,7 @@ TextBox::TextBox(const sf::RectangleShape& box_, const sf::Color& boxColor, cons
     text.setFillColor(textColor);
 }
 
-TextBox::TextBox() {}
+TextBox::TextBox() = default;
 
 // cppcheck-suppress unusedFunction ; false positive
 void TextBox::centerShape(const sf::RenderWindow& window) {

@@ -7,7 +7,7 @@
 #include "Artist.h"
 #include "Utility.h"
 
-Song::Song() {};
+Song::Song() = default;
 
 Song::Song(const std::string& title_, const std::shared_ptr<Artist> &artist_, const struct tm& length_, const std::string& id_)
     : Media(title_, artist_, length_), id(id_) {

@@ -13,6 +13,6 @@ public:
     void handleEvents(sf::RenderWindow& window, const sf::Event& event, std::atomic<bool>& stopPlayback,
                       std::atomic<bool>& isMusicPlaying, std::string& userInput);
     void searchAndPlay(std::atomic<bool>& stopPlayback, std::atomic<bool>& isMusicPlaying);
-    void draw(sf::RenderWindow& window) const override;
+    void draw(sf::RenderWindow& window, std::atomic<bool>& isMusicPlaying) const;
     bool getActive() const;
 };

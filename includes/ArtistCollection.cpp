@@ -23,9 +23,9 @@ std::shared_ptr<Artist> ArtistCollection::getArtist(const std::string& id) {
     return nullptr;
 }
 
-std::ostream& operator<<(std::ostream& os, const ArtistCollection& artist_collection) {
+std::ostream& operator<<(std::ostream& os, const ArtistCollection&) {
     os << "Current Artist Collection:\n";
-    for (const auto&[id, artist] : artist_collection.artistMap) {
+    for (const auto&[id, artist] : ArtistCollection::artistMap) {
         os << "\t" << artist->getName() << "\n";
     }
     return os;

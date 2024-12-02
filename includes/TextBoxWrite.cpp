@@ -55,12 +55,18 @@ void TextBoxWrite::searchAndPlay(std::atomic<bool>& stopPlayback, std::atomic<bo
     song->play(EnvironmentSetup::getYoutubeAPI(), stopPlayback, isMusicPlaying);
 }
 
-void TextBoxWrite::draw(sf::RenderWindow& window) const {
+void TextBoxWrite::draw(sf::RenderWindow& window, std::atomic<bool>& isMusicPlaying) const {
     TextBox::draw(window);
     sf::Text query("Enter the song name", font, 24);
     query.setFillColor(sf::Color::White);
     query.setPosition(box.getPosition().x + 60, box.getPosition().y - 50);
     window.draw(query);
+    if (isMusicPlaying) {
+        sf::Text playing("Playing music...press S to stop.", font, 24);
+        playing.setFillColor(sf::Color::White);
+        playing.setPosition(box.getPosition().x, box.getPosition().y + 70);
+        window.draw(playing);
+    }
 }
 
 bool TextBoxWrite::getActive() const { return isActive; }

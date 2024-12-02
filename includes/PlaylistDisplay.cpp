@@ -11,7 +11,7 @@ unsigned int PlaylistDisplay::currentIndex = 0;
 
 PlaylistDisplay::PlaylistDisplay(const sf::Font &font_) : font(font_), scrollSpeed(40.f), verticalOffset(0.f), visibleCount(10),
                                                           itemHeight(40) {
-    std::ifstream file("playlists.json");
+    /*std::ifstream file("playlists.json");
     if (!file.is_open()) {
         std::cerr << "Failed to open playlists.json" << std::endl;
     }
@@ -28,17 +28,21 @@ PlaylistDisplay::PlaylistDisplay(const sf::Font &font_) : font(font_), scrollSpe
             playlist.addSong(song_ptr);
         }
         playlists.push_back(playlist);
-    }
-    playlists.push_back(Playlist("test3"));
-    playlists.push_back(Playlist("test4"));
-    playlists.push_back(Playlist("test5"));
-    playlists.push_back(Playlist("test6"));
-    playlists.push_back(Playlist("test7"));
-    playlists.push_back(Playlist("test8"));
-    playlists.push_back(Playlist("test9"));
-    playlists.push_back(Playlist("test10"));
-    playlists.push_back(Playlist("test11"));
-    playlists.push_back(Playlist("test12"));
+    }*/
+    /*playlists.emplace_back(Playlist("test1"));
+    playlists.emplace_back(Playlist("test2"));
+    playlists.emplace_back(Playlist("test3"));
+    playlists.emplace_back(Playlist("test4"));
+    playlists.emplace_back(Playlist("test5"));
+    playlists.emplace_back(Playlist("test6"));
+    playlists.emplace_back(Playlist("test7"));
+    playlists.emplace_back(Playlist("test8"));
+    playlists.emplace_back(Playlist("test9"));
+    playlists.emplace_back(Playlist("test10"));
+    playlists.emplace_back(Playlist("test11"));
+    playlists.emplace_back(Playlist("test12"));
+    savePlaylists();*/
+    loadPlaylists();
 }
 
 void PlaylistDisplay::draw(sf::RenderWindow& window) {
@@ -114,4 +118,33 @@ void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& ev
     if (event.type == sf::Event::Resized) {
         window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
     }
+}
+
+void PlaylistDisplay::savePlaylists() {
+    std::ofstream file("playlists.json");
+    if (!file.is_open()) {
+        std::cerr << "Could not open playlists.json" << std::endl;
+    }
+    nlohmann::json j = playlists;
+    file << j.dump(4);
+    file.close();
+}
+
+void PlaylistDisplay::loadPlaylists() {
+    playlists.clear();
+    std::ifstream file("playlists.json");
+    if (!file.is_open()) {
+        std::cerr << "Could not open playlists.json" << std::endl;
+    }
+    nlohmann::json j;
+    file >> j;
+
+    /*for (const auto& playlist : j) {
+        Playlist p;
+        from_json(playlist, p);
+    }*/
+
+    playlists = j.get<std::vector<Playlist>>();
+
+    file.close();
 }

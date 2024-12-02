@@ -133,7 +133,6 @@ namespace Utils {
                 return;
             }
 
-            std::cout << "Playing audio... Type 'stop' to stop playback." << std::endl;
             isMusicPlaying.store(true);
             music.play();
 
@@ -188,5 +187,21 @@ namespace Utils {
 #endif
         }
         env_file.close();
+    }
+
+    TextBoxTab initSearchTab(const sf::Font& font) {
+        sf::RectangleShape searchBox(sf::Vector2f(200, 50));
+        searchBox.setPosition(0, 0);
+        sf::Text searchText("Search music", font, 20);
+        searchText.setPosition(20, 12);
+        return TextBoxTab(searchBox, sf::Color::Green, font, searchText, sf::Color::Black);
+    }
+
+    TextBoxTab initPlaylistsTab(const sf::Font& font) {
+        sf::RectangleShape playlistsBox(sf::Vector2f(200, 50));
+        playlistsBox.setPosition(200, 0);
+        sf::Text playlistsText("Playlists", font, 20);
+        playlistsText.setPosition(250, 12);
+        return TextBoxTab(playlistsBox, sf::Color::Green, font, playlistsText, sf::Color::Black);
     }
 }

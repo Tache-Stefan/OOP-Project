@@ -25,9 +25,9 @@ std::shared_ptr<Song> SongCollection::searchSongByName(const std::string& name) 
     return nullptr;
 }
 
-std::ostream& operator<<(std::ostream& os, const SongCollection& song_collection) {
+std::ostream& operator<<(std::ostream& os, const SongCollection&) {
     os << "Current Song Collection:\n";
-    for (const auto&[id, song] : song_collection.songMap) {
+    for (const auto&[id, song] : SongCollection::songMap) {
         os << "\t" << song->getTitle() << "\n";
     }
     return os;

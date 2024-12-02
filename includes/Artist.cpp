@@ -2,7 +2,7 @@
 #include "Artist.h"
 #include "Song.h"
 
-Artist::Artist() {}
+Artist::Artist() = default;
 
 Artist::Artist(const std::string& name_, const std::vector<std::shared_ptr<Song>>& songs_) : name(name_), songs(songs_) {
     std::cout << "Created Artist(+songs): " << name << std::endl;
