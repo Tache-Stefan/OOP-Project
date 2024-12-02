@@ -17,5 +17,6 @@ public:
     Media(const Media& other);
     const std::string& getTitle() const;
     virtual void play(const std::string& youtube_api) const = 0;
+    virtual Media* clone() const = 0;
     virtual ~Media() = default;
 };

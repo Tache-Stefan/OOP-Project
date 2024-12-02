@@ -14,4 +14,5 @@ public:
     bool handleEvents(const sf::RenderWindow& window, const sf::Event& event);
     void setOnClickCallback(const std::function<void()>& callback);
     void draw(sf::RenderWindow &window) const override;
+    TextBox* clone() const override;
 };

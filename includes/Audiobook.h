@@ -10,4 +10,5 @@ public:
     Audiobook(std::string title_, const struct tm& length_);
     friend std::ostream& operator<<(std::ostream& os, const Audiobook& audiobook);
     void play(const std::string& youtube_api) const override;
+    Media* clone() const override;
 };

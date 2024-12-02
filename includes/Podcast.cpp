@@ -30,3 +30,7 @@ void Podcast::play(const std::string& youtube_api) const {
     //Utils::playAudio(outputFile, stopPlayback);
     inputThread.join();
 }
+
+Media* Podcast::clone() const {
+    return new Podcast(*this);
+}

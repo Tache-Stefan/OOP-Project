@@ -37,3 +37,7 @@ void TextBoxTab::draw(sf::RenderWindow& window) const {
         window.draw(text);
     }
 }
+
+TextBox* TextBoxTab::clone() const {
+    return new TextBoxTab(*this);
+}

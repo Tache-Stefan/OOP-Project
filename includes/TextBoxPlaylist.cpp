@@ -25,3 +25,7 @@ void TextBoxPlaylist::handleEvents(sf::RenderWindow& window, const sf::Event& ev
         }
     }
 }*/
+
+TextBox* TextBoxPlaylist::clone() const {
+    return new TextBoxPlaylist(*this);
+}

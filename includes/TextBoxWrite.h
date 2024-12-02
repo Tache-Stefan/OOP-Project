@@ -16,4 +16,5 @@ public:
     void draw(sf::RenderWindow& window) const override;
     void draw(sf::RenderWindow& window, std::atomic<bool>& isMusicPlaying) const;
     bool getActive() const;
+    TextBox* clone() const override;
 };

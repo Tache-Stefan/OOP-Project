@@ -23,4 +23,5 @@ public:
     void play(const std::string& youtube_api, std::atomic<bool>& stopPlayback, std::atomic<bool>& isMusicPlaying) const;
     friend void to_json(nlohmann::json& j, const Song& song);
     friend void from_json(nlohmann::json& j, Song& song);
+    Media* clone() const override;
 };

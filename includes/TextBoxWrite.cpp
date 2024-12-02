@@ -72,3 +72,7 @@ void TextBoxWrite::draw(sf::RenderWindow& window, std::atomic<bool>& isMusicPlay
 }
 
 bool TextBoxWrite::getActive() const { return isActive; }
+
+TextBox* TextBoxWrite::clone() const {
+    return new TextBoxWrite(*this);
+}

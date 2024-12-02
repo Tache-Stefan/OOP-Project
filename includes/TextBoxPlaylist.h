@@ -10,4 +10,5 @@ public:
                     const sf::Color& textColor);
     /*void changeActive(const sf::Vector2f &mousePosition);
     void handleEvents(sf::RenderWindow &window, const sf::Event &event);*/
+    TextBox* clone() const override;
 };

@@ -19,14 +19,18 @@ std::ostream& operator<<(std::ostream& os, const Audiobook& audiobook) {
 }
 
 void Audiobook::play(const std::string& youtube_api) const {
-        const std::string youtubeURL = API::searchYouTube(youtube_api, title);
-        const std::string outputFile = "audio.mp3";
-        if (!Utils::downloadAudio(youtubeURL, outputFile)) {
-                return;
-        }
+    const std::string youtubeURL = API::searchYouTube(youtube_api, title);
+    const std::string outputFile = "audio.mp3";
+    if (!Utils::downloadAudio(youtubeURL, outputFile)) {
+        return;
+    }
 
-        std::atomic<bool> stopPlayback(false);
-        std::thread inputThread(Utils::monitorInput, std::ref(stopPlayback));
-        //Utils::playAudio(outputFile, stopPlayback);
-        inputThread.join();
+    std::atomic<bool> stopPlayback(false);
+    std::thread inputThread(Utils::monitorInput, std::ref(stopPlayback));
+    //Utils::playAudio(outputFile, stopPlayback);
+    inputThread.join();
+}
+
+Media* Audiobook::clone() const {
+    return new Audiobook(*this);
 }

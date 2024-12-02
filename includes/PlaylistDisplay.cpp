@@ -4,31 +4,12 @@
 #include <iostream>
 
 #include "API.h"
-#include "EnvironmentSetup.h"
 #include "TextBoxPlaylist.h"
 
 unsigned int PlaylistDisplay::currentIndex = 0;
 
 PlaylistDisplay::PlaylistDisplay(const sf::Font &font_) : font(font_), scrollSpeed(40.f), verticalOffset(0.f), visibleCount(10),
                                                           itemHeight(40) {
-    /*std::ifstream file("playlists.json");
-    if (!file.is_open()) {
-        std::cerr << "Failed to open playlists.json" << std::endl;
-    }
-
-    nlohmann::json j;
-    file >> j;
-    file.close();
-
-    for (const auto &playlistData : j) {
-        Playlist playlist(playlistData["title"]);
-        std::vector<std::string> songs = playlistData["songs"].get<std::vector<std::string>>();
-        for (const auto &song : songs) {
-            std::shared_ptr<Song> song_ptr = API::searchSpotifySong(EnvironmentSetup::getAccessToken(), song);
-            playlist.addSong(song_ptr);
-        }
-        playlists.push_back(playlist);
-    }*/
     /*playlists.emplace_back(Playlist("test1"));
     playlists.emplace_back(Playlist("test2"));
     playlists.emplace_back(Playlist("test3"));
@@ -121,10 +102,11 @@ void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& ev
 }
 
 void PlaylistDisplay::savePlaylists() {
-    std::ofstream file("playlists.json");
+    std::ofstream file("playlists.json", std::ios::trunc);
     if (!file.is_open()) {
         std::cerr << "Could not open playlists.json" << std::endl;
     }
+
     nlohmann::json j = playlists;
     file << j.dump(4);
     file.close();
@@ -132,19 +114,14 @@ void PlaylistDisplay::savePlaylists() {
 
 void PlaylistDisplay::loadPlaylists() {
     playlists.clear();
+
     std::ifstream file("playlists.json");
     if (!file.is_open()) {
         std::cerr << "Could not open playlists.json" << std::endl;
     }
+
     nlohmann::json j;
     file >> j;
-
-    /*for (const auto& playlist : j) {
-        Playlist p;
-        from_json(playlist, p);
-    }*/
-
     playlists = j.get<std::vector<Playlist>>();
-
     file.close();
 }

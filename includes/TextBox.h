@@ -15,4 +15,5 @@ public:
     void centerShape(const sf::RenderWindow& window);
     void setText(const std::string& userInput);
     virtual void draw(sf::RenderWindow& window) const;
+    virtual TextBox* clone() const = 0;
 };

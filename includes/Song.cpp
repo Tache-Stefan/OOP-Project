@@ -76,3 +76,7 @@ void to_json(nlohmann::json& j, const Song& song) {
 void from_json(nlohmann::json& j, Song& song) {
     j.at("title").get_to(song.title);
 }
+
+Media* Song::clone() const {
+    return new Song(*this);
+}
