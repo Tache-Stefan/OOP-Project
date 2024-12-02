@@ -14,16 +14,11 @@ Song::Song(const std::string& title_, const std::shared_ptr<Artist> &artist_, co
     std::cout << "Created Song: " << title << std::endl;
 }
 
-Song::Song(const std::string& title_, const struct tm& length_, const std::string& genre_, const std::string& id_)
-        : Media(title_, length_), genre(genre_), id(id_) {
-    std::cout << "Created Song: " << title << std::endl;
-}
-
 Song::Song(const std::string& title_, const struct tm& length_, const std::string& id_) : Media(title_, length_), id(id_) {
     std::cout << "Created Song: " << title << std::endl;
 }
 
-Song::Song(const Song& other) : Media(other), genre(other.genre), id(other.id) {
+Song::Song(const Song& other) : Media(other), id(other.id) {
     std::cout << "Created Song(copiere)" << std::endl;
 }
 
@@ -31,7 +26,6 @@ Song& Song::operator=(const Song& other) {
     title = other.title;
     length = other.length;
     artist = other.artist;
-    genre = other.genre;
     id = other.id;
     std::cout << "Song(operator=)" << std::endl;
     return *this;

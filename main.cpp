@@ -4,15 +4,8 @@
 #include <atomic>
 #include <filesystem>
 
-#include "includes/API.h"
-#include "includes/Song.h"
-#include "includes/Playlist.h"
-#include "includes/Artist.h"
-#include "includes/Podcast.h"
 #include "includes/Utility.h"
 #include "includes/EnvironmentSetup.h"
-#include "includes/SongCollection.h"
-#include "includes/ArtistCollection.h"
 
 #include <SFML/Graphics.hpp>
 

@@ -9,7 +9,7 @@
 #include "API.h"
 #include "EnvironmentSetup.h"
 
-Playlist::Playlist() {}
+Playlist::Playlist() = default;
 
 Playlist::Playlist(const std::string& title_, const std::vector<std::shared_ptr<Song>>& songs_) : title(title_), songs(songs_), length({}) {
 
