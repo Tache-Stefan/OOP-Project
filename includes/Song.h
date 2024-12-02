@@ -11,8 +11,8 @@ private:
     std::string id = "";
 public:
     Song();
-    Song(const std::string& title_, const std::shared_ptr<Artist>& artist_, const struct tm& length_, const std::string& id_);
-    Song(const std::string& title_, const struct tm& length_, const std::string& id_);
+    Song(std::string title_, const std::shared_ptr<Artist>& artist_, const struct tm& length_, std::string id_);
+    Song(std::string title_, const struct tm& length_, std::string id_);
     Song(const Song& other);
     Song& operator=(const Song& other);
     friend std::ostream& operator<<(std::ostream& os, const Song& song);

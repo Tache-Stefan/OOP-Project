@@ -194,7 +194,7 @@ namespace Utils {
         searchBox.setPosition(0, 0);
         sf::Text searchText("Search music", font, 20);
         searchText.setPosition(20, 12);
-        return TextBoxTab(searchBox, sf::Color::Green, font, searchText, sf::Color::Black);
+        return {searchBox, sf::Color::Green, font, searchText, sf::Color::Black};
     }
 
     TextBoxTab initPlaylistsTab(const sf::Font& font) {
@@ -202,6 +202,6 @@ namespace Utils {
         playlistsBox.setPosition(200, 0);
         sf::Text playlistsText("Playlists", font, 20);
         playlistsText.setPosition(250, 12);
-        return TextBoxTab(playlistsBox, sf::Color::Green, font, playlistsText, sf::Color::Black);
+        return {playlistsBox, sf::Color::Green, font, playlistsText, sf::Color::Black};
     }
 }

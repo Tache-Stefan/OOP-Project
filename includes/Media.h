@@ -12,8 +12,8 @@ protected:
     struct tm length = {};
 public:
     Media();
-    Media(const std::string& title_, const std::shared_ptr<Artist>& artist_, const struct tm& length_);
-    Media(const std::string& title_, const struct tm& length_);
+    Media(std::string title_, const std::shared_ptr<Artist>& artist_, const struct tm& length_);
+    Media(std::string title_, const struct tm& length_);
     Media(const Media& other);
     const std::string& getTitle() const;
     virtual void play(const std::string& youtube_api) const = 0;

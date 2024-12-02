@@ -6,8 +6,8 @@ private:
     int chapter_count = 0;
     std::string language = "None";
 public:
-    Audiobook(const std::string& title_, const struct tm& length_, int chapter_count, const std::string& language);
-    Audiobook(const std::string& title_, const struct tm& length_);
+    Audiobook(std::string title_, const struct tm& length_, const int chapter_count_, std::string language_);
+    Audiobook(std::string title_, const struct tm& length_);
     friend std::ostream& operator<<(std::ostream& os, const Audiobook& audiobook);
     void play(const std::string& youtube_api) const override;
 };

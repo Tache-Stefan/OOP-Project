@@ -11,12 +11,13 @@
 
 Playlist::Playlist() = default;
 
-Playlist::Playlist(const std::string& title_, const std::vector<std::shared_ptr<Song>>& songs_) : title(title_), songs(songs_), length({}) {
+Playlist::Playlist(std::string title_, const std::vector<std::shared_ptr<Song>>& songs_) : title(std::move(title_)),
+                   songs(songs_), length({}) {
 
     std::cout << "Created Playlist: " << title << "\n";
 }
 
-Playlist::Playlist(const std::string &title_) : title(title_) {
+Playlist::Playlist(std::string title_) : title(std::move(title_)) {
     std::cout << "Created Playlist: " << title << "\n";
 }
 

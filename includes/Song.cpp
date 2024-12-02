@@ -9,12 +9,12 @@
 
 Song::Song() = default;
 
-Song::Song(const std::string& title_, const std::shared_ptr<Artist> &artist_, const struct tm& length_, const std::string& id_)
-    : Media(title_, artist_, length_), id(id_) {
+Song::Song(std::string title_, const std::shared_ptr<Artist> &artist_, const struct tm& length_, std::string id_)
+    : Media(std::move(title_), artist_, length_), id(std::move(id_)) {
     std::cout << "Created Song: " << title << std::endl;
 }
 
-Song::Song(const std::string& title_, const struct tm& length_, const std::string& id_) : Media(title_, length_), id(id_) {
+Song::Song(std::string title_, const struct tm& length_, std::string id_) : Media(std::move(title_), length_), id(std::move(id_)) {
     std::cout << "Created Song: " << title << std::endl;
 }
 

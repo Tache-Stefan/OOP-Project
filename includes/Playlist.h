@@ -14,8 +14,8 @@ private:
     struct tm length = {};
 public:
     Playlist();
-    Playlist(const std::string& title_, const std::vector<std::shared_ptr<Song>> &songs_);
-    explicit Playlist(const std::string& title_);
+    Playlist(std::string title_, const std::vector<std::shared_ptr<Song>> &songs_);
+    explicit Playlist(std::string title_);
     void addSong(const std::shared_ptr<Song>& song);
     friend std::ostream& operator<<(std::ostream& os, const Playlist& playlist);
     std::string getLength() const;

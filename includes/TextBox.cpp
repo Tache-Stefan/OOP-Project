@@ -1,7 +1,7 @@
 #include "TextBox.h"
 
-TextBox::TextBox(const sf::RectangleShape& box_, const sf::Color& boxColor, const sf::Font& font_, const sf::Text& text_,
-                 const sf::Color& textColor) : font(font_), box(box_), text(text_) {
+TextBox::TextBox(sf::RectangleShape box_, const sf::Color& boxColor, const sf::Font& font_, sf::Text text_,
+                 const sf::Color& textColor) : font(font_), box(std::move(box_)), text(std::move(text_)) {
     box.setFillColor(boxColor);
     text.setFont(font);
     text.setFillColor(textColor);

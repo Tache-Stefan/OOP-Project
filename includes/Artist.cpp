@@ -4,16 +4,19 @@
 
 Artist::Artist() = default;
 
-Artist::Artist(const std::string& name_, const std::vector<std::shared_ptr<Song>>& songs_) : name(name_), songs(songs_) {
+Artist::Artist(std::string name_, const std::vector<std::shared_ptr<Song>>& songs_) : name(std::move(name_)), songs(songs_) {
     std::cout << "Created Artist(+songs): " << name << std::endl;
 }
-Artist::Artist(const std::string& name_, const std::string& id_) : name(name_), id(id_) {
+
+Artist::Artist(std::string name_, std::string id_) : name(std::move(name_)), id(std::move(id_)) {
     std::cout << "Created Artist: " << name << std::endl;
 }
+
 std::ostream& operator<<(std::ostream& os, const Artist& artist) {
     os << "Artist: " << artist.name << std::endl;
     return os;
 }
+
 void Artist::addSong(const std::shared_ptr<Song>& song) {
     songs.push_back(song);
 }

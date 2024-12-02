@@ -10,7 +10,7 @@ protected:
 public:
     virtual ~TextBox() = default;
     TextBox();
-    TextBox(const sf::RectangleShape& box_, const sf::Color& boxColor, const sf::Font& font_, const sf::Text& text_,
+    TextBox(sf::RectangleShape box_, const sf::Color& boxColor, const sf::Font& font_, sf::Text text_,
             const sf::Color& textColor);
     void centerShape(const sf::RenderWindow& window);
     void setText(const std::string& userInput);
