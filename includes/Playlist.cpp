@@ -36,6 +36,8 @@ std::string Playlist::getLength() const {return Utils::timeToString(length);}
 
 std::string Playlist::getTitle() const {return title;}
 
+std::vector<std::shared_ptr<Song>> Playlist::getSongs() const {return songs;}
+
 void Playlist::calculateLength() {
     for(const auto& song : songs)
         length = Utils::addTimes(length, Utils::stringToTime(song->getLength()));

@@ -4,8 +4,8 @@
 #include <filesystem>
 #include <iostream>
 #include <fstream>
-#include <nlohmann/json.hpp>
 #include <SFML/Audio.hpp>
+#include <nlohmann/json.hpp>
 
 namespace Utils {
     std::vector<std::string> split(const std::string& s, const char delimiter) {

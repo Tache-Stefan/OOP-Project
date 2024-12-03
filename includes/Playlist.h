@@ -20,6 +20,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Playlist& playlist);
     std::string getLength() const;
     std::string getTitle() const;
+    std::vector<std::shared_ptr<Song>> getSongs() const;
     void calculateLength();
     void play(const std::string& youtube_api) const;
     void shuffle();

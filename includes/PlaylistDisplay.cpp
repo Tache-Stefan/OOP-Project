@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "API.h"
+#include "SongDisplay.h"
 #include "TextBoxPlaylist.h"
 
 unsigned int PlaylistDisplay::currentIndex = 0;
@@ -42,6 +43,11 @@ void PlaylistDisplay::draw(sf::RenderWindow& window) {
 
         TextBoxPlaylist playlistButton(textButton, sf::Color(144, 213, 255), font, text, sf::Color::Black);
         playlistButton.draw(window);
+
+        if (menuActive) {
+            SongDisplay songDisplay(font, playlists[currentPlaylist].getSongs());
+            songDisplay.draw(window);
+        }
     }
 }
 
@@ -91,6 +97,13 @@ void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& ev
 
             if (mousePos.y >= boxTop && mousePos.y <= boxBottom && mousePos.x >= 0 && mousePos.x <= 200) {
                 std::cout << "Clicked on playlist: " << playlists[playlistIndex].getTitle() << std::endl;
+                if (menuActive == false) {
+                    currentPlaylist = playlistIndex;
+                    menuActive = true;
+                    break;
+                }
+                currentPlaylist = -1;
+                menuActive = false;
                 break;
             }
         }

@@ -3,13 +3,12 @@
 #include <string>
 #include <atomic>
 #include <filesystem>
+#include <SFML/Graphics.hpp>
 
 #include "includes/Utility.h"
 #include "includes/EnvironmentSetup.h"
-
-#include <SFML/Graphics.hpp>
-
 #include "includes/PlaylistDisplay.h"
+#include "includes/SongDisplay.h"
 #include "includes/TextBoxTab.h"
 #include "includes/TextBoxWrite.h"
 

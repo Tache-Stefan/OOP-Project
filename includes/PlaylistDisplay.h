@@ -7,6 +7,8 @@
 class PlaylistDisplay {
 private:
     std::vector<Playlist> playlists;
+    bool menuActive = false;
+    int currentPlaylist = -1;
     sf::Font font;
     float scrollSpeed;
     float verticalOffset;
