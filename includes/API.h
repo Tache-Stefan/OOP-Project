@@ -1,6 +1,5 @@
 #pragma once
 
-#define NOMINMAX 1
 #include "Song.h"
 #include "Artist.h"
 
