@@ -25,6 +25,11 @@ void TextBox::centerShape(const sf::RenderWindow& window) {
     );
 }
 
+void TextBox::positionShape(const sf::Vector2f& boxPosition, const sf::Vector2f& textPosition) {
+    box.setPosition(boxPosition);
+    text.setPosition(textPosition);
+}
+
 // cppcheck-suppress unusedFunction ; false positive
 void TextBox::setText(const std::string& userInput) { text.setString(userInput); }
 

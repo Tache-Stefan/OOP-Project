@@ -3,13 +3,15 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include "Playlist.h"
+#include "SongDisplay.h"
 
 class PlaylistDisplay {
 private:
     std::vector<Playlist> playlists;
+    sf::Font font;
+    SongDisplay songDisplay;
     bool menuActive = false;
     int currentPlaylist = -1;
-    sf::Font font;
     float scrollSpeed;
     float verticalOffset;
     unsigned int visibleCount;

@@ -4,12 +4,11 @@
 #include <iostream>
 
 #include "API.h"
-#include "SongDisplay.h"
 #include "TextBoxPlaylist.h"
 
 unsigned int PlaylistDisplay::currentIndex = 0;
 
-PlaylistDisplay::PlaylistDisplay(const sf::Font &font_) : font(font_), scrollSpeed(40.f), verticalOffset(0.f), visibleCount(10),
+PlaylistDisplay::PlaylistDisplay(const sf::Font &font_) : font(font_), songDisplay(font), scrollSpeed(40.f), verticalOffset(0.f), visibleCount(10),
                                                           itemHeight(40) {
     /*playlists.emplace_back(Playlist("test1"));
     playlists.emplace_back(Playlist("test2"));
@@ -28,6 +27,10 @@ PlaylistDisplay::PlaylistDisplay(const sf::Font &font_) : font(font_), scrollSpe
 }
 
 void PlaylistDisplay::draw(sf::RenderWindow& window) {
+    sf::Text songsText("Playlists", font, 24);
+    songsText.setFillColor(sf::Color::White);
+    songsText.setPosition(40.f, 160.f);
+    window.draw(songsText);
 
     for (unsigned int i = 0; i < visibleCount; ++i) {
         currentIndex = i + verticalOffset / itemHeight;
@@ -35,17 +38,13 @@ void PlaylistDisplay::draw(sf::RenderWindow& window) {
 
         sf::RectangleShape textButton(sf::Vector2f(200, 40));
         textButton.setPosition(0.f, 200.f + (i * itemHeight));
-        sf::Text text;
-        text.setFont(font);
-        text.setString(playlists[currentIndex].getTitle());
-        text.setCharacterSize(24);
+        sf::Text text(playlists[currentIndex].getTitle(), font, 24);
         text.setPosition(10.f, 205.f + (i * itemHeight));
 
         TextBoxPlaylist playlistButton(textButton, sf::Color(144, 213, 255), font, text, sf::Color::Black);
         playlistButton.draw(window);
 
         if (menuActive) {
-            SongDisplay songDisplay(font, playlists[currentPlaylist].getSongs());
             songDisplay.draw(window);
         }
     }
@@ -77,6 +76,8 @@ void PlaylistDisplay::scrollWithMouse(const float delta) {
 }
 
 void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& event) {
+    songDisplay.handleEvents(window, event);
+
     if (event.type == sf::Event::MouseWheelScrolled) {
         const sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
         if (mousePos.y >= 200 && mousePos.y <= 600 && mousePos.x >= 0 && mousePos.x <= 200) {
@@ -99,6 +100,7 @@ void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& ev
                 std::cout << "Clicked on playlist: " << playlists[playlistIndex].getTitle() << std::endl;
                 if (menuActive == false) {
                     currentPlaylist = playlistIndex;
+                    songDisplay.setSongs(playlists[currentPlaylist].getSongs());
                     menuActive = true;
                     break;
                 }
@@ -111,6 +113,7 @@ void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& ev
 
     if (event.type == sf::Event::Resized) {
         window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
+        //window.setView(sf::View(sf::FloatRect(0, 0, 1200, 700)));
     }
 }
 

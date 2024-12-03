@@ -39,7 +39,6 @@ int main() {
     });
 
     PlaylistDisplay playlistDisplay(font);
-    std::string userInput;
     std::atomic<bool> stopPlayback(false);
     std::atomic<bool> isMusicPlaying(false);
 
@@ -59,7 +58,7 @@ int main() {
             }
 
             if (currentTab == 1) {
-                inputMusic.handleEvents(window, event, stopPlayback, isMusicPlaying, userInput);
+                inputMusic.handleEventsMusic(window, event, stopPlayback, isMusicPlaying);
             }
             if (currentTab == 2) {
                 playlistDisplay.handleEvents(window, event);
