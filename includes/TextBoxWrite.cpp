@@ -1,9 +1,8 @@
 #include "TextBoxWrite.h"
 
-#include <iostream>
-
 #include "API.h"
 #include "EnvironmentSetup.h"
+#include "PlaylistDisplay.h"
 
 TextBoxWrite::TextBoxWrite() = default;
 
@@ -12,7 +11,6 @@ TextBoxWrite::TextBoxWrite(const sf::RectangleShape& box_, const sf::Color& boxC
 
 bool TextBoxWrite::containsClick(const sf::Vector2f& mousePosition) {
     if (box.getGlobalBounds().contains(mousePosition.x, mousePosition.y)) {
-        std::cout << "clicked" << std::endl;
         isActive = true;
         return true;
     }
@@ -50,7 +48,7 @@ void TextBoxWrite::handleEventsMusic(sf::RenderWindow& window, const sf::Event& 
     }
 }
 
-void TextBoxWrite::handleEventsPlaylist(sf::RenderWindow& window, const sf::Event& event) {
+void TextBoxWrite::handleEventsPlaylist(sf::RenderWindow& window, const sf::Event& event, Playlist& playlist) {
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
         const sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
         containsClick(mousePos);
@@ -73,8 +71,10 @@ void TextBoxWrite::handleEventsPlaylist(sf::RenderWindow& window, const sf::Even
     }
 
     if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
+        const std::shared_ptr<Song> song = API::searchSpotifySong(EnvironmentSetup::getAccessToken(), userInput);
         userInput.clear();
-        std::cout<< "entered" << std::endl;
+        playlist.addSong(song);
+        PlaylistDisplay::needChange();
     }
 }
 

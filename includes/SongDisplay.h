@@ -23,5 +23,5 @@ public:
     void scrollUp();
     void scrollDown();
     void scrollWithMouse(float delta);
-    void handleEvents(sf::RenderWindow &window, const sf::Event& event);
+    void handleEvents(sf::RenderWindow &window, const sf::Event& event, Playlist& playlist);
 };

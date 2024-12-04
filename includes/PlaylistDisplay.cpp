@@ -7,6 +7,7 @@
 #include "TextBoxPlaylist.h"
 
 unsigned int PlaylistDisplay::currentIndex = 0;
+bool PlaylistDisplay::change = false;
 
 PlaylistDisplay::PlaylistDisplay(const sf::Font &font_) : font(font_), songDisplay(font), scrollSpeed(40.f), verticalOffset(0.f), visibleCount(10),
                                                           itemHeight(40) {
@@ -76,7 +77,11 @@ void PlaylistDisplay::scrollWithMouse(const float delta) {
 }
 
 void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& event) {
-    songDisplay.handleEvents(window, event);
+    songDisplay.handleEvents(window, event, playlists[currentPlaylist]);
+    if (change) {
+        songDisplay.setSongs(playlists[currentPlaylist].getSongs());
+        change = false;
+    }
 
     if (event.type == sf::Event::MouseWheelScrolled) {
         const sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
@@ -113,7 +118,6 @@ void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& ev
 
     if (event.type == sf::Event::Resized) {
         window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
-        //window.setView(sf::View(sf::FloatRect(0, 0, 1200, 700)));
     }
 }
 
@@ -141,3 +145,5 @@ void PlaylistDisplay::loadPlaylists() {
     playlists = j.get<std::vector<Playlist>>();
     file.close();
 }
+
+void PlaylistDisplay::needChange() {change = true;}

@@ -17,6 +17,7 @@ private:
     unsigned int visibleCount;
     int itemHeight;
     static unsigned int currentIndex;
+    static bool change;
 public:
     explicit PlaylistDisplay(const sf::Font& font_);
     void draw(sf::RenderWindow& window);
@@ -26,4 +27,5 @@ public:
     void handleEvents(sf::RenderWindow& window, const sf::Event &event);
     void savePlaylists();
     void loadPlaylists();
+    static void needChange();
 };

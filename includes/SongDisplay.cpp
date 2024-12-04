@@ -89,8 +89,8 @@ void SongDisplay::scrollWithMouse(const float delta) {
     }
 }
 
-void SongDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& event) {
-    inputBox.handleEventsPlaylist(window, event);
+void SongDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& event, Playlist& playlist) {
+    inputBox.handleEventsPlaylist(window, event, playlist);
 
     if (event.type == sf::Event::MouseWheelScrolled) {
         const sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
