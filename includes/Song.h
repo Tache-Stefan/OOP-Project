@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include <atomic>
 
 #include "Media.h"
 
@@ -19,8 +18,7 @@ public:
     ~Song() override = default;
     std::string getLength() const;
     const std::string& getID() const;
-    void play(const std::string& youtube_api) const override;
-    void play(const std::string& youtube_api, std::atomic<bool>& stopPlayback, std::atomic<bool>& isMusicPlaying) const;
+    void play() const override;
     friend void to_json(nlohmann::json& j, const Song& song);
     friend void from_json(nlohmann::json& j, Song& song);
     Media* clone() const override;

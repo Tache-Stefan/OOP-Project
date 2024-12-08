@@ -21,7 +21,7 @@ Playlist::Playlist(std::string title_) : title(std::move(title_)) {
     std::cout << "Created Playlist: " << title << "\n";
 }
 
-void Playlist::addSong(const std::shared_ptr<Song>& song) {songs.push_back(song);}
+void Playlist::addSong(const std::shared_ptr<Song>& song) {songs.emplace_back(song);}
 
 std::ostream& operator<<(std::ostream& os, const Playlist& playlist) {
     os << "Playlist: " << playlist.title << "\n";
@@ -38,14 +38,16 @@ std::string Playlist::getTitle() const {return title;}
 
 std::vector<std::shared_ptr<Song>> Playlist::getSongs() const {return songs;}
 
+void Playlist::setSongs(const std::vector<std::shared_ptr<Song>>& songs_) { songs = songs_;}
+
 void Playlist::calculateLength() {
     for(const auto& song : songs)
         length = Utils::addTimes(length, Utils::stringToTime(song->getLength()));
 }
 
-void Playlist::play(const std::string& youtube_api) const {
+void Playlist::play() const {
     for (const auto& song : songs) {
-        song->play(youtube_api);
+        song->play();
     }
 }
 
@@ -61,7 +63,7 @@ void to_json(nlohmann::json& j, const Playlist& playlist) {
     std::vector<std::string> song_titles;
     song_titles.reserve(playlist.songs.size());
     for (const auto& song_ptr : playlist.songs) {
-        song_titles.push_back(song_ptr->getTitle());
+        song_titles.emplace_back(song_ptr->getTitle());
     }
 
     j["songs"] = song_titles;

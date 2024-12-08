@@ -4,7 +4,6 @@
 #include <filesystem>
 #include <iostream>
 #include <fstream>
-#include <SFML/Audio.hpp>
 #include <nlohmann/json.hpp>
 
 namespace Utils {
@@ -110,56 +109,6 @@ namespace Utils {
 
         std::cout << "Audio downloaded to: " << outputFile << std::endl;
         return true;
-    }
-
-    void monitorInput(std::atomic<bool> &stopPlayback) {
-        std::string input;
-        while(!stopPlayback.load()) {
-            std::getline(std::cin, input);
-            if(input == "stop") {
-                stopPlayback.store(true);
-                break;
-            }
-        }
-        std::cin.clear();
-    }
-
-    void playAudio(const std::string &filePath, std::atomic<bool> &stopPlayback, std::atomic<bool> &isMusicPlaying) {
-        {
-            sf::Music music;
-            if (!music.openFromFile(filePath)) {
-                std::cerr << "Error: Failed to open audio file!" << std::endl;
-                stopPlayback = true;
-                return;
-            }
-
-            isMusicPlaying.store(true);
-            music.play();
-
-            while (music.getStatus() == sf::SoundSource::Playing) {
-                if(stopPlayback.load()) {
-                    std::cout << "Stopping playback..." << std::endl;
-                    music.stop();
-                    break;
-                }
-                sleep(sf::milliseconds(100));
-            }
-
-            isMusicPlaying.store(false);
-            stopPlayback.store(true);
-            std::cout << "Audio finished!" << std::endl;
-        }
-
-        if (std::filesystem::exists(filePath)) {
-            try {
-                std::filesystem::remove(filePath);
-                std::cout << "File removed: " << filePath << std::endl;
-            } catch (const std::exception& e) {
-                std::cerr << e.what() << std::endl;
-            }
-        } else {
-            std::cerr << "Error: File does not exist: " << filePath << std::endl;
-        }
     }
 
     void loadEnvFile() {

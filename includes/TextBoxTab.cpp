@@ -9,8 +9,12 @@ TextBoxTab::TextBoxTab(const sf::RectangleShape& box_, const sf::Color& boxColor
 }
 
 // cppcheck-suppress unusedFunction ; false positive
-bool TextBoxTab::handleEvents(const sf::RenderWindow& window, const sf::Event& event) {
-    if (event.type == sf::Event::MouseButtonPressed) {
+bool TextBoxTab::handleEvents(sf::RenderWindow& window, const sf::Event& event) {
+    if (event.type == sf::Event::Resized) {
+        window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
+    }
+
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
         const sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
         if (box.getGlobalBounds().contains(mousePos)) {
             onClickCallback();

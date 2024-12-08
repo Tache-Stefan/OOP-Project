@@ -21,8 +21,9 @@ public:
     std::string getLength() const;
     std::string getTitle() const;
     std::vector<std::shared_ptr<Song>> getSongs() const;
+    void setSongs(const std::vector<std::shared_ptr<Song>>& songs_);
     void calculateLength();
-    void play(const std::string& youtube_api) const;
+    void play() const;
     void shuffle();
     friend void to_json(nlohmann::json& j, const Playlist& playlist);
     friend void from_json(const nlohmann::json& j, Playlist& playlist);

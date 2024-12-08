@@ -38,3 +38,7 @@ void TextBox::draw(sf::RenderWindow& window) const {
     window.draw(box);
     window.draw(text);
 }
+
+TextBox* TextBox::clone() const {
+    return new TextBox(*this);
+}

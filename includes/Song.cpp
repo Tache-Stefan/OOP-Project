@@ -5,6 +5,8 @@
 
 #include "API.h"
 #include "Artist.h"
+#include "EnvironmentSetup.h"
+#include "MusicPlayer.h"
 #include "Utility.h"
 
 Song::Song() = default;
@@ -40,30 +42,16 @@ std::string Song::getLength() const {return Utils::timeToString(length);}
 
 const std::string& Song::getID() const {return id;}
 
-void Song::play(const std::string& youtube_api) const {
-    std::atomic<bool> stopPlayback(false);
-    std::atomic<bool> isMusicPlaying(false);
-    std::thread inputThread(Utils::monitorInput, std::ref(stopPlayback));
-    const std::string youtubeURL = API::searchYouTube(youtube_api, title);
-    const std::string outputFile = "audio.mp3";
-    if (!Utils::downloadAudio(youtubeURL, outputFile)) {
-        return;
-    }
+void Song::play() const {
 
-    Utils::playAudio(outputFile, stopPlayback, isMusicPlaying);
-    inputThread.join();
-}
-
-void Song::play(const std::string& youtube_api, std::atomic<bool>& stopPlayback, std::atomic<bool>& isMusicPlaying) const {
-
-    std::thread playbackThread([this, youtube_api, &stopPlayback, &isMusicPlaying]() {
-        const std::string youtubeURL = API::searchYouTube(youtube_api, title);
+    std::thread playbackThread([this]() {
+        const std::string youtubeURL = API::searchYouTube(EnvironmentSetup::getYoutubeAPI(), title);
         const std::string outputFile = "audio.mp3";
         if (!Utils::downloadAudio(youtubeURL, outputFile)) {
             return;
         }
 
-        Utils::playAudio(outputFile, stopPlayback, isMusicPlaying);
+        MusicPlayer::playMusic();
     });
 
     playbackThread.detach();

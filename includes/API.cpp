@@ -7,6 +7,8 @@
 #include <cpr/cpr.h>
 #include <nlohmann/json.hpp>
 
+#include "Exceptions.h"
+
 
 namespace API {
     std::string getSpotifyAccessToken(const std::string& client_id, const std::string& client_secret) {
@@ -29,14 +31,14 @@ namespace API {
                 nlohmann::json jsonData = nlohmann::json::parse(r.text);
 
                 return jsonData["access_token"].get<std::string>();
-            } catch (const std::exception& e) {
-                std::cerr << "Error parsing JSON response: " << e.what() << std::endl;
+            } catch (const JsonException& e) {
+                std::cerr << e.what() << std::endl;
                 return "";
             }
-        } else {
-            std::cerr << "Error: " << r.status_code << " " << r.text << std::endl;
-            return "";
         }
+
+        std::cerr << "Error: " << r.status_code << " " << r.text << std::endl;
+        return "";
     }
 
     std::shared_ptr<Song> searchSpotifySong(const std::string& access_token, const std::string& query) {
@@ -85,8 +87,8 @@ namespace API {
                 std::cerr << "No results found for query: " << query << std::endl;
                 return nullptr;
 
-            } catch (const std::exception& e) {
-                std::cerr << "Error parsing JSON: " << e.what() << std::endl;
+            } catch (const JsonException& e) {
+                std::cerr << e.what() << std::endl;
                 return nullptr;
             }
         }
@@ -120,8 +122,8 @@ namespace API {
                 std::cerr << "No results found for query: " << query << std::endl;
                 return nullptr;
 
-            } catch (const std::exception& e) {
-                std::cerr << "Error parsing JSON: " << e.what() << std::endl;
+            } catch (const JsonException& e) {
+                std::cerr << e.what() << std::endl;
                 return nullptr;
             }
         }
@@ -147,8 +149,8 @@ namespace API {
                 std::cerr << "No videos found for query: " << query << std::endl;
                 return "";
 
-            } catch (const std::exception& e) {
-                std::cerr << "JSON parsing error: " << e.what() << std::endl;
+            } catch (const JsonException& e) {
+                std::cerr << e.what() << std::endl;
                 return "";
             }
         }

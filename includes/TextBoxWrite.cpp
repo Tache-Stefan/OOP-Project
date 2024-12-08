@@ -2,7 +2,32 @@
 
 #include "API.h"
 #include "EnvironmentSetup.h"
+#include "Exceptions.h"
+#include "MusicPlayer.h"
 #include "PlaylistDisplay.h"
+
+void TextBoxWrite::handleEvents(sf::RenderWindow& window, const sf::Event& event) {
+    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+        const sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+        containsClick(mousePos);
+    }
+
+    if (isActive && event.type == sf::Event::TextEntered) {
+        if (event.text.unicode < 128) {
+            if (event.text.unicode == 8 && !userInput.empty()) {
+                userInput.pop_back();
+            } else if (event.text.unicode >= 32 && event.text.unicode <= 126) {
+                userInput += static_cast<char>(event.text.unicode);
+            }
+        }
+        setText(userInput);
+    }
+
+    if (event.type == sf::Event::Resized) {
+        window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
+        centerShape(window);
+    }
+}
 
 TextBoxWrite::TextBoxWrite() = default;
 
@@ -18,81 +43,57 @@ bool TextBoxWrite::containsClick(const sf::Vector2f& mousePosition) {
     return false;
 }
 
-void TextBoxWrite::handleEventsMusic(sf::RenderWindow& window, const sf::Event& event, std::atomic<bool>& stopPlayback,
-                                std::atomic<bool>& isMusicPlaying) {
-    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-        const sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-        containsClick(mousePos);
-    }
+void TextBoxWrite::handleEventsMusic(sf::RenderWindow& window, const sf::Event& event) {
+    handleEvents(window, event);
 
-    if (isActive && event.type == sf::Event::TextEntered) {
-        if (event.text.unicode < 128) {
-            if (event.text.unicode == 8 && !userInput.empty()) {
-                userInput.pop_back();
-            } else if (event.text.unicode >= 32 && event.text.unicode <= 126) {
-                userInput += static_cast<char>(event.text.unicode);
-            }
+    if (isActive && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
+        if (userInput.empty()) {
+            throw SearchException(userInput);
         }
-        setText(userInput);
-    }
-
-    if (event.type == sf::Event::Resized) {
-        window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
-        centerShape(window);
-    }
-
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
+        const std::shared_ptr<Song> song = API::searchSpotifySong(EnvironmentSetup::getAccessToken(), userInput);
         userInput.clear();
-        stopPlayback.store(false);
-        searchAndPlay(stopPlayback, isMusicPlaying);
+        MusicPlayer::setStopPlayback(true);
+        song->play();
     }
 }
 
-void TextBoxWrite::handleEventsPlaylist(sf::RenderWindow& window, const sf::Event& event, Playlist& playlist) {
-    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
-        const sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-        containsClick(mousePos);
-    }
+void TextBoxWrite::handleEventsSongDisplay(sf::RenderWindow& window, const sf::Event& event, Playlist& playlist) {
+    handleEvents(window, event);
 
-    if (isActive && event.type == sf::Event::TextEntered) {
-        if (event.text.unicode < 128) {
-            if (event.text.unicode == 8 && !userInput.empty()) {
-                userInput.pop_back();
-            } else if (event.text.unicode >= 32 && event.text.unicode <= 126) {
-                userInput += static_cast<char>(event.text.unicode);
-            }
+    if (isActive && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
+        if (userInput.empty()) {
+            throw SearchException(userInput);
         }
-        setText(userInput);
-    }
-
-    if (event.type == sf::Event::Resized) {
-        window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
-        centerShape(window);
-    }
-
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
         const std::shared_ptr<Song> song = API::searchSpotifySong(EnvironmentSetup::getAccessToken(), userInput);
         userInput.clear();
         playlist.addSong(song);
-        PlaylistDisplay::needChange();
+        PlaylistDisplay::needChangeAddSong();
     }
 }
 
-void TextBoxWrite::searchAndPlay(std::atomic<bool>& stopPlayback, std::atomic<bool>& isMusicPlaying) {
-    const std::shared_ptr<Song> song = API::searchSpotifySong(EnvironmentSetup::getAccessToken(), text.getString());
-    text.setString("");
-    song->play(EnvironmentSetup::getYoutubeAPI(), stopPlayback, isMusicPlaying);
+void TextBoxWrite::handleEventsPlaylistDisplay(sf::RenderWindow& window, const sf::Event& event, std::vector<Playlist>& playlists) {
+    handleEvents(window, event);
+
+    if (isActive && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
+        for (const auto& playlist : playlists) {
+            if (playlist.getTitle() == userInput) {
+                throw PlaylistException(userInput);
+            }
+        }
+        playlists.emplace_back(userInput);
+        userInput.clear();
+    }
 }
 
 void TextBoxWrite::draw(sf::RenderWindow& window) const { TextBox::draw(window); }
 
-void TextBoxWrite::draw(sf::RenderWindow& window, std::atomic<bool>& isMusicPlaying) const {
+void TextBoxWrite::drawSearch(sf::RenderWindow& window) const {
     TextBox::draw(window);
     sf::Text query("Enter the song name", font, 24);
     query.setFillColor(sf::Color::White);
     query.setPosition(box.getPosition().x + 60, box.getPosition().y - 50);
     window.draw(query);
-    if (isMusicPlaying) {
+    if (MusicPlayer::getIsMusicPlaying()) {
         sf::Text playing("Playing music...press S to stop.", font, 24);
         playing.setFillColor(sf::Color::White);
         playing.setPosition(box.getPosition().x, box.getPosition().y + 70);
