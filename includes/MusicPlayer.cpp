@@ -7,6 +7,7 @@
 
 std::atomic<bool> MusicPlayer::stopPlayback = false;
 std::atomic<bool> MusicPlayer::isMusicPlaying = false;
+std::atomic<bool> MusicPlayer::loadingMusic = false;
 std::string MusicPlayer::filePath = "audio.mp3";
 
 void MusicPlayer::playMusic() {
@@ -17,10 +18,12 @@ void MusicPlayer::playMusic() {
         sf::Music music;
         if (!music.openFromFile(filePath)) {
             std::cerr << "Error: Failed to open audio file!" << std::endl;
-            stopPlayback = true;
+            loadingMusic.store(false);
+            stopPlayback.store(true);
             return;
         }
 
+        loadingMusic.store(false);
         isMusicPlaying.store(true);
         music.play();
 
@@ -54,6 +57,10 @@ void MusicPlayer::setStopPlayback(const bool stopPlayback_) { stopPlayback.store
 
 void MusicPlayer::setIsMusicPlaying(const bool isMusicPlaying_) { isMusicPlaying.store(isMusicPlaying_); }
 
+void MusicPlayer::setLoadingMusic(const bool loadingMusic_) { loadingMusic.store(loadingMusic_); }
+
 bool MusicPlayer::getStopPlayback() { return stopPlayback.load(); }
 
 bool MusicPlayer::getIsMusicPlaying() { return isMusicPlaying.load(); }
+
+bool MusicPlayer::getLoadingMusic() { return loadingMusic.load(); }
