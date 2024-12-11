@@ -8,12 +8,12 @@
 #include "includes/Exceptions.h"
 #include "includes/MusicPlayer.h"
 #include "includes/PlaylistDisplay.h"
-#include "includes/SongDisplay.h"
+#include "includes/TextBoxButton.h"
 #include "includes/TextBoxTab.h"
 #include "includes/TextBoxWrite.h"
 
 int main() {
-    const EnvironmentSetup envSetup;
+    EnvironmentSetup::getInstance();
     int currentTab = 1;
 
     sf::RenderWindow window(sf::VideoMode(1200, 700), "Music Manager", sf::Style::Default);
@@ -27,16 +27,8 @@ int main() {
     TextBoxWrite inputMusic(sf::RectangleShape(sf::Vector2f(400, 50)), sf::Color::White, font,
         sf::Text("", font, 24), sf::Color::Black);
 
-    TextBoxTab searchTab = Utils::initSearchTab(font);
-    TextBoxTab playlistsTab = Utils::initPlaylistsTab(font);
-
-    searchTab.setOnClickCallback([&currentTab] {
-        currentTab = 1;
-    });
-    playlistsTab.setOnClickCallback([&currentTab] {
-        currentTab = 2;
-    });
-
+    std::vector<TextBoxTab> tabs = Utils::initTabs(font, currentTab);
+    std::vector<TextBoxButton> buttons = Utils::initButtons();
     PlaylistDisplay playlistDisplay(font);
 
     while (window.isOpen()) {
@@ -46,6 +38,17 @@ int main() {
             if (event.type == sf::Event::Closed) {
                 MusicPlayer::setStopPlayback(true);
                 window.close();
+            }
+
+            if (event.type == sf::Event::Resized) {
+                auto windowWidth = static_cast<float>(event.size.width);
+                auto windowHeight = static_cast<float>(event.size.height);
+
+                for (unsigned int i = 0; i < 5; ++i) {
+                    buttons[i].positionShape(
+                        sf::Vector2f(windowWidth * 0.335 + i * 85, windowHeight * 0.615),
+                        sf::Vector2f(windowWidth * 0.335 + 17 + i * 85, windowHeight * 0.615));
+                }
             }
 
             if (!inputMusic.getActive() && MusicPlayer::getIsMusicPlaying() && event.type == sf::Event::KeyPressed &&
@@ -60,34 +63,37 @@ int main() {
                 } catch (const SearchException& e) {
                     std::cerr << e.what() << std::endl;
                 }
+                for (unsigned int i = 0; i < 5; ++i) {
+                    buttons[i].handleEvents(window, event);
+                }
             }
             if (currentTab == 2) {
                 playlistDisplay.handleEvents(window, event);
             }
-            searchTab.handleEvents(window, event);
-            playlistsTab.handleEvents(window, event);
+            for (unsigned int i = 0; i < 2; ++i) {
+                tabs[i].handleEvents(window, event);
+            }
+        }
+
+        window.clear();
+        for (unsigned int i = 0; i < 2; ++i) {
+            tabs[i].draw(window);
         }
 
         switch (currentTab) {
             case 1:
-                window.clear();
                 inputMusic.centerShape(window);
                 inputMusic.drawSearch(window);
-                searchTab.draw(window);
-                playlistsTab.draw(window);
+                for (unsigned int i = 0; i < 5; ++i) {
+                    buttons[i].draw(window);
+                }
                 window.display();
             break;
             case 2:
-                window.clear();
                 playlistDisplay.draw(window);
-                searchTab.draw(window);
-                playlistsTab.draw(window);
                 window.display();
             break;
             default:
-                window.clear();
-                searchTab.draw(window);
-                playlistsTab.draw(window);
                 window.display();
             break;
         }

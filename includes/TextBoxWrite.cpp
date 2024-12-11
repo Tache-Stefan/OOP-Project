@@ -52,6 +52,7 @@ void TextBoxWrite::handleEventsMusic(sf::RenderWindow& window, const sf::Event& 
         }
         MusicPlayer::setLoadingMusic(true);
         const std::shared_ptr<Song> song = API::searchSpotifySong(EnvironmentSetup::getAccessToken(), userInput);
+        currentSong = song->getTitle();
         userInput.clear();
         MusicPlayer::setStopPlayback(true);
         song->play();
@@ -97,13 +98,13 @@ void TextBoxWrite::drawSearch(sf::RenderWindow& window) const {
     if (MusicPlayer::getLoadingMusic()) {
         sf::Text loading("Loading music...", font, 24);
         loading.setFillColor(sf::Color::White);
-        loading.setPosition(box.getPosition().x + 90, box.getPosition().y + 70);
+        loading.setPosition(box.getPosition().x + 90, box.getPosition().y + 65);
         window.draw(loading);
     }
     if (MusicPlayer::getIsMusicPlaying()) {
-        sf::Text playing("Playing music...press S to stop.", font, 24);
+        sf::Text playing("Playing song - " + currentSong, font, 24);
         playing.setFillColor(sf::Color::White);
-        playing.setPosition(box.getPosition().x, box.getPosition().y + 70);
+        playing.setPosition(box.getPosition().x, box.getPosition().y + 65);
         window.draw(playing);
     }
 }

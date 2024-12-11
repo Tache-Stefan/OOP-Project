@@ -4,7 +4,11 @@
 #include <filesystem>
 #include <iostream>
 #include <fstream>
+#include <array>
 #include <nlohmann/json.hpp>
+
+#include "MusicPlayer.h"
+#include "TextBoxButton.h"
 
 namespace Utils {
     std::vector<std::string> split(const std::string& s, const char delimiter) {
@@ -152,5 +156,71 @@ namespace Utils {
         sf::Text playlistsText("Playlists", font, 20);
         playlistsText.setPosition(250, 12);
         return {playlistsBox, sf::Color::Green, font, playlistsText, sf::Color::Black};
+    }
+
+    std::vector<TextBoxButton> initButtons() {
+        sf::Font fontButtons;
+        if (!fontButtons.loadFromFile("fonts/Coolvetica.otf")) {
+            std::cerr << "Failed to load font." << std::endl;
+        }
+
+        const std::array<std::string, 5> aux = {"|<", "<", "| |", ">", ">|"};
+        std::vector<TextBoxButton> buttons;
+        buttons.reserve(5);
+        for (unsigned int i = 0; i < 5; ++i) {
+            if (aux[i] == "| |") {
+                buttons.emplace_back(sf::RectangleShape(sf::Vector2f(60, 40)), sf::Color::Red, fontButtons,
+                                     sf::Text(aux[i], fontButtons, 30), sf::Color::White);
+            }
+            else {
+                buttons.emplace_back(sf::RectangleShape(sf::Vector2f(60, 40)), sf::Color::Green, fontButtons,
+                                     sf::Text(aux[i], fontButtons, 30), sf::Color::White);
+            }
+            buttons[i].positionShape(
+                sf::Vector2f(1200 * 0.335 + i * 85, 700 * 0.615),
+                sf::Vector2f(1200 * 0.335 + 17 + i * 85, 700 * 0.615));
+        }
+        buttons[0].setOnClickCallback([] {
+            MusicPlayer::setSeekToStart(true);
+        });
+        buttons[1].setOnClickCallback([] {
+            MusicPlayer::setSkipBack(true);
+        });
+        buttons[2].setOnClickCallback([] {
+            MusicPlayer::setStopPlayback(true);
+        });
+        buttons[3].setOnClickCallback([] {
+            MusicPlayer::setSkipForward(true);
+        });
+        buttons[4].setOnClickCallback([] {
+            MusicPlayer::setSeekToEnd(true);
+        });
+
+        return buttons;
+    }
+
+    std::vector<TextBoxTab> initTabs(const sf::Font& font, int& currentTab) {
+        std::vector<TextBoxTab> tabs;
+        tabs.reserve(2);
+
+        sf::RectangleShape searchBox(sf::Vector2f(200, 50));
+        searchBox.setPosition(0, 0);
+        sf::Text searchText("Search music", font, 20);
+        searchText.setPosition(20, 12);
+        tabs.emplace_back(searchBox, sf::Color::Green, font, searchText, sf::Color::Black);
+        tabs[0].setOnClickCallback([&currentTab] {
+            currentTab = 1;
+        });
+
+        sf::RectangleShape playlistsBox(sf::Vector2f(200, 50));
+        playlistsBox.setPosition(200, 0);
+        sf::Text playlistsText("Playlists", font, 20);
+        playlistsText.setPosition(250, 12);
+        tabs.emplace_back(playlistsBox, sf::Color::Green, font, playlistsText, sf::Color::Black);
+        tabs[1].setOnClickCallback([&currentTab] {
+            currentTab = 2;
+        });
+
+        return tabs;
     }
 }

@@ -44,7 +44,7 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
 
 #### Cerințe
 - [x] separarea codului din clase în `.h` (sau `.hpp`) și `.cpp`
-- [ ] moșteniri:
+- [x] moșteniri:
   - minim o clasă de bază și **3 clase derivate** din aceeași ierarhie
   - ierarhia trebuie să fie cu bază proprie, nu derivată dintr-o clasă predefinită
   - [ ] funcții virtuale (pure) apelate prin pointeri de bază din clasa care conține atributul de tip pointer de bază
@@ -53,7 +53,7 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
     - afișare virtuală, interfață non-virtuală
   - [x] apelarea constructorului din clasa de bază din constructori din derivate
   - [ ] clasă cu atribut de tip pointer la o clasă de bază cu derivate; aici apelați funcțiile virtuale prin pointer de bază, eventual prin interfața non-virtuală din bază
-    - [ ] suprascris cc/op= pentru copieri/atribuiri corecte, copy and swap
+    - [x] suprascris cc/op= pentru copieri/atribuiri corecte, copy and swap
     - [ ] `dynamic_cast`/`std::dynamic_pointer_cast` pentru downcast cu sens
     - [x] smart pointers (recomandat, opțional)
 - [x] excepții
@@ -169,3 +169,5 @@ Vezi și [`scripts/cmake.sh`](scripts/cmake.sh).
 - [yt-dlp](https://github.com/yt-dlp/yt-dlp)
 - [ffmpeg](https://www.ffmpeg.org/)
 - [Youtube Data API](https://developers.google.com/youtube/v3)
+- [FranieFont](https://www.dafontfree.io/franie-font/)
+- [CoolveticaFont](https://www.dafont.com/coolvetica.font)

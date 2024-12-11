@@ -32,3 +32,15 @@ void to_json(nlohmann::json& j, const Artist& artist) {
 void from_json(nlohmann::json& j, Artist& artist) {
     j.at("name").get_to(artist.name);
 }
+
+Artist& Artist::operator=(Artist& other) {
+    swap(*this, other);
+    return *this;
+}
+
+void swap(Artist& a1, Artist& a2) noexcept {
+    using std::swap;
+    swap(a1.name, a2.name);
+    swap(a1.id, a2.id);
+    swap(a1.songs, a2.songs);
+}

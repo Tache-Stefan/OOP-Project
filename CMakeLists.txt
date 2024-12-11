@@ -129,6 +129,8 @@ add_executable(${PROJECT_NAME}
         includes/Exceptions.h
         includes/MusicPlayer.cpp
         includes/MusicPlayer.h
+        includes/TextBoxButton.cpp
+        includes/TextBoxButton.h
 )
 
 include(cmake/CompilerFlags.cmake)

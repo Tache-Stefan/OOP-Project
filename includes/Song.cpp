@@ -24,15 +24,6 @@ Song::Song(const Song& other) : Media(other), id(other.id) {
     std::cout << "Created Song(copiere)" << std::endl;
 }
 
-Song& Song::operator=(const Song& other) {
-    title = other.title;
-    length = other.length;
-    artist = other.artist;
-    id = other.id;
-    std::cout << "Song(operator=)" << std::endl;
-    return *this;
-}
-
 std::ostream& operator<<(std::ostream& os, const Song& song) {
     os << "Song: " << song.title << ", " << Utils::timeToString(song.length) << ", " << "id: " << song.id << std::endl;
     return os;
@@ -67,4 +58,17 @@ void from_json(nlohmann::json& j, Song& song) {
 
 Media* Song::clone() const {
     return new Song(*this);
+}
+
+Song& Song::operator=(Song& other) {
+    swap(*this, other);
+    return *this;
+}
+
+void swap(Song& s1, Song& s2) noexcept {
+    using std::swap;
+    swap(s1.title, s2.title);
+    swap(s1.length, s2.length);
+    swap(s1.artist, s2.artist);
+    swap(s1.id, s2.id);
 }

@@ -8,6 +8,11 @@
 std::atomic<bool> MusicPlayer::stopPlayback = false;
 std::atomic<bool> MusicPlayer::isMusicPlaying = false;
 std::atomic<bool> MusicPlayer::loadingMusic = false;
+std::atomic<int> MusicPlayer::volume = 100;
+std::atomic<bool> MusicPlayer::seekToStart = false;
+std::atomic<bool> MusicPlayer::seekToEnd = false;
+std::atomic<bool> MusicPlayer::skipBack = false;
+std::atomic<bool> MusicPlayer::skipForward = false;
 std::string MusicPlayer::filePath = "audio.mp3";
 
 void MusicPlayer::playMusic() {
@@ -23,6 +28,7 @@ void MusicPlayer::playMusic() {
             return;
         }
 
+        music.setVolume(volume);
         loadingMusic.store(false);
         isMusicPlaying.store(true);
         music.play();
@@ -32,6 +38,31 @@ void MusicPlayer::playMusic() {
                 std::cout << "Stopping playback..." << std::endl;
                 music.stop();
                 break;
+            }
+            music.setVolume(volume.load());
+            if (seekToStart.load()) {
+                music.setPlayingOffset(sf::seconds(0));
+                seekToStart.store(false);
+            }
+            if (seekToEnd.load()) {
+                music.setPlayingOffset(music.getDuration());
+                seekToEnd.store(false);
+            }
+            if (skipBack.load()) {
+                sf::Time newOffset = music.getPlayingOffset() - sf::seconds(10);
+                if (newOffset < sf::seconds(0)) {
+                    newOffset = sf::seconds(0);
+                }
+                music.setPlayingOffset(newOffset);
+                skipBack.store(false);
+            }
+            if (skipForward.load()) {
+                sf::Time newOffset = music.getPlayingOffset() + sf::seconds(10);
+                if (newOffset > music.getDuration()) {
+                    newOffset = music.getDuration();
+                }
+                music.setPlayingOffset(newOffset);
+                skipForward.store(false);
             }
             sleep(sf::milliseconds(100));
         }
@@ -53,11 +84,29 @@ void MusicPlayer::playMusic() {
     }
 }
 
+void MusicPlayer::increaseVolume() {
+    const int newVolume = std::min(volume.load() + 10, 100);
+    volume.store(newVolume);
+}
+
+void MusicPlayer::decreaseVolume() {
+    const int newVolume = std::max(volume.load() - 10, 0);
+    volume.store(newVolume);
+}
+
 void MusicPlayer::setStopPlayback(const bool stopPlayback_) { stopPlayback.store(stopPlayback_); }
 
 void MusicPlayer::setIsMusicPlaying(const bool isMusicPlaying_) { isMusicPlaying.store(isMusicPlaying_); }
 
 void MusicPlayer::setLoadingMusic(const bool loadingMusic_) { loadingMusic.store(loadingMusic_); }
+
+void MusicPlayer::setSeekToStart(const bool seekToStart_) { seekToStart.store(seekToStart_); }
+
+void MusicPlayer::setSeekToEnd(const bool seekToEnd_) { seekToEnd.store(seekToEnd_); }
+
+void MusicPlayer::setSkipBack(const bool skipBack_) { skipBack.store(skipBack_); }
+
+void MusicPlayer::setSkipForward(const bool skipForward_) { skipForward.store(skipForward_); }
 
 bool MusicPlayer::getStopPlayback() { return stopPlayback.load(); }
 

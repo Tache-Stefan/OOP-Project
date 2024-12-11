@@ -44,6 +44,11 @@ EnvironmentSetup::EnvironmentSetup() : envSet(false) {
     }
 }
 
+EnvironmentSetup& EnvironmentSetup::getInstance() {
+    static EnvironmentSetup setup;
+    return setup;
+}
+
 const std::string& EnvironmentSetup::getYoutubeAPI() {return youtube_api;}
 
 const std::string& EnvironmentSetup::getAccessToken() {return access_token;}

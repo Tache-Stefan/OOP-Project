@@ -13,7 +13,6 @@ public:
     Song(std::string title_, const std::shared_ptr<Artist>& artist_, const struct tm& length_, std::string id_);
     Song(std::string title_, const struct tm& length_, std::string id_);
     Song(const Song& other);
-    Song& operator=(const Song& other);
     friend std::ostream& operator<<(std::ostream& os, const Song& song);
     ~Song() override = default;
     std::string getLength() const;
@@ -22,4 +21,6 @@ public:
     friend void to_json(nlohmann::json& j, const Song& song);
     friend void from_json(nlohmann::json& j, Song& song);
     Media* clone() const override;
+    Song& operator=(Song& other);
+    friend void swap(Song& s1, Song& s2) noexcept;
 };

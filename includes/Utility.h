@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 
+#include "TextBoxButton.h"
 #include "TextBoxTab.h"
 
 namespace Utils {
@@ -15,8 +16,9 @@ namespace Utils {
     std::string base64_encode(const std::string& input);
     bool downloadAudio(const std::string &youtubeUrl, const std::string &outputFile);
     void monitorInput(std::atomic<bool> &stopPlayback);
-    void playAudio(const std::string &filePath, std::atomic<bool> &stopPlayback, std::atomic<bool> &isMusicPlaying);
     void loadEnvFile();
     TextBoxTab initSearchTab(const sf::Font& font);
     TextBoxTab initPlaylistsTab(const sf::Font& font);
+    std::vector<TextBoxButton> initButtons();
+    std::vector<TextBoxTab> initTabs(const sf::Font& font, int& currentTab);
 }
