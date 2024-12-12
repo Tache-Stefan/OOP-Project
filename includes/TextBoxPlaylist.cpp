@@ -8,6 +8,20 @@ TextBoxPlaylist::TextBoxPlaylist(const sf::RectangleShape& box_, const sf::Color
     box.setOutlineColor(textColor);
 }
 
-TextBox* TextBoxPlaylist::clone() const {
+TextBoxPlaylist* TextBoxPlaylist::clone() const {
     return new TextBoxPlaylist(*this);
+}
+
+TextBoxPlaylist& TextBoxPlaylist::operator=(const TextBoxPlaylist& other) {
+    TextBoxPlaylist* temp = other.clone();
+    swap(*this, *temp);
+    delete temp;
+    return *this;
+}
+
+void swap(TextBoxPlaylist& t1, TextBoxPlaylist& t2) noexcept {
+    using std::swap;
+    swap(t1.font, t2.font);
+    swap(t1.box, t2.box);
+    swap(t1.text, t2.text);
 }

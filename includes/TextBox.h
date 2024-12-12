@@ -16,5 +16,7 @@ public:
     void positionShape(const sf::Vector2f& boxPosition, const sf::Vector2f& textPosition);
     void setText(const std::string& userInput);
     virtual void draw(sf::RenderWindow& window) const;
-    virtual TextBox* clone() const;
+    virtual TextBox* clone() const = 0;
+    TextBox& operator=(const TextBox& other);
+    friend void swap(TextBox& t1, TextBox& t2) noexcept;
 };

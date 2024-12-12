@@ -151,8 +151,8 @@ void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& ev
     }
 
     if (event.type == sf::Event::Resized) {
-        const float windowWidth = static_cast<float>(event.size.width);
-        const float windowHeight = static_cast<float>(event.size.height);
+        const auto windowWidth = static_cast<float>(event.size.width);
+        const auto windowHeight = static_cast<float>(event.size.height);
 
         inputBox.positionShape(
             sf::Vector2f(windowWidth * 0.23f, windowHeight * 0.2f),

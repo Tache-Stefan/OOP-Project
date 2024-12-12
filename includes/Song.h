@@ -20,7 +20,7 @@ public:
     void play() const override;
     friend void to_json(nlohmann::json& j, const Song& song);
     friend void from_json(nlohmann::json& j, Song& song);
-    Media* clone() const override;
-    Song& operator=(Song& other);
+    Song* clone() const override;
+    Song& operator=(const Song& other);
     friend void swap(Song& s1, Song& s2) noexcept;
 };

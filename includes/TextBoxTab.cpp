@@ -42,6 +42,22 @@ void TextBoxTab::draw(sf::RenderWindow& window) const {
     }
 }
 
-TextBox* TextBoxTab::clone() const {
+TextBoxTab* TextBoxTab::clone() const {
     return new TextBoxTab(*this);
+}
+
+TextBoxTab& TextBoxTab::operator=(const TextBoxTab& other) {
+    TextBoxTab* temp = other.clone();
+    swap(*this, *temp);
+    delete temp;
+    return *this;
+}
+
+void swap(TextBoxTab& t1, TextBoxTab& t2) noexcept {
+    using std::swap;
+    swap(t1.font, t2.font);
+    swap(t1.box, t2.box);
+    swap(t1.text, t2.text);
+    swap(t1.isActive, t2.isActive);
+    swap(t1.onClickCallback, t2.onClickCallback);
 }

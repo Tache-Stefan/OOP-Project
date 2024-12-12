@@ -39,6 +39,9 @@ void TextBox::draw(sf::RenderWindow& window) const {
     window.draw(text);
 }
 
-TextBox* TextBox::clone() const {
-    return new TextBox(*this);
+void swap(TextBox& t1, TextBox& t2) noexcept {
+    using std::swap;
+    swap(t1.font, t2.font);
+    swap(t1.box, t2.box);
+    swap(t1.text, t2.text);
 }

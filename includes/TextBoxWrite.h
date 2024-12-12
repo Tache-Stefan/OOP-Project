@@ -21,5 +21,7 @@ public:
     void draw(sf::RenderWindow& window) const override;
     void drawSearch(sf::RenderWindow& window) const;
     bool getActive() const;
-    TextBox* clone() const override;
+    TextBoxWrite* clone() const override;
+    TextBoxWrite& operator=(const TextBoxWrite &other);
+    friend void swap(TextBoxWrite& t1, TextBoxWrite& t2) noexcept;
 };

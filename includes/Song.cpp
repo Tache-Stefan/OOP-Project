@@ -56,12 +56,14 @@ void from_json(nlohmann::json& j, Song& song) {
     j.at("title").get_to(song.title);
 }
 
-Media* Song::clone() const {
+Song* Song::clone() const {
     return new Song(*this);
 }
 
-Song& Song::operator=(Song& other) {
-    swap(*this, other);
+Song& Song::operator=(const Song& other) {
+    Song* temp = other.clone();
+    swap(*this, *temp);
+    delete temp;
     return *this;
 }
 

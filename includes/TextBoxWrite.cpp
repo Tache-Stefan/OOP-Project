@@ -111,6 +111,23 @@ void TextBoxWrite::drawSearch(sf::RenderWindow& window) const {
 
 bool TextBoxWrite::getActive() const { return isActive; }
 
-TextBox* TextBoxWrite::clone() const {
+TextBoxWrite* TextBoxWrite::clone() const {
     return new TextBoxWrite(*this);
+}
+
+TextBoxWrite& TextBoxWrite::operator=(const TextBoxWrite& other) {
+    TextBoxWrite* temp = other.clone();
+    swap(*this, *temp);
+    delete temp;
+    return *this;
+}
+
+void swap(TextBoxWrite& t1, TextBoxWrite& t2) noexcept {
+    using std::swap;
+    swap(t1.font, t2.font);
+    swap(t1.box, t2.box);
+    swap(t1.text, t2.text);
+    swap(t1.isActive, t2.isActive);
+    swap(t1.userInput, t2.userInput);
+    swap(t1.currentSong, t2.currentSong);
 }
