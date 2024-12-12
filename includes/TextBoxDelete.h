@@ -13,4 +13,5 @@ public:
     TextBoxDelete* clone() const override;
     TextBoxDelete& operator=(const TextBoxDelete &other);
     friend void swap(TextBoxDelete& t1, TextBoxDelete& t2) noexcept;
+    TextBoxDelete(const TextBoxDelete &other);
 };

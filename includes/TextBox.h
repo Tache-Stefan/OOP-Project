@@ -18,4 +18,5 @@ public:
     virtual void draw(sf::RenderWindow& window) const;
     virtual TextBox* clone() const = 0;
     friend void swap(TextBox& t1, TextBox& t2) noexcept;
+    TextBox(const TextBox &other);
 };

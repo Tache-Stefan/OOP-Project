@@ -18,4 +18,5 @@ public:
     TextBoxButton* clone() const override;
     TextBoxButton& operator=(const TextBoxButton &other);
     friend void swap(TextBoxButton& t1, TextBoxButton& t2) noexcept;
+    TextBoxButton(const TextBoxButton &other);
 };

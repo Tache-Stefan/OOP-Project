@@ -17,4 +17,5 @@ public:
     TextBoxTab* clone() const override;
     TextBoxTab& operator=(const TextBoxTab &other);
     friend void swap(TextBoxTab& t1, TextBoxTab& t2) noexcept;
+    TextBoxTab(const TextBoxTab &other);
 };

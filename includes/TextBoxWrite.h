@@ -24,4 +24,5 @@ public:
     TextBoxWrite* clone() const override;
     TextBoxWrite& operator=(const TextBoxWrite &other);
     friend void swap(TextBoxWrite& t1, TextBoxWrite& t2) noexcept;
+    TextBoxWrite(const TextBoxWrite &other);
 };

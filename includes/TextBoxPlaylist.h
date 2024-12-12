@@ -9,4 +9,5 @@ public:
     TextBoxPlaylist* clone() const override;
     TextBoxPlaylist& operator=(const TextBoxPlaylist &other);
     friend void swap(TextBoxPlaylist& t1, TextBoxPlaylist& t2) noexcept;
+    TextBoxPlaylist(const TextBoxPlaylist &other);
 };

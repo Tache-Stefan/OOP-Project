@@ -61,3 +61,5 @@ void swap(TextBoxTab& t1, TextBoxTab& t2) noexcept {
     swap(t1.isActive, t2.isActive);
     swap(t1.onClickCallback, t2.onClickCallback);
 }
+
+TextBoxTab::TextBoxTab(const TextBoxTab& other) : TextBox(other), isActive(other.isActive), onClickCallback(other.onClickCallback) {}

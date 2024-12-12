@@ -131,3 +131,6 @@ void swap(TextBoxWrite& t1, TextBoxWrite& t2) noexcept {
     swap(t1.userInput, t2.userInput);
     swap(t1.currentSong, t2.currentSong);
 }
+
+TextBoxWrite::TextBoxWrite(const TextBoxWrite& other) : TextBox(other), isActive(other.isActive), userInput(other.userInput),
+                                                        currentSong(other.currentSong) {}
