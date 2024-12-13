@@ -59,7 +59,7 @@ void TextBoxWrite::handleEventsMusic(sf::RenderWindow& window, const sf::Event& 
     }
 }
 
-void TextBoxWrite::handleEventsSongDisplay(sf::RenderWindow& window, const sf::Event& event, Playlist& playlist) {
+void TextBoxWrite::handleEventsSongDisplay(sf::RenderWindow& window, const sf::Event& event, Playlist* playlist) {
     handleEvents(window, event);
 
     if (isActive && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
@@ -68,7 +68,7 @@ void TextBoxWrite::handleEventsSongDisplay(sf::RenderWindow& window, const sf::E
         }
         const std::shared_ptr<Song> song = API::searchSpotifySong(EnvironmentSetup::getAccessToken(), userInput);
         userInput.clear();
-        playlist.addSong(song);
+        playlist->addSong(song);
         PlaylistDisplay::needChangeAddSong();
     }
 }

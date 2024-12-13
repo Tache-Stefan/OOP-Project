@@ -29,7 +29,7 @@ int main() {
 
     std::vector<TextBoxTab> tabs = Utils::initTabs(font, currentTab);
     std::vector<TextBoxButton> buttons = Utils::initButtons();
-    PlaylistDisplay playlistDisplay(font);
+    std::unique_ptr<Display> display = std::make_unique<PlaylistDisplay>(font);
 
     while (window.isOpen()) {
 
@@ -68,7 +68,7 @@ int main() {
                 }
             }
             if (currentTab == 2) {
-                playlistDisplay.handleEvents(window, event);
+                display->handleEvents(window, event);
             }
             for (unsigned int i = 0; i < 2; ++i) {
                 tabs[i].handleEvents(window, event);
@@ -90,7 +90,7 @@ int main() {
                 window.display();
             break;
             case 2:
-                playlistDisplay.draw(window);
+                display->draw(window);
                 window.display();
             break;
             default:

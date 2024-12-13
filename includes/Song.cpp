@@ -12,15 +12,15 @@
 Song::Song() = default;
 
 Song::Song(std::string title_, const std::shared_ptr<Artist> &artist_, const struct tm& length_, std::string id_)
-    : Media(std::move(title_), artist_, length_), id(std::move(id_)) {
+    : MediaItem(std::move(title_), length_), artist(artist_), id(std::move(id_)) {
     std::cout << "Created Song: " << title << std::endl;
 }
 
-Song::Song(std::string title_, const struct tm& length_, std::string id_) : Media(std::move(title_), length_), id(std::move(id_)) {
+Song::Song(std::string title_, const struct tm& length_, std::string id_) : MediaItem(std::move(title_), length_), id(std::move(id_)) {
     std::cout << "Created Song: " << title << std::endl;
 }
 
-Song::Song(const Song& other) : Media(other), id(other.id) {
+Song::Song(const Song& other) : MediaItem(other), artist(other.artist), id(other.id) {
     std::cout << "Created Song(copiere)" << std::endl;
 }
 
@@ -30,6 +30,8 @@ std::ostream& operator<<(std::ostream& os, const Song& song) {
 }
 
 std::string Song::getLength() const {return Utils::timeToString(length);}
+
+std::string Song::getTitle() const {return title;}
 
 const std::string& Song::getID() const {return id;}
 

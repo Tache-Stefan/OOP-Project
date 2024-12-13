@@ -10,12 +10,12 @@
 
 unsigned int SongDisplay::currentIndex = 0;
 
-SongDisplay::SongDisplay(const sf::Font &font_) :
-    font(font_),
-    inputBox(TextBoxWrite(sf::RectangleShape(sf::Vector2f(300.f, 50.f)), sf::Color::White, font,
-   sf::Text("", font, 24), sf::Color::Black)),
-    songsText(sf::Text("Songs", font, 24)),
-    scrollSpeed(40.f), verticalOffset(0.f), visibleCount(8), itemHeight(40), windowWidth(1200), windowHeight(700) {
+void SongDisplay::setMaxScroll(int& maxScroll) {
+    maxScroll = (songs.size() > visibleCount) ? (songs.size() - visibleCount) * itemHeight : 0;
+}
+
+SongDisplay::SongDisplay(const sf::Font &font_) : Display(font_),
+    songsText(sf::Text("Songs", font, 24)) {
 
     inputBox.positionShape(
             sf::Vector2f(windowWidth * 0.73f, windowHeight * 0.2f),
@@ -29,12 +29,6 @@ SongDisplay::SongDisplay(const sf::Font &font_) :
 
     songsText.setFillColor(sf::Color::White);
     songsText.setPosition(windowWidth * 0.5f + 90, windowHeight * 0.16f);
-
-    for (unsigned int i = 0; i < 8; ++i) {
-        textsRects[i] = sf::RectangleShape(sf::Vector2f(200, 40));
-        texts[i] = sf::Text("", font, 24);
-        deleteRects[i] = sf::RectangleShape(sf::Vector2f(60, 39));
-    }
 }
 
 void SongDisplay::setSongs(const std::vector<std::shared_ptr<Song>>& songs_) {songs = songs_;}
@@ -65,32 +59,7 @@ void SongDisplay::draw(sf::RenderWindow& window) {
     inputBox.draw(window);
 }
 
-void SongDisplay::scrollUp() {
-    if (verticalOffset > 0) {
-        verticalOffset -= scrollSpeed;
-    }
-}
-
-void SongDisplay::scrollDown() {
-    const int maxScroll = (songs.size() > visibleCount) ? (songs.size() - visibleCount) * itemHeight : 0;
-
-    if (verticalOffset < maxScroll) {
-        verticalOffset += scrollSpeed;
-    }
-    if (verticalOffset > maxScroll) {
-        verticalOffset = maxScroll;
-    }
-}
-
-void SongDisplay::scrollWithMouse(const float delta) {
-    if (delta < 0) {
-        scrollDown();
-    } else if (delta > 0) {
-        scrollUp();
-    }
-}
-
-void SongDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& event, Playlist& playlist) {
+void SongDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& event, Playlist* playlist) {
     try {
         inputBox.handleEventsSongDisplay(window, event, playlist);
     } catch (const SearchException& e) {
@@ -142,4 +111,8 @@ void SongDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& event,
 
         songsText.setPosition(windowWidth * 0.5f + 90, windowHeight * 0.16f);
     }
+}
+
+SongDisplay* SongDisplay::clone() const {
+    return new SongDisplay(*this);
 }

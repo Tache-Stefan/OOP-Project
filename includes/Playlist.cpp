@@ -11,15 +11,9 @@
 
 Playlist::Playlist() = default;
 
-Playlist::Playlist(std::string title_, const std::vector<std::shared_ptr<Song>>& songs_) : title(std::move(title_)),
-                   songs(songs_), length({}) {
+Playlist::Playlist(const std::string &title_, const std::vector<std::shared_ptr<Song>>& songs_) : MediaItem(title_), songs(songs_) {}
 
-    std::cout << "Created Playlist: " << title << "\n";
-}
-
-Playlist::Playlist(std::string title_) : title(std::move(title_)) {
-    std::cout << "Created Playlist: " << title << "\n";
-}
+Playlist::Playlist(const std::string &title_) : MediaItem(title_) {}
 
 void Playlist::addSong(const std::shared_ptr<Song>& song) {songs.emplace_back(song);}
 
@@ -31,6 +25,8 @@ std::ostream& operator<<(std::ostream& os, const Playlist& playlist) {
     }
     return os;
 }
+
+Playlist::Playlist(const Playlist& other) : MediaItem(other), songs(other.songs) {}
 
 std::string Playlist::getLength() const {return Utils::timeToString(length);}
 
@@ -76,4 +72,22 @@ void from_json(const nlohmann::json& j, Playlist& playlist) {
         std::shared_ptr<Song> song_ptr = API::searchSpotifySong(EnvironmentSetup::getAccessToken(), song);
         playlist.addSong(song_ptr);
     }
+}
+
+Playlist* Playlist::clone() const {
+    return new Playlist(*this);
+}
+
+Playlist& Playlist::operator=(const Playlist& other) {
+    Playlist* temp = other.clone();
+    swap(*this, *temp);
+    delete temp;
+    return *this;
+}
+
+void swap(Playlist& p1, Playlist& p2) noexcept {
+    using std::swap;
+    swap(p1.title, p2.title);
+    swap(p1.length, p2.length);
+    swap(p1.songs, p2.songs);
 }

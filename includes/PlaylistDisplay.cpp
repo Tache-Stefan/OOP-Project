@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <iostream>
+#include <set>
 
 #include "API.h"
 #include "Exceptions.h"
@@ -11,30 +12,25 @@
 unsigned int PlaylistDisplay::currentIndex = 0;
 int PlaylistDisplay::change = -1;
 
-PlaylistDisplay::PlaylistDisplay(const sf::Font &font_) : font(font_), songDisplay(font_),
-    inputBox(TextBoxWrite(sf::RectangleShape(sf::Vector2f(300.f, 50.f)), sf::Color::White, font,
-    sf::Text("", font, 24), sf::Color::Black)),
-    playlistsText(sf::Text ("Playlists", font, 24)),
-    scrollSpeed(40.f), verticalOffset(0.f), visibleCount(8), itemHeight(40) {
+void PlaylistDisplay::setMaxScroll(int& maxScroll) {
+    maxScroll = (playlists.size() > visibleCount) ? (playlists.size() - visibleCount) * itemHeight : 0;
+}
+
+PlaylistDisplay::PlaylistDisplay(const sf::Font &font_) : Display(font_), songDisplay(font_),
+    playlistsText(sf::Text ("Playlists", font, 24)) {
 
     inputBox.positionShape(
-            sf::Vector2f(1200 * 0.23f, 700 * 0.2f),
-            sf::Vector2f(1200 * 0.24f, 700 * 0.21f)
+            sf::Vector2f(windowWidth * 0.23f, windowHeight * 0.2f),
+            sf::Vector2f(windowWidth * 0.24f, windowHeight * 0.21f)
             );
     inputText.setFont(font);
     inputText.setString("Enter the name of a playlist to add");
     inputText.setCharacterSize(16);
     inputText.setFillColor(sf::Color::White);
-    inputText.setPosition(1200 * 0.225f, 700 * 0.16f);
+    inputText.setPosition(windowWidth * 0.225f, windowHeight * 0.16f);
 
     playlistsText.setFillColor(sf::Color::White);
     playlistsText.setPosition(60.f, 160.f);
-
-    for (unsigned int i = 0; i < 8; ++i) {
-        textsRects[i] = sf::RectangleShape(sf::Vector2f(200, 40));
-        texts[i] = sf::Text("", font, 24);
-        deleteRects[i] = sf::RectangleShape(sf::Vector2f(60, 40));
-    }
 
     loadPlaylists();
 }
@@ -48,16 +44,13 @@ void PlaylistDisplay::draw(sf::RenderWindow& window) {
         currentIndex = i + verticalOffset / itemHeight;
         if (currentIndex >= playlists.size()) break;
 
-        //sf::RectangleShape textButton(sf::Vector2f(200, 40));
         textsRects[i].setPosition(0.f, 200.f + (i * itemHeight));
-        //sf::Text text(playlists[currentIndex].getTitle(), font, 24);
         texts[i].setString(playlists[currentIndex].getTitle());
         texts[i].setPosition(10.f, 205.f + (i * itemHeight));
 
         TextBoxPlaylist playlistButton(textsRects[i], sf::Color(144, 213, 255), font, texts[i], sf::Color::Black);
         playlistButton.draw(window);
 
-        //sf::RectangleShape deleteRect(sf::Vector2f(60, 40));
         deleteRects[i].setPosition(200.f, 200.f + (i * itemHeight));
         sf::Text deleteText;
         deleteText.setPosition(217.f, 200.f + (i * itemHeight));
@@ -70,33 +63,9 @@ void PlaylistDisplay::draw(sf::RenderWindow& window) {
     }
 }
 
-void PlaylistDisplay::scrollUp() {
-    if (verticalOffset > 0) {
-        verticalOffset -= scrollSpeed;
-    }
-}
-
-void PlaylistDisplay::scrollDown() {
-    const int maxScroll = (playlists.size() > visibleCount) ? (playlists.size() - visibleCount) * itemHeight : 0;
-
-    if (verticalOffset < maxScroll) {
-        verticalOffset += scrollSpeed;
-    }
-    if (verticalOffset > maxScroll) {
-        verticalOffset = maxScroll;
-    }
-}
-
-void PlaylistDisplay::scrollWithMouse(const float delta) {
-    if (delta < 0) {
-        scrollDown();
-    } else if (delta > 0) {
-        scrollUp();
-    }
-}
-
-void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& event) {
-    songDisplay.handleEvents(window, event, playlists[currentPlaylist]);
+void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& event, Playlist* playlist) {
+    (void)playlist;
+    songDisplay.handleEvents(window, event, &playlists[currentPlaylist]);
     if (change == 1) {
         songDisplay.setSongs(playlists[currentPlaylist].getSongs());
         change = -1;
@@ -151,8 +120,8 @@ void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& ev
     }
 
     if (event.type == sf::Event::Resized) {
-        const auto windowWidth = static_cast<float>(event.size.width);
-        const auto windowHeight = static_cast<float>(event.size.height);
+        windowWidth = static_cast<float>(event.size.width);
+        windowHeight = static_cast<float>(event.size.height);
 
         inputBox.positionShape(
             sf::Vector2f(windowWidth * 0.23f, windowHeight * 0.2f),
@@ -190,3 +159,7 @@ void PlaylistDisplay::loadPlaylists() {
 void PlaylistDisplay::needChangeAddSong() {change = 1;}
 
 void PlaylistDisplay::needChangeRemoveSong() {change = 2;}
+
+PlaylistDisplay* PlaylistDisplay::clone() const {
+    return new PlaylistDisplay(*this);
+}

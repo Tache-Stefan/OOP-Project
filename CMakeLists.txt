@@ -101,8 +101,8 @@ add_executable(${PROJECT_NAME}
         includes/Artist.h
         includes/Utility.h
         includes/Utility.cpp
-        includes/Media.cpp
-        includes/Media.h
+        includes/MediaItem.cpp
+        includes/MediaItem.h
         includes/API.cpp
         includes/API.h
         includes/EnvironmentSetup.cpp
@@ -131,6 +131,8 @@ add_executable(${PROJECT_NAME}
         includes/MusicPlayer.h
         includes/TextBoxButton.cpp
         includes/TextBoxButton.h
+        includes/Display.cpp
+        includes/Display.h
 )
 
 include(cmake/CompilerFlags.cmake)

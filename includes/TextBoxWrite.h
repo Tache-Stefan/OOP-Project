@@ -16,7 +16,7 @@ public:
     TextBoxWrite(const sf::RectangleShape& box_, const sf::Color& boxColor, const sf::Font& font_, const sf::Text& text_, const sf::Color& textColor);
     bool containsClick(const sf::Vector2f& mousePosition);
     void handleEventsMusic(sf::RenderWindow& window, const sf::Event& event);
-    void handleEventsSongDisplay(sf::RenderWindow& window, const sf::Event& event, Playlist& playlist);
+    void handleEventsSongDisplay(sf::RenderWindow& window, const sf::Event& event, Playlist* playlist);
     void handleEventsPlaylistDisplay(sf::RenderWindow& window, const sf::Event& event, std::vector<Playlist>& playlists);
     void draw(sf::RenderWindow& window) const override;
     void drawSearch(sf::RenderWindow& window) const;
