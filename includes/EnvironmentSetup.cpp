@@ -10,7 +10,7 @@ std::string EnvironmentSetup::access_token;
 EnvironmentSetup::EnvironmentSetup() : envSet(false) {
     const char* githubActions = std::getenv("GITHUB_ACTIONS");
     if (githubActions == nullptr) {
-        //Utils::loadEnvFile();
+        Utils::loadEnvFile();
     }
 
     const char* client_id_env = getenv("SPOTIFY_CLIENT_ID");
