@@ -13,5 +13,4 @@ int main() {
     Application app(font);
 
     app.run();
-    //test
 }
