@@ -14,7 +14,8 @@ std::atomic<bool> MusicPlayer::seekToEnd = false;
 std::atomic<bool> MusicPlayer::skipBack = false;
 std::atomic<bool> MusicPlayer::skipForward = false;
 std::atomic<bool> MusicPlayer::playlistPlaying = false;
-std::atomic<std::shared_ptr<std::string>> MusicPlayer::currentSong{nullptr};
+std::string MusicPlayer::currentSong{""};
+std::mutex MusicPlayer::songMutex;
 std::string MusicPlayer::filePath = "audio.mp3";
 
 void MusicPlayer::playMusic() {
@@ -112,7 +113,10 @@ void MusicPlayer::setSkipForward(const bool skipForward_) { skipForward.store(sk
 
 void MusicPlayer::setPlaylistPlaying(const bool playlistPlaying_) { playlistPlaying.store(playlistPlaying_); }
 
-void MusicPlayer::setCurrentSong(const std::string& currentSong_) { currentSong.store(std::make_shared<std::string>(currentSong_)); }
+void MusicPlayer::setCurrentSong(const std::string& currentSong_) {
+    std::lock_guard lock(songMutex);
+    currentSong = currentSong_;
+}
 
 bool MusicPlayer::getStopPlayback() { return stopPlayback.load(); }
 
@@ -122,4 +126,7 @@ bool MusicPlayer::getLoadingMusic() { return loadingMusic.load(); }
 
 bool MusicPlayer::getPlaylistPlaying() { return playlistPlaying.load(); }
 
-std::shared_ptr<std::string> MusicPlayer::getCurrentSong() { return currentSong.load(); }
+std::string MusicPlayer::getCurrentSong() {
+    std::lock_guard lock(songMutex);
+    return currentSong;
+}

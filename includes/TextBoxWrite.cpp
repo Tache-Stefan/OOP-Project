@@ -102,7 +102,7 @@ void TextBoxWrite::drawSearch(sf::RenderWindow& window) const {
         window.draw(loading);
     }
     if (MusicPlayer::getIsMusicPlaying()) {
-        sf::Text playing("Playing song - " + *MusicPlayer::getCurrentSong(), font, 24);
+        sf::Text playing("Playing song - " + MusicPlayer::getCurrentSong(), font, 24);
         playing.setFillColor(sf::Color::White);
         playing.setPosition(box.getPosition().x, box.getPosition().y + 65);
         window.draw(playing);

@@ -16,7 +16,8 @@ private:
     static std::atomic<bool> skipBack;
     static std::atomic<bool> skipForward;
     static std::atomic<bool> playlistPlaying;
-    static std::atomic<std::shared_ptr<std::string>> currentSong;
+    static std::string currentSong;
+    static std::mutex songMutex;
 public:
     static void playMusic();
     static void increaseVolume();
@@ -34,5 +35,5 @@ public:
     static bool getIsMusicPlaying();
     static bool getLoadingMusic();
     static bool getPlaylistPlaying();
-    static std::shared_ptr<std::string> getCurrentSong();
+    static std::string getCurrentSong();
 };
