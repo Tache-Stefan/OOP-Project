@@ -3,7 +3,7 @@
 #include <memory>
 #include <mutex>
 
-#include "SFML/Audio.hpp"
+#include <SFML/Audio.hpp>
 
 class MusicPlayer {
 private:
@@ -21,6 +21,9 @@ private:
     static std::string currentSong;
     static std::mutex songMutex;
 public:
+    MusicPlayer() = delete;
+    MusicPlayer(const MusicPlayer&) = delete;
+    MusicPlayer& operator=(const MusicPlayer&) = delete;
     static void playMusic();
     static void increaseVolume();
     static void decreaseVolume();
