@@ -54,7 +54,7 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
   - [x] apelarea constructorului din clasa de bază din constructori din derivate
   - [x] clasă cu atribut de tip pointer la o clasă de bază cu derivate; aici apelați funcțiile virtuale prin pointer de bază, eventual prin interfața non-virtuală din bază
     - [x] suprascris cc/op= pentru copieri/atribuiri corecte, copy and swap
-    - [ ] `dynamic_cast`/`std::dynamic_pointer_cast` pentru downcast cu sens
+    - [x] `dynamic_cast`/`std::dynamic_pointer_cast` pentru downcast cu sens
     - [x] smart pointers (recomandat, opțional)
 - [x] excepții
   - [x] ierarhie proprie cu baza `std::exception` sau derivată din `std::exception`; minim **3** clase pentru erori specifice
@@ -66,7 +66,7 @@ O cerință nu se consideră îndeplinită dacă este realizată doar ca o serie
 - [x] funcții *de nivel înalt*, de eliminat cât mai mulți getters/setters/funcții low-level
 - [x] la sfârșit: commit separat cu adăugarea unei noi clase derivate fără a modifica restul codului, **pe lângă cele 3 derivate deja adăugate** din aceeași ierarhie
   - noua derivată nu poate fi una existentă care a fost ștearsă și adăugată din nou
-- [ ] tag de `git`: de exemplu `v0.2`
+- [x] tag de `git`: de exemplu `v0.2`
 
 ## Tema 3
 

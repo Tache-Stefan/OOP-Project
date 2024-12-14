@@ -133,6 +133,8 @@ add_executable(${PROJECT_NAME}
         includes/TextBoxButton.h
         includes/Display.cpp
         includes/Display.h
+        includes/Application.cpp
+        includes/Application.h
 )
 
 include(cmake/CompilerFlags.cmake)

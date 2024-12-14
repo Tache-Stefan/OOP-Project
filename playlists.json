@@ -1,52 +1,16 @@
 [
     {
         "songs": [
+            "Last Christmas",
+            "Holly Jolly Christmas",
+            "All I Want for Christmas Is You"
+        ],
+        "title": "Christmas"
+    },
+    {
+        "songs": [
             "Grenade"
         ],
-        "title": "test1"
-    },
-    {
-        "songs": [],
-        "title": "test2"
-    },
-    {
-        "songs": [],
-        "title": "test3"
-    },
-    {
-        "songs": [],
-        "title": "test4"
-    },
-    {
-        "songs": [],
-        "title": "test5"
-    },
-    {
-        "songs": [],
-        "title": "test6"
-    },
-    {
-        "songs": [],
-        "title": "test7"
-    },
-    {
-        "songs": [],
-        "title": "test8"
-    },
-    {
-        "songs": [],
-        "title": "test9"
-    },
-    {
-        "songs": [],
-        "title": "test10"
-    },
-    {
-        "songs": [],
-        "title": "test11"
-    },
-    {
-        "songs": [],
-        "title": "test12"
+        "title": "Test"
     }
 ]

@@ -10,12 +10,6 @@ void ArtistCollection::addArtist(const std::shared_ptr<Artist>& artist) {
     std::cout << "Added \"" << artist->getName() << "\" to the artist collection. \n";
 }
 
-/*bool ArtistCollection::searchArtist(const std::string& id) {
-    const auto it = artistMap.find(id);
-    if (it == artistMap.end()) { return false; }
-    return true;
-}*/
-
 // cppcheck-suppress unusedFunction ; false positive
 std::shared_ptr<Artist> ArtistCollection::getArtist(const std::string& id) {
     const auto it = artistMap.find(id);
