@@ -17,6 +17,19 @@ bool TextBoxButton::handleEvents(sf::RenderWindow& window, const sf::Event& even
         return false;
     }
     box.setFillColor(originalColor);
+    if (MusicPlayer::getPaused() && text.getString() == "| |") {
+        box.setFillColor(sf::Color::Green);
+        text.setString("|>");
+    }
+    else if (text.getString() == "| |") {
+        box.setFillColor(sf::Color::Red);
+    }
+    if (!MusicPlayer::getPaused() && text.getString() == "|>") {
+        text.setString("| |");
+    }
+    else if (text.getString() == "|>") {
+        box.setFillColor(sf::Color::Green);
+    }
 
     if (event.type == sf::Event::Resized) {
         window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));

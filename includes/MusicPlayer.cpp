@@ -5,6 +5,7 @@
 
 #include "Exceptions.h"
 
+std::atomic<bool> MusicPlayer::paused = false;
 std::atomic<bool> MusicPlayer::stopPlayback = false;
 std::atomic<bool> MusicPlayer::isMusicPlaying = false;
 std::atomic<bool> MusicPlayer::loadingMusic = false;
@@ -36,11 +37,16 @@ void MusicPlayer::playMusic() {
         isMusicPlaying.store(true);
         music.play();
 
-        while (music.getStatus() == sf::SoundSource::Playing) {
+        while (music.getStatus() == sf::SoundSource::Playing || music.getStatus() == sf::SoundSource::Paused) {
             if(stopPlayback.load()) {
                 std::cout << "Stopping playback..." << std::endl;
                 music.stop();
                 break;
+            }
+            if (paused.load() && music.getStatus() == sf::SoundSource::Playing) {
+                music.pause();
+            } else if (!paused.load() && music.getStatus() == sf::SoundSource::Paused) {
+                music.play();
             }
             music.setVolume(volume.load());
             if (seekToStart.load()) {
@@ -70,6 +76,7 @@ void MusicPlayer::playMusic() {
             sleep(sf::milliseconds(100));
         }
 
+        paused.store(false);
         isMusicPlaying.store(false);
         stopPlayback.store(true);
         std::cout << "Audio finished!" << std::endl;
@@ -97,6 +104,8 @@ void MusicPlayer::decreaseVolume() {
     volume.store(newVolume);
 }
 
+void MusicPlayer::setPaused(const bool paused_) { paused.store(paused_); }
+
 void MusicPlayer::setStopPlayback(const bool stopPlayback_) { stopPlayback.store(stopPlayback_); }
 
 void MusicPlayer::setIsMusicPlaying(const bool isMusicPlaying_) { isMusicPlaying.store(isMusicPlaying_); }
@@ -117,6 +126,8 @@ void MusicPlayer::setCurrentSong(const std::string& currentSong_) {
     std::lock_guard lock(songMutex);
     currentSong = currentSong_;
 }
+
+bool MusicPlayer::getPaused() { return paused.load(); }
 
 bool MusicPlayer::getStopPlayback() { return stopPlayback.load(); }
 

@@ -1,12 +1,14 @@
 #pragma once
 #include <atomic>
 #include <memory>
+#include <mutex>
 
 #include "SFML/Audio.hpp"
 
 class MusicPlayer {
 private:
     static std::string filePath;
+    static std::atomic<bool> paused;
     static std::atomic<bool> stopPlayback;
     static std::atomic<bool> isMusicPlaying;
     static std::atomic<bool> loadingMusic;
@@ -22,6 +24,7 @@ public:
     static void playMusic();
     static void increaseVolume();
     static void decreaseVolume();
+    static void setPaused(bool paused_);
     static void setStopPlayback(bool stopPlayback_);
     static void setIsMusicPlaying(bool isMusicPlaying_);
     static void setLoadingMusic(bool loadingMusic_);
@@ -31,6 +34,7 @@ public:
     static void setSkipForward(bool skipForward_);
     static void setPlaylistPlaying(bool playlistPlaying_);
     static void setCurrentSong(const std::string &currentSong_);
+    static bool getPaused();
     static bool getStopPlayback();
     static bool getIsMusicPlaying();
     static bool getLoadingMusic();

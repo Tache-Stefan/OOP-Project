@@ -187,7 +187,11 @@ namespace Utils {
             MusicPlayer::setSkipBack(true);
         });
         buttons[2].setOnClickCallback([] {
-            MusicPlayer::setStopPlayback(true);
+            if (MusicPlayer::getPaused()) {
+                MusicPlayer::setPaused(false);
+            } else {
+                MusicPlayer::setPaused(true);
+            }
         });
         buttons[3].setOnClickCallback([] {
             MusicPlayer::setSkipForward(true);
@@ -235,7 +239,7 @@ namespace Utils {
 
         sf::RectangleShape searchBox(sf::Vector2f(200, 50));
         searchBox.setPosition(0, 0);
-        sf::Text searchText("Search music", font, 20);
+        sf::Text searchText("Music player", font, 20);
         searchText.setPosition(20, 12);
         tabs.emplace_back(searchBox, sf::Color::Green, font, searchText, sf::Color::Black);
         tabs[0].setOnClickCallback([&currentTab] {
