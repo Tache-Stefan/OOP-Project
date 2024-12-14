@@ -25,6 +25,7 @@ void TextBox::centerShape(const sf::RenderWindow& window) {
     );
 }
 
+// cppcheck-suppress unusedFunction ; false positive
 sf::FloatRect TextBox::getBounds() const {
     return box.getGlobalBounds();
 }

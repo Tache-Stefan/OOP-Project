@@ -35,7 +35,6 @@ public:
     static void setPlaylistPlaying(bool playlistPlaying_);
     static void setCurrentSong(const std::string &currentSong_);
     static bool getPaused();
-    static bool getStopPlayback();
     static bool getIsMusicPlaying();
     static bool getLoadingMusic();
     static bool getPlaylistPlaying();

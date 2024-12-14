@@ -19,6 +19,7 @@ std::string MusicPlayer::currentSong{""};
 std::mutex MusicPlayer::songMutex;
 std::string MusicPlayer::filePath = "audio.mp3";
 
+// cppcheck-suppress unusedFunction ; false positive
 void MusicPlayer::playMusic() {
     stopPlayback.store(false);
     isMusicPlaying.store(false);
@@ -94,34 +95,46 @@ void MusicPlayer::playMusic() {
     }
 }
 
+// cppcheck-suppress unusedFunction ; false positive
 void MusicPlayer::increaseVolume() {
     const int newVolume = std::min(volume.load() + 10, 100);
     volume.store(newVolume);
 }
 
+// cppcheck-suppress unusedFunction ; false positive
 void MusicPlayer::decreaseVolume() {
     const int newVolume = std::max(volume.load() - 10, 0);
     volume.store(newVolume);
 }
 
+// cppcheck-suppress unusedFunction ; false positive
 void MusicPlayer::setPaused(const bool paused_) { paused.store(paused_); }
 
+// cppcheck-suppress unusedFunction ; false positive
 void MusicPlayer::setStopPlayback(const bool stopPlayback_) { stopPlayback.store(stopPlayback_); }
 
+// cppcheck-suppress unusedFunction ; false positive
 void MusicPlayer::setIsMusicPlaying(const bool isMusicPlaying_) { isMusicPlaying.store(isMusicPlaying_); }
 
+// cppcheck-suppress unusedFunction ; false positive
 void MusicPlayer::setLoadingMusic(const bool loadingMusic_) { loadingMusic.store(loadingMusic_); }
 
+// cppcheck-suppress unusedFunction ; false positive
 void MusicPlayer::setSeekToStart(const bool seekToStart_) { seekToStart.store(seekToStart_); }
 
+// cppcheck-suppress unusedFunction ; false positive
 void MusicPlayer::setSeekToEnd(const bool seekToEnd_) { seekToEnd.store(seekToEnd_); }
 
+// cppcheck-suppress unusedFunction ; false positive
 void MusicPlayer::setSkipBack(const bool skipBack_) { skipBack.store(skipBack_); }
 
+// cppcheck-suppress unusedFunction ; false positive
 void MusicPlayer::setSkipForward(const bool skipForward_) { skipForward.store(skipForward_); }
 
+// cppcheck-suppress unusedFunction ; false positive
 void MusicPlayer::setPlaylistPlaying(const bool playlistPlaying_) { playlistPlaying.store(playlistPlaying_); }
 
+// cppcheck-suppress unusedFunction ; false positive
 void MusicPlayer::setCurrentSong(const std::string& currentSong_) {
     std::lock_guard lock(songMutex);
     currentSong = currentSong_;
@@ -129,14 +142,15 @@ void MusicPlayer::setCurrentSong(const std::string& currentSong_) {
 
 bool MusicPlayer::getPaused() { return paused.load(); }
 
-bool MusicPlayer::getStopPlayback() { return stopPlayback.load(); }
-
 bool MusicPlayer::getIsMusicPlaying() { return isMusicPlaying.load(); }
 
+// cppcheck-suppress unusedFunction ; false positive
 bool MusicPlayer::getLoadingMusic() { return loadingMusic.load(); }
 
+// cppcheck-suppress unusedFunction ; false positive
 bool MusicPlayer::getPlaylistPlaying() { return playlistPlaying.load(); }
 
+// cppcheck-suppress unusedFunction ; false positive
 std::string MusicPlayer::getCurrentSong() {
     std::lock_guard lock(songMutex);
     return currentSong;
