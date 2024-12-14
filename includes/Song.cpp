@@ -36,11 +36,15 @@ std::string Song::getTitle() const {return title;}
 const std::string& Song::getID() const {return id;}
 
 void Song::play() const {
+    MusicPlayer::setStopPlayback(true);
+    MusicPlayer::setLoadingMusic(true);
+    MusicPlayer::setCurrentSong(title);
 
     std::thread playbackThread([this]() {
         const std::string youtubeURL = API::searchYouTube(EnvironmentSetup::getYoutubeAPI(), title);
         const std::string outputFile = "audio.mp3";
         if (!Utils::downloadAudio(youtubeURL, outputFile)) {
+            MusicPlayer::setLoadingMusic(false);
             return;
         }
 

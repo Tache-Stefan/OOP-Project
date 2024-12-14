@@ -20,5 +20,6 @@ namespace Utils {
     TextBoxTab initSearchTab(const sf::Font& font);
     TextBoxTab initPlaylistsTab(const sf::Font& font);
     std::vector<TextBoxButton> initButtons();
+    std::vector<TextBoxButton> initVolButtons();
     std::vector<TextBoxTab> initTabs(const sf::Font& font, int& currentTab);
 }

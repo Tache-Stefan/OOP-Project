@@ -199,6 +199,36 @@ namespace Utils {
         return buttons;
     }
 
+    std::vector<TextBoxButton> initVolButtons() {
+        sf::Font fontButtons;
+        if (!fontButtons.loadFromFile("fonts/Coolvetica.otf")) {
+            std::cerr << "Failed to load font." << std::endl;
+        }
+
+        const std::array<std::string, 2> aux = {"VOL-", "VOL+"};
+        std::vector<TextBoxButton> volButtons;
+        volButtons.reserve(2);
+        volButtons.emplace_back(sf::RectangleShape(sf::Vector2f(80, 40)), sf::Color::Red, fontButtons,
+                                     sf::Text(aux[0], fontButtons, 28), sf::Color::White);
+        volButtons.emplace_back(sf::RectangleShape(sf::Vector2f(80, 40)), sf::Color::Green, fontButtons,
+                                     sf::Text(aux[1], fontButtons, 28), sf::Color::White);
+        volButtons[0].positionShape(
+        sf::Vector2f(1200 - 160, 700 - 40),
+        sf::Vector2f(1200 + 10 - 160, 700 - 40));
+        volButtons[1].positionShape(
+        sf::Vector2f(1200 - 80, 700 - 40),
+        sf::Vector2f(1200 + 10 - 80, 700 - 40));
+
+        volButtons[0].setOnClickCallback([] {
+            MusicPlayer::decreaseVolume();
+        });
+        volButtons[1].setOnClickCallback([] {
+            MusicPlayer::increaseVolume();
+        });
+
+        return volButtons;
+    }
+
     std::vector<TextBoxTab> initTabs(const sf::Font& font, int& currentTab) {
         std::vector<TextBoxTab> tabs;
         tabs.reserve(2);

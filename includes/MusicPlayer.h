@@ -1,5 +1,6 @@
 #pragma once
 #include <atomic>
+#include <memory>
 
 #include "SFML/Audio.hpp"
 
@@ -14,6 +15,8 @@ private:
     static std::atomic<bool> seekToEnd;
     static std::atomic<bool> skipBack;
     static std::atomic<bool> skipForward;
+    static std::atomic<bool> playlistPlaying;
+    static std::atomic<std::shared_ptr<std::string>> currentSong;
 public:
     static void playMusic();
     static void increaseVolume();
@@ -25,7 +28,11 @@ public:
     static void setSeekToEnd(bool seekToEnd_);
     static void setSkipBack(bool skipBack_);
     static void setSkipForward(bool skipForward_);
+    static void setPlaylistPlaying(bool playlistPlaying_);
+    static void setCurrentSong(const std::string &currentSong_);
     static bool getStopPlayback();
     static bool getIsMusicPlaying();
     static bool getLoadingMusic();
+    static bool getPlaylistPlaying();
+    static std::shared_ptr<std::string> getCurrentSong();
 };

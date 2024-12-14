@@ -32,6 +32,11 @@ PlaylistDisplay::PlaylistDisplay(const sf::Font &font_) : Display(font_), songDi
     playlistsText.setFillColor(sf::Color::White);
     playlistsText.setPosition(60.f, 160.f);
 
+    for (unsigned int i = 0; i < 8; ++i) {
+        playRects[i] = sf::RectangleShape(sf::Vector2f(80, 40));
+        playTexts[i] = sf::Text("Play", font, 24);
+    }
+
     loadPlaylists();
 }
 
@@ -50,6 +55,11 @@ void PlaylistDisplay::draw(sf::RenderWindow& window) {
 
         TextBoxPlaylist playlistButton(textsRects[i], sf::Color(144, 213, 255), font, texts[i], sf::Color::Black);
         playlistButton.draw(window);
+
+        playRects[i].setPosition(260.f, 200.f + (i * itemHeight));
+        playTexts[i].setPosition(270.f, 205.f + (i * itemHeight));
+        TextBoxPlaylist playButton(playRects[i], sf::Color::Green, font, playTexts[i], sf::Color::Black);
+        playButton.draw(window);
 
         deleteRects[i].setPosition(200.f, 200.f + (i * itemHeight));
         sf::Text deleteText;
@@ -115,6 +125,9 @@ void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& ev
                 menuActive = false;
                 TextBoxDelete::clickedPlaylist(playlists, playlistIndex);
                 break;
+            }
+            if (mousePos.y >= boxTop && mousePos.y <= boxBottom && mousePos.x > 260 && mousePos.x <= 340) {
+                playlists[playlistIndex].play();
             }
         }
     }

@@ -13,6 +13,8 @@ std::atomic<bool> MusicPlayer::seekToStart = false;
 std::atomic<bool> MusicPlayer::seekToEnd = false;
 std::atomic<bool> MusicPlayer::skipBack = false;
 std::atomic<bool> MusicPlayer::skipForward = false;
+std::atomic<bool> MusicPlayer::playlistPlaying = false;
+std::atomic<std::shared_ptr<std::string>> MusicPlayer::currentSong{nullptr};
 std::string MusicPlayer::filePath = "audio.mp3";
 
 void MusicPlayer::playMusic() {
@@ -108,8 +110,16 @@ void MusicPlayer::setSkipBack(const bool skipBack_) { skipBack.store(skipBack_);
 
 void MusicPlayer::setSkipForward(const bool skipForward_) { skipForward.store(skipForward_); }
 
+void MusicPlayer::setPlaylistPlaying(const bool playlistPlaying_) { playlistPlaying.store(playlistPlaying_); }
+
+void MusicPlayer::setCurrentSong(const std::string& currentSong_) { currentSong.store(std::make_shared<std::string>(currentSong_)); }
+
 bool MusicPlayer::getStopPlayback() { return stopPlayback.load(); }
 
 bool MusicPlayer::getIsMusicPlaying() { return isMusicPlaying.load(); }
 
 bool MusicPlayer::getLoadingMusic() { return loadingMusic.load(); }
+
+bool MusicPlayer::getPlaylistPlaying() { return playlistPlaying.load(); }
+
+std::shared_ptr<std::string> MusicPlayer::getCurrentSong() { return currentSong.load(); }

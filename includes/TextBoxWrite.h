@@ -9,7 +9,6 @@ class TextBoxWrite : public TextBox {
 private:
     bool isActive = false;
     std::string userInput = "";
-    std::string currentSong = "";
     void handleEvents(sf::RenderWindow& window, const sf::Event& event);
 public:
     TextBoxWrite();

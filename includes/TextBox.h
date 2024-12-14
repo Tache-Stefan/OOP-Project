@@ -13,6 +13,7 @@ public:
     TextBox(sf::RectangleShape box_, const sf::Color& boxColor, const sf::Font& font_, sf::Text text_,
             const sf::Color& textColor);
     void centerShape(const sf::RenderWindow& window);
+    sf::FloatRect getBounds() const;
     void positionShape(const sf::Vector2f& boxPosition, const sf::Vector2f& textPosition);
     void setText(const std::string& userInput);
     virtual void draw(sf::RenderWindow& window) const;

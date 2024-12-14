@@ -5,9 +5,11 @@
 #include <random>
 #include <chrono>
 #include <iostream>
+#include <thread>
 
 #include "API.h"
 #include "EnvironmentSetup.h"
+#include "MusicPlayer.h"
 
 Playlist::Playlist() = default;
 
@@ -42,9 +44,23 @@ void Playlist::calculateLength() {
 }
 
 void Playlist::play() const {
-    for (const auto& song : songs) {
-        song->play();
-    }
+    MusicPlayer::setStopPlayback(true);
+    MusicPlayer::setPlaylistPlaying(true);
+
+    std::thread playlistThread([this]() {
+        for (const auto& song : songs) {
+            song->play();
+
+            while (MusicPlayer::getIsMusicPlaying() || MusicPlayer::getLoadingMusic()) {
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            }
+            if (!MusicPlayer::getPlaylistPlaying())
+                break;
+        }
+        MusicPlayer::setPlaylistPlaying(false);
+    });
+
+    playlistThread.detach();
 }
 
 void Playlist::shuffle() {

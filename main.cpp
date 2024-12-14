@@ -29,6 +29,7 @@ int main() {
 
     std::vector<TextBoxTab> tabs = Utils::initTabs(font, currentTab);
     std::vector<TextBoxButton> buttons = Utils::initButtons();
+    std::vector<TextBoxButton> volButtons = Utils::initVolButtons();
     std::unique_ptr<Display> display = std::make_unique<PlaylistDisplay>(font);
 
     while (window.isOpen()) {
@@ -44,17 +45,19 @@ int main() {
                 auto windowWidth = static_cast<float>(event.size.width);
                 auto windowHeight = static_cast<float>(event.size.height);
 
+                const sf::FloatRect bounds = inputMusic.getBounds();
                 for (unsigned int i = 0; i < 5; ++i) {
                     buttons[i].positionShape(
-                        sf::Vector2f(windowWidth * 0.335 + i * 85, windowHeight * 0.615),
-                        sf::Vector2f(windowWidth * 0.335 + 17 + i * 85, windowHeight * 0.615));
+                        sf::Vector2f(window.getSize().x / 2.0f - bounds.width / 2.0f + i * 85,
+                               window.getSize().y / 2.0f - bounds.height / 2.0f + 100),
+                        sf::Vector2f(window.getSize().x / 2.0f - bounds.width / 2.0f + 17 + i * 85,
+                               window.getSize().y / 2.0f - bounds.height / 2.0f + 100));
                 }
-            }
-
-            if (!inputMusic.getActive() && MusicPlayer::getIsMusicPlaying() && event.type == sf::Event::KeyPressed &&
-                event.key.code == sf::Keyboard::S) {
-                MusicPlayer::setStopPlayback(true);
-                std::cout << "Playback stopped!" << std::endl;
+                for (int i = 1; i >= 0; --i) {
+                    volButtons[i == 1 ? 0 : 1].positionShape(
+                    sf::Vector2f(windowWidth - (i + 1) * 80, windowHeight - 40),
+                    sf::Vector2f(windowWidth + 10 - (i + 1) * 80, windowHeight - 40));
+                }
             }
 
             if (currentTab == 1) {
@@ -65,6 +68,9 @@ int main() {
                 }
                 for (unsigned int i = 0; i < 5; ++i) {
                     buttons[i].handleEvents(window, event);
+                    if (i < 2) {
+                        volButtons[i].handleEvents(window, event);
+                    }
                 }
             }
             if (currentTab == 2) {
@@ -86,6 +92,9 @@ int main() {
                 inputMusic.drawSearch(window);
                 for (unsigned int i = 0; i < 5; ++i) {
                     buttons[i].draw(window);
+                    if (i < 2) {
+                        volButtons[i].draw(window);
+                    }
                 }
                 window.display();
             break;

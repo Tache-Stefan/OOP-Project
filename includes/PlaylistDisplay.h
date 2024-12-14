@@ -5,10 +5,13 @@
 #include "Display.h"
 #include "Playlist.h"
 #include "SongDisplay.h"
+#include "TextBoxPlaylist.h"
 
 class PlaylistDisplay : public Display {
 private:
     std::vector<Playlist> playlists;
+    std::array<sf::RectangleShape, 8> playRects;
+    std::array<sf::Text, 8> playTexts;
     SongDisplay songDisplay;
     sf::Text playlistsText;
     bool menuActive = false;
