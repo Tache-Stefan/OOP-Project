@@ -51,7 +51,7 @@ void Application::handleEvents() {
             }
         }
         if (currentTab == 2) {
-            display->handleEvents(window, event);
+            display->handleEvents(window, event, nullptr);
         }
         for (unsigned int i = 0; i < 2; ++i) {
             tabs[i].handleEvents(window, event);

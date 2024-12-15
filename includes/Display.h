@@ -27,6 +27,6 @@ public:
     virtual void scrollDown();
     virtual void scrollWithMouse(float delta);
     virtual void draw(sf::RenderWindow& window) = 0;
-    virtual void handleEvents(sf::RenderWindow& window, const sf::Event& event, Playlist* playlist = nullptr) = 0;
+    virtual void handleEvents(sf::RenderWindow& window, const sf::Event& event, Playlist* playlist) = 0;
     virtual Display* clone() const = 0;
 };
