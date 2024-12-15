@@ -22,6 +22,7 @@ public:
     const std::string& getID() const;
     friend void to_json(nlohmann::json& j, const Artist& artist);
     friend void from_json(nlohmann::json& j, Artist& artist);
-    Artist& operator=(Artist& other);
+    Artist(const Artist &other);
+    Artist& operator=(Artist other);
     friend void swap(Artist& a1, Artist& a2) noexcept;
 };

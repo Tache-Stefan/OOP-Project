@@ -33,7 +33,9 @@ void from_json(nlohmann::json& j, Artist& artist) {
     j.at("name").get_to(artist.name);
 }
 
-Artist& Artist::operator=(Artist& other) {
+Artist::Artist(const Artist& other) = default;
+
+Artist& Artist::operator=(Artist other) {
     swap(*this, other);
     return *this;
 }

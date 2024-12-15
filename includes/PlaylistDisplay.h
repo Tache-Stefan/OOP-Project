@@ -23,7 +23,7 @@ private:
 public:
     explicit PlaylistDisplay(const sf::Font& font_);
     void draw(sf::RenderWindow& window) override;
-    void handleEvents(sf::RenderWindow& window, const sf::Event &event, Playlist* playlist = nullptr) override;
+    void handleEvents(sf::RenderWindow& window, const sf::Event &event, Playlist* playlist) override;
     void savePlaylists();
     void loadPlaylists();
     static void needChangeAddSong();
