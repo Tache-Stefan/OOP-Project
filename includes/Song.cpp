@@ -67,6 +67,10 @@ Song* Song::clone() const {
 }
 
 Song& Song::operator=(const Song& other) {
+    if (this == &other) {
+        return *this;
+    }
+
     Song* temp = other.clone();
     swap(*this, *temp);
     delete temp;

@@ -30,11 +30,13 @@ PlaylistDisplay::PlaylistDisplay(const sf::Font &font_) : Display(font_), songDi
     inputText.setPosition(windowWidth * 0.225f, windowHeight * 0.16f);
 
     playlistsText.setFillColor(sf::Color::White);
-    playlistsText.setPosition(60.f, 160.f);
+    playlistsText.setPosition(60.f, 240.f);
 
     for (unsigned int i = 0; i < 8; ++i) {
         playRects[i] = sf::RectangleShape(sf::Vector2f(80, 40));
         playTexts[i] = sf::Text("Play", font, 24);
+        shuffleRects[i] = sf::RectangleShape(sf::Vector2f(110, 40));
+        shuffleTexts[i] = sf::Text("Shuffle", font, 24);
     }
 
     loadPlaylists();
@@ -49,21 +51,26 @@ void PlaylistDisplay::draw(sf::RenderWindow& window) {
         currentIndex = i + verticalOffset / itemHeight;
         if (currentIndex >= playlists.size()) break;
 
-        textsRects[i].setPosition(0.f, 200.f + (i * itemHeight));
+        textsRects[i].setPosition(0.f, 280.f + (i * itemHeight));
         texts[i].setString(playlists[currentIndex].getTitle());
-        texts[i].setPosition(10.f, 205.f + (i * itemHeight));
+        texts[i].setPosition(10.f, 285.f + (i * itemHeight));
 
         TextBoxPlaylist playlistButton(textsRects[i], sf::Color(144, 213, 255), font, texts[i], sf::Color::Black);
         playlistButton.draw(window);
 
-        playRects[i].setPosition(260.f, 200.f + (i * itemHeight));
-        playTexts[i].setPosition(270.f, 205.f + (i * itemHeight));
+        playRects[i].setPosition(260.f, 280.f + (i * itemHeight));
+        playTexts[i].setPosition(270.f, 285.f + (i * itemHeight));
         TextBoxPlaylist playButton(playRects[i], sf::Color::Green, font, playTexts[i], sf::Color::Black);
         playButton.draw(window);
 
-        deleteRects[i].setPosition(200.f, 200.f + (i * itemHeight));
+        shuffleRects[i].setPosition(340.f, 280.f + (i * itemHeight));
+        shuffleTexts[i].setPosition(350.f, 285.f + (i * itemHeight));
+        TextBoxPlaylist shuffleButton(shuffleRects[i], sf::Color::Green, font, shuffleTexts[i], sf::Color::Black);
+        shuffleButton.draw(window);
+
+        deleteRects[i].setPosition(200.f, 280.f + (i * itemHeight));
         sf::Text deleteText;
-        deleteText.setPosition(217.f, 200.f + (i * itemHeight));
+        deleteText.setPosition(217.f, 280.f + (i * itemHeight));
         TextBoxDelete deleteButton(deleteRects[i], font, deleteText);
         deleteButton.draw(window);
 
@@ -75,8 +82,10 @@ void PlaylistDisplay::draw(sf::RenderWindow& window) {
 
 void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& event, Playlist* playlist) {
     (void)playlist;
-    songDisplay.handleEvents(window, event, &playlists[currentPlaylist]);
-    if (change == 1) {
+    if (menuActive) {
+        songDisplay.handleEvents(window, event, &playlists[currentPlaylist]);
+    }
+    if (change == 1 || change == 3) {
         songDisplay.setSongs(playlists[currentPlaylist].getSongs());
         change = -1;
     }
@@ -93,7 +102,7 @@ void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& ev
 
     if (event.type == sf::Event::MouseWheelScrolled) {
         const sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
-        if (mousePos.y >= 200 && mousePos.y <= 200 + visibleCount * 40 && mousePos.x >= 0 && mousePos.x <= 200) {
+        if (mousePos.y >= 280 && mousePos.y <= 280 + visibleCount * 40 && mousePos.x >= 0 && mousePos.x <= 200) {
             scrollWithMouse(event.mouseWheelScroll.delta);
         }
     }
@@ -106,7 +115,7 @@ void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& ev
             const unsigned int playlistIndex = i + verticalOffset / itemHeight;
             if (playlistIndex >= playlists.size()) break;
 
-            const float boxTop = 200.f + (i * itemHeight);
+            const float boxTop = 280.f + (i * itemHeight);
             const float boxBottom = boxTop + itemHeight;
 
             if (mousePos.y >= boxTop && mousePos.y <= boxBottom && mousePos.x >= 0 && mousePos.x <= 200) {
@@ -121,13 +130,17 @@ void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& ev
                 menuActive = false;
                 break;
             }
-            if (mousePos.y >= boxTop && mousePos.y <= boxBottom && mousePos.x >= 200 && mousePos.x <= 260) {
+            if (mousePos.y >= boxTop && mousePos.y <= boxBottom && mousePos.x > 200 && mousePos.x <= 260) {
                 menuActive = false;
                 TextBoxDelete::clickedPlaylist(playlists, playlistIndex);
                 break;
             }
             if (mousePos.y >= boxTop && mousePos.y <= boxBottom && mousePos.x > 260 && mousePos.x <= 340) {
                 playlists[playlistIndex].play();
+            }
+            if (mousePos.y >= boxTop && mousePos.y <= boxBottom && mousePos.x > 340 && mousePos.x <= 450) {
+                playlists[playlistIndex].shuffle();
+                change = 3;
             }
         }
     }

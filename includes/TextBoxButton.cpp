@@ -79,5 +79,4 @@ void swap(TextBoxButton& t1, TextBoxButton& t2) noexcept {
     swap(t1.originalColor, t2.originalColor);
 }
 
-TextBoxButton::TextBoxButton(const TextBoxButton& other) : TextBox(other), isActive(other.isActive),
-                                                           onClickCallback(other.onClickCallback), originalColor(other.originalColor) {}
+TextBoxButton::TextBoxButton(const TextBoxButton& other) = default;

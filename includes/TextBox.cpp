@@ -51,4 +51,4 @@ void swap(TextBox& t1, TextBox& t2) noexcept {
     swap(t1.text, t2.text);
 }
 
-TextBox::TextBox(const TextBox& other) : font(other.font), box(other.box), text(other.text) {}
+TextBox::TextBox(const TextBox& other) = default;

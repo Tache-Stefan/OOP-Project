@@ -131,4 +131,4 @@ void swap(TextBoxWrite& t1, TextBoxWrite& t2) noexcept {
     swap(t1.userInput, t2.userInput);
 }
 
-TextBoxWrite::TextBoxWrite(const TextBoxWrite& other) : TextBox(other), isActive(other.isActive), userInput(other.userInput) {}
+TextBoxWrite::TextBoxWrite(const TextBoxWrite& other) = default;

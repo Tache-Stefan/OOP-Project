@@ -15,7 +15,7 @@ std::atomic<bool> MusicPlayer::seekToEnd = false;
 std::atomic<bool> MusicPlayer::skipBack = false;
 std::atomic<bool> MusicPlayer::skipForward = false;
 std::atomic<bool> MusicPlayer::playlistPlaying = false;
-std::string MusicPlayer::currentSong{""};
+std::string MusicPlayer::currentSong;
 std::mutex MusicPlayer::songMutex;
 std::string MusicPlayer::filePath = "audio.mp3";
 

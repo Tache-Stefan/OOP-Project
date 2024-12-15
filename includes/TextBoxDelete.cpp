@@ -49,4 +49,4 @@ void swap(TextBoxDelete& t1, TextBoxDelete& t2) noexcept {
     swap(t1.text, t2.text);
 }
 
-TextBoxDelete::TextBoxDelete(const TextBoxDelete& other) : TextBox(other) {}
+TextBoxDelete::TextBoxDelete(const TextBoxDelete& other) = default;

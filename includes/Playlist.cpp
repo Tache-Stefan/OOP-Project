@@ -28,7 +28,7 @@ std::ostream& operator<<(std::ostream& os, const Playlist& playlist) {
     return os;
 }
 
-Playlist::Playlist(const Playlist& other) : MediaItem(other), songs(other.songs) {}
+Playlist::Playlist(const Playlist& other) = default;
 
 std::string Playlist::getLength() const {return Utils::timeToString(length);}
 

@@ -26,4 +26,4 @@ void swap(TextBoxPlaylist& t1, TextBoxPlaylist& t2) noexcept {
     swap(t1.text, t2.text);
 }
 
-TextBoxPlaylist::TextBoxPlaylist(const TextBoxPlaylist& other) : TextBox(other) {}
+TextBoxPlaylist::TextBoxPlaylist(const TextBoxPlaylist& other) = default;
