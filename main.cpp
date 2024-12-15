@@ -1,7 +1,4 @@
 #include <iostream>
-#include <fstream>
-#include <SFML/Graphics.hpp>
-
 #include "includes/Application.h"
 
 int main() {
