@@ -1,5 +1,5 @@
-#include "MediaItem.h"
-#include "Artist.h"
+#include "../headers/MediaItem.h"
+#include "../headers/Artist.h"
 
 MediaItem::MediaItem() = default;
 

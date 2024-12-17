@@ -1,13 +1,13 @@
-#include "Song.h"
+#include "../headers/Song.h"
 
 #include <iostream>
 #include <thread>
 
-#include "API.h"
-#include "Artist.h"
-#include "EnvironmentSetup.h"
-#include "MusicPlayer.h"
-#include "Utility.h"
+#include "../headers/API.h"
+#include "../headers/Artist.h"
+#include "../headers/EnvironmentSetup.h"
+#include "../headers/MusicPlayer.h"
+#include "../headers/Utility.h"
 
 Song::Song() = default;
 

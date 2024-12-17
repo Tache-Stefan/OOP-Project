@@ -9,6 +9,8 @@ protected:
     sf::Font font;
     sf::RectangleShape box;
     sf::Text text;
+    friend void swap(TextBox& t1, TextBox& t2) noexcept;
+    TextBox(const TextBox &other);
 public:
     virtual ~TextBox() = default;
     TextBox();
@@ -21,6 +23,4 @@ public:
     virtual void handleEvents(sf::RenderWindow&, const sf::Event&) = 0;
     virtual void draw(sf::RenderWindow& window);
     virtual TextBox* clone() const = 0;
-    friend void swap(TextBox& t1, TextBox& t2) noexcept;
-    TextBox(const TextBox &other);
 };

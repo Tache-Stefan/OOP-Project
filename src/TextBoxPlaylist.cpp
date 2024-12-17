@@ -1,4 +1,4 @@
-#include "TextBoxPlaylist.h"
+#include "../headers/TextBoxPlaylist.h"
 
 TextBoxPlaylist::TextBoxPlaylist() = default;
 

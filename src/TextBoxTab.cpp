@@ -1,4 +1,4 @@
-#include "TextBoxTab.h"
+#include "../headers/TextBoxTab.h"
 
 void TextBoxTab::extraDraw(sf::RenderWindow& window) {
     if (isActive) {

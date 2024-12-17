@@ -1,5 +1,5 @@
 #include <iostream>
-#include "includes/Application.h"
+#include "headers/Application.h"
 
 int main() {
     sf::Font font;

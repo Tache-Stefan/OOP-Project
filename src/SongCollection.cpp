@@ -1,4 +1,4 @@
-#include "SongCollection.h"
+#include "../headers/SongCollection.h"
 
 #include <iostream>
 

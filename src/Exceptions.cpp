@@ -1,4 +1,4 @@
-#include "Exceptions.h"
+#include "../headers/Exceptions.h"
 
 SearchException::SearchException(const std::string& msg) : BasicException(std::string("Search query is invalid: ") + msg) {}
 

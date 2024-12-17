@@ -1,12 +1,12 @@
-#include "Application.h"
+#include "../headers/Application.h"
 
 #include <iostream>
 
-#include "Exceptions.h"
-#include "EnvironmentSetup.h"
-#include "MusicPlayer.h"
-#include "Utility.h"
-#include "PlaylistDisplay.h"
+#include "../headers/Exceptions.h"
+#include "../headers/EnvironmentSetup.h"
+#include "../headers/MusicPlayer.h"
+#include "../headers/Utility.h"
+#include "../headers/PlaylistDisplay.h"
 
 void Application::drawTextBox(const std::unique_ptr<TextBox>& textBox) {
     if (textBox == nullptr)

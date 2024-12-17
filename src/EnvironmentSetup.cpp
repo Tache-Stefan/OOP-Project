@@ -1,6 +1,6 @@
-#include "EnvironmentSetup.h"
-#include "API.h"
-#include "Utility.h"
+#include "../headers/EnvironmentSetup.h"
+#include "../headers/API.h"
+#include "../headers/Utility.h"
 
 #include <iostream>
 

@@ -1,4 +1,4 @@
-#include "Utility.h"
+#include "../headers/Utility.h"
 
 #include <sstream>
 #include <filesystem>
@@ -7,8 +7,8 @@
 #include <array>
 #include <nlohmann/json.hpp>
 
-#include "MusicPlayer.h"
-#include "TextBoxButton.h"
+#include "../headers/MusicPlayer.h"
+#include "../headers/TextBoxButton.h"
 
 namespace Utils {
     std::vector<std::string> split(const std::string& s, const char delimiter) {

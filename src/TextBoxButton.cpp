@@ -1,6 +1,5 @@
-#include "TextBoxButton.h"
-
-#include "MusicPlayer.h"
+#include "../headers/TextBoxButton.h"
+#include "../headers/MusicPlayer.h"
 
 void TextBoxButton::extraDraw(sf::RenderWindow& window) {
     if (isActive) {

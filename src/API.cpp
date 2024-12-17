@@ -1,15 +1,14 @@
 #include <iostream>
-#include "API.h"
-#include "Utility.h"
-#include "ArtistCollection.h"
-#include "SongCollection.h"
+#include "../headers/API.h"
+#include "../headers/Utility.h"
+#include "../headers/ArtistCollection.h"
+#include "../headers/SongCollection.h"
 
 #include <cpr/cpr.h>
 #include <nlohmann/json.hpp>
 
-#include "EnvironmentSetup.h"
-#include "Exceptions.h"
-
+#include "../headers/EnvironmentSetup.h"
+#include "../headers/Exceptions.h"
 
 namespace API {
     std::string getSpotifyAccessToken(const std::string& client_id, const std::string& client_secret) {

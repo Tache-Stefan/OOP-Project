@@ -1,4 +1,4 @@
-#include "TextBox.h"
+#include "../headers/TextBox.h"
 
 TextBox::TextBox(sf::RectangleShape box_, const sf::Color& boxColor, const sf::Font& font_, sf::Text text_,
                  const sf::Color& textColor) : font(font_), box(std::move(box_)), text(std::move(text_)) {

@@ -1,6 +1,6 @@
 #include <iostream>
-#include "Artist.h"
-#include "Song.h"
+#include "../headers/Artist.h"
+#include "../headers/Song.h"
 
 Artist::Artist() = default;
 

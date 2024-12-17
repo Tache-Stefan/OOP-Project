@@ -1,12 +1,12 @@
-#include "SongDisplay.h"
+#include "../headers/SongDisplay.h"
 
 #include <iostream>
 
-#include "API.h"
-#include "EnvironmentSetup.h"
-#include "Exceptions.h"
-#include "TextBoxDelete.h"
-#include "TextBoxPlaylist.h"
+#include "../headers/API.h"
+#include "../headers/EnvironmentSetup.h"
+#include "../headers/Exceptions.h"
+#include "../headers/TextBoxDelete.h"
+#include "../headers/TextBoxPlaylist.h"
 
 unsigned int SongDisplay::currentIndex = 0;
 

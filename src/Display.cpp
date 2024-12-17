@@ -1,4 +1,4 @@
-#include "Display.h"
+#include "../headers/Display.h"
 
 Display::Display(const sf::Font &font_) : font(font_),
     inputBox(TextBoxWrite(sf::RectangleShape(sf::Vector2f(300.f, 50.f)), sf::Color::White, font,

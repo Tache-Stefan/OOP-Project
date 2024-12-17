@@ -1,15 +1,15 @@
-#include "Playlist.h"
+#include "../headers/Playlist.h"
 
-#include "Utility.h"
+#include "../headers/Utility.h"
 #include <algorithm>
 #include <random>
 #include <chrono>
 #include <iostream>
 #include <thread>
 
-#include "API.h"
-#include "EnvironmentSetup.h"
-#include "MusicPlayer.h"
+#include "../headers/API.h"
+#include "../headers/EnvironmentSetup.h"
+#include "../headers/MusicPlayer.h"
 
 Playlist::Playlist() = default;
 

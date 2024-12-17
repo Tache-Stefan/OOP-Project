@@ -1,10 +1,10 @@
-#include "TextBoxDelete.h"
+#include "../headers/TextBoxDelete.h"
 
 #include <iostream>
 #include <memory>
 
-#include "PlaylistDisplay.h"
-#include "Song.h"
+#include "../headers/PlaylistDisplay.h"
+#include "../headers/Song.h"
 
 TextBoxDelete::TextBoxDelete() = default;
 

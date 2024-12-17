@@ -1,10 +1,10 @@
-#include "TextBoxWrite.h"
+#include "../headers/TextBoxWrite.h"
 
-#include "API.h"
-#include "EnvironmentSetup.h"
-#include "Exceptions.h"
-#include "MusicPlayer.h"
-#include "PlaylistDisplay.h"
+#include "../headers/API.h"
+#include "../headers/EnvironmentSetup.h"
+#include "../headers/Exceptions.h"
+#include "../headers/MusicPlayer.h"
+#include "../headers/PlaylistDisplay.h"
 
 void TextBoxWrite::handleEventsCommon(sf::RenderWindow& window, const sf::Event& event) {
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {

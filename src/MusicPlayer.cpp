@@ -1,9 +1,9 @@
-#include "MusicPlayer.h"
+#include "../headers/MusicPlayer.h"
 
 #include <iostream>
 #include <filesystem>
 
-#include "Exceptions.h"
+#include "../headers/Exceptions.h"
 
 std::atomic<bool> MusicPlayer::paused = false;
 std::atomic<bool> MusicPlayer::stopPlayback = false;

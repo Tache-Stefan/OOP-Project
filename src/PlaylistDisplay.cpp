@@ -1,13 +1,13 @@
-#include "PlaylistDisplay.h"
+#include "../headers/PlaylistDisplay.h"
 
 #include <fstream>
 #include <iostream>
 #include <set>
 
-#include "API.h"
-#include "Exceptions.h"
-#include "TextBoxDelete.h"
-#include "TextBoxPlaylist.h"
+#include "../headers/API.h"
+#include "../headers/Exceptions.h"
+#include "../headers/TextBoxDelete.h"
+#include "../headers/TextBoxPlaylist.h"
 
 unsigned int PlaylistDisplay::currentIndex = 0;
 int PlaylistDisplay::change = -1;
