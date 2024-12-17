@@ -11,7 +11,7 @@ private:
     sf::Font font;
     int currentTab;
     sf::RenderWindow window;
-    TextBoxWrite inputMusic;
+    std::unique_ptr<TextBox> inputMusic;
     std::vector<std::unique_ptr<TextBox>> tabs;
     std::vector<std::unique_ptr<TextBox>> buttons;
     std::vector<std::unique_ptr<TextBox>> volButtons;

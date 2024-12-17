@@ -31,6 +31,8 @@ void TextBoxDelete::clickedPlaylist(std::vector<Playlist>& playlists, const unsi
     }
 }
 
+void TextBoxDelete::handleEvents(sf::RenderWindow &, const sf::Event &) {}
+
 TextBoxDelete* TextBoxDelete::clone() const {
     return new TextBoxDelete(*this);
 }

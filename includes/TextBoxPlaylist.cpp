@@ -8,6 +8,8 @@ TextBoxPlaylist::TextBoxPlaylist(const sf::RectangleShape& box_, const sf::Color
     box.setOutlineColor(textColor);
 }
 
+void TextBoxPlaylist::handleEvents(sf::RenderWindow &, const sf::Event &) {}
+
 TextBoxPlaylist* TextBoxPlaylist::clone() const {
     return new TextBoxPlaylist(*this);
 }

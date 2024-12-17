@@ -39,8 +39,6 @@ void TextBox::positionShape(const sf::Vector2f& boxPosition, const sf::Vector2f&
 // cppcheck-suppress unusedFunction ; false positive
 void TextBox::setText(const std::string& userInput) { text.setString(userInput); }
 
-void TextBox::handleEvents(sf::RenderWindow&, const sf::Event&) {}
-
 void TextBox::draw(sf::RenderWindow& window){
     window.draw(box);
     window.draw(text);

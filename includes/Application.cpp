@@ -19,9 +19,8 @@ void Application::drawTextBox(const std::unique_ptr<TextBox>& textBox) {
         textBox->draw(window);
 }
 
-
 void Application::resizeUI(const float windowWidth, const float windowHeight) const {
-    const sf::FloatRect bounds = inputMusic.getBounds();
+    const sf::FloatRect bounds = inputMusic->getBounds();
     for (unsigned int i = 0; i < 5; ++i) {
         buttons[i]->positionShape(
         sf::Vector2f(window.getSize().x / 2.0f - bounds.width / 2.0f + i * 85,
@@ -51,7 +50,7 @@ void Application::handleEvents() {
 
         if (currentTab == 1) {
             try {
-                inputMusic.handleEvents(window, event);
+                inputMusic->handleEvents(window, event);
             } catch (const SearchException& e) {
                 std::cerr << e.what() << std::endl;
             }
@@ -76,11 +75,11 @@ void Application::render() {
     for (unsigned int i = 0; i < 2; ++i) {
         drawTextBox(tabs[i]);
     }
+    drawTextBox(inputMusic);
 
     switch (currentTab) {
         case 1:
-            inputMusic.centerShape(window);
-            inputMusic.drawSearch(window);
+            inputMusic->centerShape(window);
             for (unsigned int i = 0; i < 5; ++i) {
                 drawTextBox(buttons[i]);
                 if (i < 2) {
@@ -101,8 +100,8 @@ void Application::render() {
 
 Application::Application(const sf::Font& font_) : font(font_), currentTab(1),
     window(sf::VideoMode(1200, 700), "Music Manager", sf::Style::Default),
-    inputMusic(sf::RectangleShape(sf::Vector2f(400, 50)), sf::Color::White, font,
-    sf::Text("", font, 24), sf::Color::Black) {
+    inputMusic(std::make_unique<TextBoxWrite>(sf::RectangleShape(sf::Vector2f(400, 50)), sf::Color::White, font,
+    sf::Text("", font, 24), sf::Color::Black)) {
 
     window.setFramerateLimit(30);
 
