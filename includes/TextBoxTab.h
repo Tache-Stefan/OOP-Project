@@ -12,7 +12,7 @@ public:
     TextBoxTab();
     TextBoxTab(const sf::RectangleShape& box_, const sf::Color& boxColor, const sf::Font& font_, const sf::Text& text_,
                const sf::Color& textColor);
-    bool handleEvents(sf::RenderWindow& window, const sf::Event& event);
+    void handleEvents(sf::RenderWindow& window, const sf::Event& event) override;
     void setOnClickCallback(const std::function<void()>& callback);
     TextBoxTab* clone() const override;
     TextBoxTab& operator=(const TextBoxTab &other);

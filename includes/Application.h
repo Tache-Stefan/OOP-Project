@@ -4,7 +4,6 @@
 
 #include "Display.h"
 #include "TextBoxButton.h"
-#include "TextBoxTab.h"
 #include "TextBoxWrite.h"
 
 class Application {
@@ -13,11 +12,12 @@ private:
     int currentTab;
     sf::RenderWindow window;
     TextBoxWrite inputMusic;
-    std::vector<TextBoxTab> tabs;
-    std::vector<TextBoxButton> buttons;
-    std::vector<TextBoxButton> volButtons;
+    std::vector<std::unique_ptr<TextBox>> tabs;
+    std::vector<std::unique_ptr<TextBox>> buttons;
+    std::vector<std::unique_ptr<TextBox>> volButtons;
     std::unique_ptr<Display> display;
-    void resizeUI(float windowWidth, float windowHeight);
+    void drawTextBox(const std::unique_ptr<TextBox>& textBox);
+    void resizeUI(float windowWidth, float windowHeight) const;
     void handleEvents();
     void render();
 public:

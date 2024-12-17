@@ -18,6 +18,7 @@ public:
     sf::FloatRect getBounds() const;
     void positionShape(const sf::Vector2f& boxPosition, const sf::Vector2f& textPosition);
     void setText(const std::string& userInput);
+    virtual void handleEvents(sf::RenderWindow&, const sf::Event&);
     virtual void draw(sf::RenderWindow& window);
     virtual TextBox* clone() const = 0;
     friend void swap(TextBox& t1, TextBox& t2) noexcept;

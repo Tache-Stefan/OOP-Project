@@ -14,7 +14,7 @@ public:
     TextBoxButton(sf::RectangleShape box_, const sf::Color& boxColor, const sf::Font& font_, sf::Text text_,
                   const sf::Color& textColor);
     void setOnClickCallback(const std::function<void()> &callback);
-    bool handleEvents(sf::RenderWindow &window, const sf::Event &event);
+    void handleEvents(sf::RenderWindow &window, const sf::Event &event) override;
     TextBoxButton* clone() const override;
     TextBoxButton& operator=(const TextBoxButton &other);
     friend void swap(TextBoxButton& t1, TextBoxButton& t2) noexcept;

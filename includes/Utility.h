@@ -1,10 +1,10 @@
 #pragma once
 
 #include <atomic>
+#include <memory>
 #include <vector>
 #include <string>
 
-#include "TextBoxButton.h"
 #include "TextBoxTab.h"
 
 namespace Utils {
@@ -17,9 +17,7 @@ namespace Utils {
     bool downloadAudio(const std::string &youtubeUrl, const std::string &outputFile);
     void monitorInput(std::atomic<bool> &stopPlayback);
     void loadEnvFile();
-    TextBoxTab initSearchTab(const sf::Font& font);
-    TextBoxTab initPlaylistsTab(const sf::Font& font);
-    std::vector<TextBoxButton> initButtons();
-    std::vector<TextBoxButton> initVolButtons();
-    std::vector<TextBoxTab> initTabs(const sf::Font& font, int& currentTab);
+    std::vector<std::unique_ptr<TextBox>> initButtons();
+    std::vector<std::unique_ptr<TextBox>> initVolButtons();
+    std::vector<std::unique_ptr<TextBox>> initTabs(const sf::Font& font, int& currentTab);
 }

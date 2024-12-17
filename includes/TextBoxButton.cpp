@@ -20,11 +20,11 @@ void TextBoxButton::setOnClickCallback(const std::function<void()>& callback) {
     onClickCallback = callback;
 }
 
-bool TextBoxButton::handleEvents(sf::RenderWindow& window, const sf::Event& event) {
+void TextBoxButton::handleEvents(sf::RenderWindow& window, const sf::Event& event) {
     if (!MusicPlayer::getIsMusicPlaying()) {
         box.setFillColor(sf::Color(150, 150, 150));
         isActive = false;
-        return false;
+        return;
     }
     box.setFillColor(originalColor);
     if (MusicPlayer::getPaused() && text.getString() == "| |") {
@@ -50,11 +50,10 @@ bool TextBoxButton::handleEvents(sf::RenderWindow& window, const sf::Event& even
         if (box.getGlobalBounds().contains(mousePos)) {
             onClickCallback();
             isActive = true;
-            return true;
+            return;
         }
     }
     isActive = false;
-    return false;
 }
 
 TextBoxButton* TextBoxButton::clone() const {

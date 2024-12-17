@@ -6,7 +6,7 @@
 #include "MusicPlayer.h"
 #include "PlaylistDisplay.h"
 
-void TextBoxWrite::handleEvents(sf::RenderWindow& window, const sf::Event& event) {
+void TextBoxWrite::handleEventsCommon(sf::RenderWindow& window, const sf::Event& event) {
     if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
         const sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
         containsClick(mousePos);
@@ -43,8 +43,8 @@ bool TextBoxWrite::containsClick(const sf::Vector2f& mousePosition) {
     return false;
 }
 
-void TextBoxWrite::handleEventsMusic(sf::RenderWindow& window, const sf::Event& event) {
-    handleEvents(window, event);
+void TextBoxWrite::handleEvents(sf::RenderWindow& window, const sf::Event& event) {
+    handleEventsCommon(window, event);
 
     if (isActive && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
         if (userInput.empty()) {
@@ -60,7 +60,7 @@ void TextBoxWrite::handleEventsMusic(sf::RenderWindow& window, const sf::Event& 
 }
 
 void TextBoxWrite::handleEventsSongDisplay(sf::RenderWindow& window, const sf::Event& event, Playlist* playlist) {
-    handleEvents(window, event);
+    handleEventsCommon(window, event);
 
     if (isActive && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
         if (userInput.empty()) {
@@ -74,7 +74,7 @@ void TextBoxWrite::handleEventsSongDisplay(sf::RenderWindow& window, const sf::E
 }
 
 void TextBoxWrite::handleEventsPlaylistDisplay(sf::RenderWindow& window, const sf::Event& event, std::vector<Playlist>& playlists) {
-    handleEvents(window, event);
+    handleEventsCommon(window, event);
 
     if (isActive && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
         for (const auto& playlist : playlists) {

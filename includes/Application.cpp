@@ -8,17 +8,29 @@
 #include "Utility.h"
 #include "PlaylistDisplay.h"
 
-void Application::resizeUI(const float windowWidth, const float windowHeight) {
+void Application::drawTextBox(const std::unique_ptr<TextBox>& textBox) {
+    if (textBox == nullptr)
+        return;
+    if (auto* mainWrite = dynamic_cast<TextBoxWrite*>(textBox.get())) {
+        if (currentTab == 1)
+            mainWrite->drawSearch(window);
+    }
+    else
+        textBox->draw(window);
+}
+
+
+void Application::resizeUI(const float windowWidth, const float windowHeight) const {
     const sf::FloatRect bounds = inputMusic.getBounds();
     for (unsigned int i = 0; i < 5; ++i) {
-        buttons[i].positionShape(
+        buttons[i]->positionShape(
         sf::Vector2f(window.getSize().x / 2.0f - bounds.width / 2.0f + i * 85,
                 window.getSize().y / 2.0f - bounds.height / 2.0f + 100),
                 sf::Vector2f(window.getSize().x / 2.0f - bounds.width / 2.0f + 17 + i * 85,
                 window.getSize().y / 2.0f - bounds.height / 2.0f + 100));
     }
     for (int i = 1; i >= 0; --i) {
-        volButtons[i == 1 ? 0 : 1].positionShape(
+        volButtons[i == 1 ? 0 : 1]->positionShape(
         sf::Vector2f(windowWidth - (i + 1) * 80, windowHeight - 40),
         sf::Vector2f(windowWidth + 10 - (i + 1) * 80, windowHeight - 40));
     }
@@ -39,14 +51,14 @@ void Application::handleEvents() {
 
         if (currentTab == 1) {
             try {
-                inputMusic.handleEventsMusic(window, event);
+                inputMusic.handleEvents(window, event);
             } catch (const SearchException& e) {
                 std::cerr << e.what() << std::endl;
             }
             for (unsigned int i = 0; i < 5; ++i) {
-                buttons[i].handleEvents(window, event);
+                buttons[i]->handleEvents(window, event);
                 if (i < 2) {
-                    volButtons[i].handleEvents(window, event);
+                    volButtons[i]->handleEvents(window, event);
                 }
             }
         }
@@ -54,7 +66,7 @@ void Application::handleEvents() {
             display->handleEvents(window, event, nullptr);
         }
         for (unsigned int i = 0; i < 2; ++i) {
-            tabs[i].handleEvents(window, event);
+            tabs[i]->handleEvents(window, event);
         }
     }
 }
@@ -62,7 +74,7 @@ void Application::handleEvents() {
 void Application::render() {
     window.clear();
     for (unsigned int i = 0; i < 2; ++i) {
-        tabs[i].draw(window);
+        drawTextBox(tabs[i]);
     }
 
     switch (currentTab) {
@@ -70,9 +82,9 @@ void Application::render() {
             inputMusic.centerShape(window);
             inputMusic.drawSearch(window);
             for (unsigned int i = 0; i < 5; ++i) {
-                buttons[i].draw(window);
+                drawTextBox(buttons[i]);
                 if (i < 2) {
-                    volButtons[i].draw(window);
+                    drawTextBox(volButtons[i]);
                 }
             }
             window.display();

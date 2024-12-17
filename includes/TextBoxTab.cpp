@@ -19,7 +19,7 @@ TextBoxTab::TextBoxTab(const sf::RectangleShape& box_, const sf::Color& boxColor
 }
 
 // cppcheck-suppress unusedFunction ; false positive
-bool TextBoxTab::handleEvents(sf::RenderWindow& window, const sf::Event& event) {
+void TextBoxTab::handleEvents(sf::RenderWindow& window, const sf::Event& event) {
     if (event.type == sf::Event::Resized) {
         window.setView(sf::View(sf::FloatRect(0, 0, event.size.width, event.size.height)));
     }
@@ -29,11 +29,10 @@ bool TextBoxTab::handleEvents(sf::RenderWindow& window, const sf::Event& event) 
         if (box.getGlobalBounds().contains(mousePos)) {
             onClickCallback();
             isActive = true;
-            return true;
+            return;
         }
     }
     isActive = false;
-    return false;
 }
 
 // cppcheck-suppress unusedFunction ; false positive
