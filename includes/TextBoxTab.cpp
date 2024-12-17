@@ -1,5 +1,15 @@
 #include "TextBoxTab.h"
 
+void TextBoxTab::extraDraw(sf::RenderWindow& window) {
+    if (isActive) {
+        sf::RectangleShape border = box;
+        border.setOutlineColor(sf::Color::White);
+        border.setOutlineThickness(1);
+        window.draw(border);
+        window.draw(text);
+    }
+}
+
 TextBoxTab::TextBoxTab() = default;
 
 TextBoxTab::TextBoxTab(const sf::RectangleShape& box_, const sf::Color& boxColor, const sf::Font& font_, const sf::Text& text_,
@@ -29,17 +39,6 @@ bool TextBoxTab::handleEvents(sf::RenderWindow& window, const sf::Event& event) 
 // cppcheck-suppress unusedFunction ; false positive
 void TextBoxTab::setOnClickCallback(const std::function<void()>& callback) {
     onClickCallback = callback;
-}
-
-void TextBoxTab::draw(sf::RenderWindow& window) const {
-    TextBox::draw(window);
-    if (isActive) {
-        sf::RectangleShape border = box;
-        border.setOutlineColor(sf::Color::White);
-        border.setOutlineThickness(1);
-        window.draw(border);
-        window.draw(text);
-    }
 }
 
 TextBoxTab* TextBoxTab::clone() const {

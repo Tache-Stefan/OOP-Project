@@ -2,6 +2,16 @@
 
 #include "MusicPlayer.h"
 
+void TextBoxButton::extraDraw(sf::RenderWindow& window) {
+    if (isActive) {
+        sf::RectangleShape border = box;
+        border.setOutlineColor(sf::Color::White);
+        border.setOutlineThickness(1);
+        window.draw(border);
+        window.draw(text);
+    }
+}
+
 TextBoxButton::TextBoxButton(sf::RectangleShape box_, const sf::Color& boxColor, const sf::Font& font_, sf::Text text_,
                              const sf::Color& textColor) : TextBox(std::move(box_), boxColor, font_, std::move(text_), textColor),
                              originalColor(boxColor) {}
@@ -45,17 +55,6 @@ bool TextBoxButton::handleEvents(sf::RenderWindow& window, const sf::Event& even
     }
     isActive = false;
     return false;
-}
-
-void TextBoxButton::draw(sf::RenderWindow& window) const {
-    TextBox::draw(window);
-    if (isActive) {
-        sf::RectangleShape border = box;
-        border.setOutlineColor(sf::Color::White);
-        border.setOutlineThickness(1);
-        window.draw(border);
-        window.draw(text);
-    }
 }
 
 TextBoxButton* TextBoxButton::clone() const {

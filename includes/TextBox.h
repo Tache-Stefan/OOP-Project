@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 
 class TextBox {
+private:
+    virtual void extraDraw([[maybe_unused]] sf::RenderWindow& window) {}
 protected:
     sf::Font font;
     sf::RectangleShape box;
@@ -16,7 +18,7 @@ public:
     sf::FloatRect getBounds() const;
     void positionShape(const sf::Vector2f& boxPosition, const sf::Vector2f& textPosition);
     void setText(const std::string& userInput);
-    virtual void draw(sf::RenderWindow& window) const;
+    virtual void draw(sf::RenderWindow& window);
     virtual TextBox* clone() const = 0;
     friend void swap(TextBox& t1, TextBox& t2) noexcept;
     TextBox(const TextBox &other);

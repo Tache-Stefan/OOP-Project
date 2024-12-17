@@ -85,7 +85,7 @@ void from_json(const nlohmann::json& j, Playlist& playlist) {
     playlist.title = j["title"];
     std::vector<std::string> songs = j["songs"].get<std::vector<std::string>>();
     for (const auto &song : songs) {
-        std::shared_ptr<Song> song_ptr = API::searchSpotifySong(EnvironmentSetup::getAccessToken(), song);
+        std::shared_ptr<Song> song_ptr = API::searchSpotifySong(song);
         playlist.addSong(song_ptr);
     }
 }

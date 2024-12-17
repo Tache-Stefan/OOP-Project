@@ -41,7 +41,7 @@ void Song::play() const {
     MusicPlayer::setCurrentSong(title);
 
     std::thread playbackThread([this]() {
-        const std::string youtubeURL = API::searchYouTube(EnvironmentSetup::getYoutubeAPI(), title);
+        const std::string youtubeURL = API::searchYouTube(title);
         const std::string outputFile = "audio.mp3";
         if (!Utils::downloadAudio(youtubeURL, outputFile)) {
             MusicPlayer::setLoadingMusic(false);

@@ -68,18 +68,18 @@ void Application::render() {
     switch (currentTab) {
         case 1:
             inputMusic.centerShape(window);
-        inputMusic.drawSearch(window);
-        for (unsigned int i = 0; i < 5; ++i) {
-            buttons[i].draw(window);
-            if (i < 2) {
-                volButtons[i].draw(window);
+            inputMusic.drawSearch(window);
+            for (unsigned int i = 0; i < 5; ++i) {
+                buttons[i].draw(window);
+                if (i < 2) {
+                    volButtons[i].draw(window);
+                }
             }
-        }
-        window.display();
+            window.display();
         break;
         case 2:
             display->draw(window);
-        window.display();
+            window.display();
         break;
         default:
             window.display();

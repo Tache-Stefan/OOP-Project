@@ -51,7 +51,7 @@ void TextBoxWrite::handleEventsMusic(sf::RenderWindow& window, const sf::Event& 
             throw SearchException(userInput);
         }
         MusicPlayer::setLoadingMusic(true);
-        const std::shared_ptr<Song> song = API::searchSpotifySong(EnvironmentSetup::getAccessToken(), userInput);
+        const std::shared_ptr<Song> song = API::searchSpotifySong(userInput);
         userInput.clear();
         MusicPlayer::setStopPlayback(true);
         MusicPlayer::setPlaylistPlaying(false);
@@ -66,7 +66,7 @@ void TextBoxWrite::handleEventsSongDisplay(sf::RenderWindow& window, const sf::E
         if (userInput.empty()) {
             throw SearchException(userInput);
         }
-        const std::shared_ptr<Song> song = API::searchSpotifySong(EnvironmentSetup::getAccessToken(), userInput);
+        const std::shared_ptr<Song> song = API::searchSpotifySong(userInput);
         userInput.clear();
         playlist->addSong(song);
         PlaylistDisplay::needChangeAddSong();
@@ -87,9 +87,7 @@ void TextBoxWrite::handleEventsPlaylistDisplay(sf::RenderWindow& window, const s
     }
 }
 
-void TextBoxWrite::draw(sf::RenderWindow& window) const { TextBox::draw(window); }
-
-void TextBoxWrite::drawSearch(sf::RenderWindow& window) const {
+void TextBoxWrite::drawSearch(sf::RenderWindow& window) {
     TextBox::draw(window);
     sf::Text query("Enter the song name", font, 24);
     query.setFillColor(sf::Color::White);

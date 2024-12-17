@@ -7,13 +7,13 @@ class TextBoxTab : public TextBox {
 private:
     bool isActive = false;
     std::function<void()> onClickCallback;
+    void extraDraw(sf::RenderWindow& window) override;
 public:
     TextBoxTab();
     TextBoxTab(const sf::RectangleShape& box_, const sf::Color& boxColor, const sf::Font& font_, const sf::Text& text_,
                const sf::Color& textColor);
     bool handleEvents(sf::RenderWindow& window, const sf::Event& event);
     void setOnClickCallback(const std::function<void()>& callback);
-    void draw(sf::RenderWindow &window) const override;
     TextBoxTab* clone() const override;
     TextBoxTab& operator=(const TextBoxTab &other);
     friend void swap(TextBoxTab& t1, TextBoxTab& t2) noexcept;

@@ -7,6 +7,7 @@
 #include <cpr/cpr.h>
 #include <nlohmann/json.hpp>
 
+#include "EnvironmentSetup.h"
 #include "Exceptions.h"
 
 
@@ -41,7 +42,8 @@ namespace API {
         return "";
     }
 
-    std::shared_ptr<Song> searchSpotifySong(const std::string& access_token, const std::string& query) {
+    std::shared_ptr<Song> searchSpotifySong(const std::string& query) {
+        const std::string access_token = EnvironmentSetup::getAccessToken();
 
         cpr::Header headers = {
             {"Authorization", "Bearer " + access_token},
@@ -69,7 +71,7 @@ namespace API {
                     const std::shared_ptr<Artist> artist = ArtistCollection::getArtist(artist_id);
                     if (artist == nullptr) {
                         const std::string artist_name = first_result["artists"][0]["name"];
-                        const std::shared_ptr<Artist> artist_api = searchSpotifyArtist(access_token, artist_name);
+                        const std::shared_ptr<Artist> artist_api = searchSpotifyArtist(artist_name);
                         ArtistCollection::addArtist(artist_api);
                         const std::string track_name = first_result["name"];
                         const struct tm length = Utils::durationToTm(first_result["duration_ms"]);
@@ -97,7 +99,8 @@ namespace API {
         return nullptr;
     }
 
-    std::shared_ptr<Artist> searchSpotifyArtist(const std::string &access_token, const std::string &query) {
+    std::shared_ptr<Artist> searchSpotifyArtist(const std::string &query) {
+        const std::string access_token = EnvironmentSetup::getAccessToken();
 
         cpr::Header headers = {
             {"Authorization", "Bearer " + access_token},
@@ -132,7 +135,9 @@ namespace API {
         return nullptr;
     }
 
-    std::string searchYouTube(const std::string& youtube_api, const std::string& query) {
+    std::string searchYouTube(const std::string& query) {
+        const std::string youtube_api = EnvironmentSetup::getYoutubeAPI();
+
         const std::string url = "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" +
             cpr::util:: urlEncode(query) + "&type=video&maxResults=1&key=" + youtube_api;
 

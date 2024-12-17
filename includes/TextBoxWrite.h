@@ -17,8 +17,7 @@ public:
     void handleEventsMusic(sf::RenderWindow& window, const sf::Event& event);
     void handleEventsSongDisplay(sf::RenderWindow& window, const sf::Event& event, Playlist* playlist);
     void handleEventsPlaylistDisplay(sf::RenderWindow& window, const sf::Event& event, std::vector<Playlist>& playlists);
-    void draw(sf::RenderWindow& window) const override;
-    void drawSearch(sf::RenderWindow& window) const;
+    void drawSearch(sf::RenderWindow& window);
     bool getActive() const;
     TextBoxWrite* clone() const override;
     TextBoxWrite& operator=(const TextBoxWrite &other);
