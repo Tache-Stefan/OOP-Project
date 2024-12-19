@@ -40,6 +40,8 @@ void TextBoxTab::setOnClickCallback(const std::function<void()>& callback) {
     onClickCallback = callback;
 }
 
+bool TextBoxTab::isTab() const { return true; }
+
 TextBoxTab* TextBoxTab::clone() const {
     return new TextBoxTab(*this);
 }

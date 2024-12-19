@@ -60,11 +60,7 @@ void SongDisplay::draw(sf::RenderWindow& window) {
 }
 
 void SongDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& event, Playlist* playlist) {
-    try {
-        inputBox.handleEventsSongDisplay(window, event, playlist);
-    } catch (const SearchException& e) {
-        std::cerr << e.what() << std::endl;
-    }
+    inputBox.handleEventsSongDisplay(window, event, playlist);
 
     const float boxLeft = windowWidth * 0.5f;
     const float boxRight = windowWidth * 0.5f + 200.f;

@@ -8,7 +8,6 @@
 #include <thread>
 
 #include "../headers/API.h"
-#include "../headers/EnvironmentSetup.h"
 #include "../headers/MusicPlayer.h"
 
 Playlist::Playlist() = default;

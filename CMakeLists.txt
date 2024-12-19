@@ -135,6 +135,10 @@ add_executable(${PROJECT_NAME}
         headers/Display.h
         src/Application.cpp
         headers/Application.h
+        headers/TextBoxManager.h
+        src/TextBoxManager.cpp
+        headers/DisplayManager.h
+        src/DisplayManager.cpp
 )
 
 include(cmake/CompilerFlags.cmake)

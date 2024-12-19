@@ -39,7 +39,12 @@ PlaylistDisplay::PlaylistDisplay(const sf::Font &font_) : Display(font_), songDi
         shuffleTexts[i] = sf::Text("Shuffle", font, 24);
     }
 
-    loadPlaylists();
+    try {
+        loadPlaylists();
+    }
+    catch (const FileException &e) {
+        std::cout << e.what() << std::endl;
+    }
 }
 
 void PlaylistDisplay::draw(sf::RenderWindow& window) {
@@ -94,11 +99,7 @@ void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& ev
         change = -1;
     }
 
-    try {
-        inputBox.handleEventsPlaylistDisplay(window, event, playlists);
-    } catch (const PlaylistException& e) {
-        std::cerr << e.what() << std::endl;
-    }
+    inputBox.handleEventsPlaylistDisplay(window, event, playlists);
 
     if (event.type == sf::Event::MouseWheelScrolled) {
         const sf::Vector2f mousePos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
@@ -160,10 +161,10 @@ void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& ev
 void PlaylistDisplay::savePlaylists() {
     std::ofstream file("playlists.json", std::ios::trunc);
     if (!file.is_open()) {
-        std::cerr << "Could not open playlists.json" << std::endl;
+        throw FileException("playlists.json");
     }
 
-    nlohmann::json j = playlists;
+    const nlohmann::json j = playlists;
     file << j.dump(4);
     file.close();
 }
@@ -173,7 +174,7 @@ void PlaylistDisplay::loadPlaylists() {
 
     std::ifstream file("playlists.json");
     if (!file.is_open()) {
-        std::cerr << "Could not open playlists.json" << std::endl;
+        throw FileException("playlists.json");
     }
 
     nlohmann::json j;

@@ -1,8 +1,9 @@
 #include "../headers/TextBoxWrite.h"
 
+#include <iostream>
+
 #include "../headers/API.h"
 #include "../headers/EnvironmentSetup.h"
-#include "../headers/Exceptions.h"
 #include "../headers/MusicPlayer.h"
 #include "../headers/PlaylistDisplay.h"
 
@@ -48,7 +49,8 @@ void TextBoxWrite::handleEvents(sf::RenderWindow& window, const sf::Event& event
 
     if (isActive && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
         if (userInput.empty()) {
-            throw SearchException(userInput);
+            std::cout << "Input empty!" << std::endl;
+            return;
         }
         MusicPlayer::setLoadingMusic(true);
         const std::shared_ptr<Song> song = API::searchSpotifySong(userInput);
@@ -64,7 +66,8 @@ void TextBoxWrite::handleEventsSongDisplay(sf::RenderWindow& window, const sf::E
 
     if (isActive && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
         if (userInput.empty()) {
-            throw SearchException(userInput);
+            std::cout << "Input empty!" << std::endl;
+            return;
         }
         const std::shared_ptr<Song> song = API::searchSpotifySong(userInput);
         userInput.clear();
@@ -79,7 +82,8 @@ void TextBoxWrite::handleEventsPlaylistDisplay(sf::RenderWindow& window, const s
     if (isActive && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
         for (const auto& playlist : playlists) {
             if (playlist.getTitle() == userInput) {
-                throw PlaylistException(userInput);
+                std::cout << "Playlist already exists." << std::endl;
+                return;
             }
         }
         playlists.emplace_back(userInput);
