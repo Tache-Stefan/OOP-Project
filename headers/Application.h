@@ -2,15 +2,19 @@
 
 #include <SFML/Graphics.hpp>
 #include "DisplayManager.h"
+#include "TextBoxConcreteFactory.h"
 #include "TextBoxManager.h"
 
 class Application {
 private:
+    std::unique_ptr<TextBoxAbstractFactory> factory = std::make_unique<TextBoxConcreteFactory>();
     TextBoxManager textBoxManager;
     DisplayManager displayManager;
     sf::Font font;
     int currentTab;
     sf::RenderWindow window;
+    std::function<void()> getButtonCallback(unsigned int i);
+    void createUI();
     void handleEvents();
     void render();
 public:

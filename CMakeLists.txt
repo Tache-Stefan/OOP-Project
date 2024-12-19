@@ -139,6 +139,10 @@ add_executable(${PROJECT_NAME}
         src/TextBoxManager.cpp
         headers/DisplayManager.h
         src/DisplayManager.cpp
+        headers/TextBoxAbstractFactory.h
+        src/TextBoxAbstractFactory.cpp
+        headers/TextBoxConcreteFactory.h
+        src/TextBoxConcreteFactory.cpp
 )
 
 include(cmake/CompilerFlags.cmake)
