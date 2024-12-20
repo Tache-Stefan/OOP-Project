@@ -20,6 +20,8 @@ private:
     static std::atomic<bool> playlistPlaying;
     static std::string currentSong;
     static std::mutex songMutex;
+    static sf::Time elapsedTime;
+    static sf::Time totalTime;
 public:
     MusicPlayer() = delete;
     MusicPlayer(const MusicPlayer&) = delete;
@@ -42,4 +44,6 @@ public:
     static bool getLoadingMusic();
     static bool getPlaylistPlaying();
     static std::string getCurrentSong();
+    static sf::Time getElapsedTime();
+    static sf::Time getTotalTime();
 };

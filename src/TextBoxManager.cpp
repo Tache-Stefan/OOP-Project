@@ -35,9 +35,9 @@ void TextBoxManager::resizeUI(const sf::RenderWindow& window, const float window
     const sf::FloatRect bounds = textBoxes[0]->getBounds();
     for (unsigned int i = 1; i <= 5; ++i) {
         textBoxes[i]->positionShape(
-        sf::Vector2f(window.getSize().x / 2.0f - bounds.width / 2.0f + i * 85,
+        sf::Vector2f(window.getSize().x / 2.0f - bounds.width / 2.0f + (i - 1) * 85,
                 window.getSize().y / 2.0f - bounds.height / 2.0f + 100),
-                sf::Vector2f(window.getSize().x / 2.0f - bounds.width / 2.0f + 17 + i * 85,
+                sf::Vector2f(window.getSize().x / 2.0f - bounds.width / 2.0f + 17 + (i - 1) * 85,
                 window.getSize().y / 2.0f - bounds.height / 2.0f + 100));
     }
     for (int i = 7; i >= 6; --i) {
@@ -45,6 +45,10 @@ void TextBoxManager::resizeUI(const sf::RenderWindow& window, const float window
         sf::Vector2f(windowWidth - (i - 5) * 80, windowHeight - 40),
         sf::Vector2f(windowWidth + 10 - (i - 5) * 80, windowHeight - 40));
     }
+    textBoxes[textBoxes.size() - 1]->positionShape(
+        sf::Vector2f(0, 0),
+        sf::Vector2f(window.getSize().x / 2.0f - bounds.width / 2.0f + 440,
+                               window.getSize().y / 2.0f - bounds.height / 2.0f + 15));
 }
 
 void TextBoxManager::handleEvents(const int currentTab, sf::RenderWindow& window, const sf::Event& event) {

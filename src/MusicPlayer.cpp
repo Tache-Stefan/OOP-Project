@@ -17,6 +17,8 @@ std::atomic<bool> MusicPlayer::skipForward = false;
 std::atomic<bool> MusicPlayer::playlistPlaying = false;
 std::string MusicPlayer::currentSong;
 std::mutex MusicPlayer::songMutex;
+sf::Time MusicPlayer::elapsedTime = sf::Time::Zero;
+sf::Time MusicPlayer::totalTime = sf::Time::Zero;
 std::string MusicPlayer::filePath = "audio.mp3";
 
 // cppcheck-suppress unusedFunction ; false positive
@@ -36,6 +38,7 @@ void MusicPlayer::playMusic() {
         music.setVolume(volume);
         loadingMusic.store(false);
         isMusicPlaying.store(true);
+        totalTime = music.getDuration();
         music.play();
 
         while (music.getStatus() == sf::SoundSource::Playing || music.getStatus() == sf::SoundSource::Paused) {
@@ -49,6 +52,7 @@ void MusicPlayer::playMusic() {
             } else if (!paused.load() && music.getStatus() == sf::SoundSource::Paused) {
                 music.play();
             }
+            elapsedTime = music.getPlayingOffset();
             music.setVolume(volume.load());
             if (seekToStart.load()) {
                 music.setPlayingOffset(sf::seconds(0));
@@ -77,6 +81,8 @@ void MusicPlayer::playMusic() {
             sleep(sf::milliseconds(100));
         }
 
+        elapsedTime = sf::Time::Zero;
+        totalTime = sf::Time::Zero;
         paused.store(false);
         isMusicPlaying.store(false);
         stopPlayback.store(true);
@@ -155,3 +161,9 @@ std::string MusicPlayer::getCurrentSong() {
     std::lock_guard lock(songMutex);
     return currentSong;
 }
+
+// cppcheck-suppress unusedFunction ; false positive
+sf::Time MusicPlayer::getElapsedTime() { return elapsedTime; }
+
+// cppcheck-suppress unusedFunction ; false positive
+sf::Time MusicPlayer::getTotalTime() { return totalTime; }

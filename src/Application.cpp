@@ -7,6 +7,7 @@
 #include "../headers/Utility.h"
 #include "../headers/PlaylistDisplay.h"
 #include "../headers/TextBoxButton.h"
+#include "../headers/TextBoxTimer.h"
 
 class TextBoxButton;
 
@@ -92,6 +93,14 @@ void Application::createUI() {
             );
         textBoxManager.addTextBox(std::move(textBox));
     }
+
+    auto timer = std::make_unique<TextBoxTimer>(
+        sf::RectangleShape(sf::Vector2f(0, 0)),
+        sf::Color::Black, fontButtons, sf::Text("", fontButtons, 24), sf::Color::Yellow);
+    timer->positionShape(
+        sf::Vector2f(0, 0),
+        sf::Vector2f(845, 340));
+    textBoxManager.addTextBox(std::move(timer));
 }
 
 void Application::handleEvents() {

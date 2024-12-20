@@ -143,6 +143,8 @@ add_executable(${PROJECT_NAME}
         src/TextBoxAbstractFactory.cpp
         headers/TextBoxConcreteFactory.h
         src/TextBoxConcreteFactory.cpp
+        headers/TextBoxTimer.h
+        src/TextBoxTimer.cpp
 )
 
 include(cmake/CompilerFlags.cmake)
