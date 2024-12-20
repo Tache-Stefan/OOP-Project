@@ -6,9 +6,7 @@
 
 TextBoxTimer::TextBoxTimer(const sf::RectangleShape &box_, const sf::Color &boxColor, const sf::Font &font_,
                            const sf::Text &text_, const sf::Color &textColor) :
-                           TextBox(box_, boxColor, font_, text_, textColor), isPlaying(false), elapsedTime(sf::Time::Zero) {}
-
-void TextBoxTimer::setPlaying(const bool &playing) { isPlaying = playing; }
+                           TextBox(box_, boxColor, font_, text_, textColor), elapsedTime(sf::Time::Zero) {}
 
 std::string TextBoxTimer::formatTime(const sf::Time& time) const {
     const int minutes = static_cast<int>(time.asSeconds()) / 60;
