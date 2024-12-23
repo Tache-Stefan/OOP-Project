@@ -107,10 +107,6 @@ add_executable(${PROJECT_NAME}
         headers/API.h
         src/EnvironmentSetup.cpp
         headers/EnvironmentSetup.h
-        src/SongCollection.cpp
-        headers/SongCollection.h
-        src/ArtistCollection.cpp
-        headers/ArtistCollection.h
         src/TextBoxWrite.cpp
         headers/TextBoxWrite.h
         src/TextBox.cpp

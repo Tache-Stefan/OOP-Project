@@ -1,8 +1,7 @@
 #include <iostream>
 #include "../headers/API.h"
 #include "../headers/Utility.h"
-#include "../headers/ArtistCollection.h"
-#include "../headers/SongCollection.h"
+#include "../headers/Collection.h"
 
 #include <cpr/cpr.h>
 #include <nlohmann/json.hpp>
@@ -60,29 +59,29 @@ namespace API {
                 if (!jsonData["tracks"]["items"].empty()) {
                     auto first_result = jsonData["tracks"]["items"][0];
                     const std::string song_id = first_result["id"];
-                    std::shared_ptr<Song> song = SongCollection::searchSongByID(song_id);
+                    std::shared_ptr<Song> song = Collection<Song>::getItem(song_id);
 
                     if (song != nullptr) {
                         return song;
                     }
 
                     const std::string artist_id = first_result["artists"][0]["id"];
-                    const std::shared_ptr<Artist> artist = ArtistCollection::getArtist(artist_id);
+                    const std::shared_ptr<Artist> artist = Collection<Artist>::getItem(artist_id);
                     if (artist == nullptr) {
                         const std::string artist_name = first_result["artists"][0]["name"];
                         const std::shared_ptr<Artist> artist_api = searchSpotifyArtist(artist_name);
-                        ArtistCollection::addArtist(artist_api);
+                        Collection<Artist>::addItem(artist_api);
                         const std::string track_name = first_result["name"];
                         const struct tm length = Utils::durationToTm(first_result["duration_ms"]);
                         song = std::make_shared<Song>(track_name, artist_api, length, song_id);
-                        SongCollection::addSong(song);
+                        Collection<Song>::addItem(song);
                         return song;
                     }
 
                     const std::string track_name = first_result["name"];
                     const struct tm length = Utils::durationToTm(first_result["duration_ms"]);
                     song = std::make_shared<Song>(track_name, artist, length, song_id);
-                    SongCollection::addSong(song);
+                    Collection<Song>::addItem(song);
                     return song;
                 }
                 std::cerr << "No results found for query: " << query << std::endl;

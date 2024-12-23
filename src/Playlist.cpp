@@ -29,8 +29,6 @@ std::ostream& operator<<(std::ostream& os, const Playlist& playlist) {
 
 Playlist::Playlist(const Playlist& other) = default;
 
-std::string Playlist::getLength() const {return Utils::timeToString(length);}
-
 std::string Playlist::getTitle() const {return title;}
 
 std::vector<std::shared_ptr<Song>> Playlist::getSongs() const {return songs;}

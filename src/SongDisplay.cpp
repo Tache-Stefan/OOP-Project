@@ -89,7 +89,7 @@ void SongDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& event,
                 break;
             }
             if (mousePos.y >= boxTop && mousePos.y <= boxBottom && mousePos.x >= boxRight && mousePos.x <= boxRight + 60) {
-                TextBoxDelete::clickedSong(songs, songIndex);
+                TextBoxDelete::clickedItem(songs, songIndex);
                 break;
             }
         }

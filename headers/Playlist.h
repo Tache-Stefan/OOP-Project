@@ -18,7 +18,6 @@ public:
     void addSong(const std::shared_ptr<Song>& song);
     friend std::ostream& operator<<(std::ostream& os, const Playlist& playlist);
     Playlist(const Playlist &other);
-    std::string getLength() const;
     std::string getTitle() const override;
     std::vector<std::shared_ptr<Song>> getSongs() const;
     void setSongs(const std::vector<std::shared_ptr<Song>>& songs_);

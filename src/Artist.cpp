@@ -21,7 +21,7 @@ void Artist::addSong(const std::shared_ptr<Song>& song) {
     songs.push_back(song);
 }
 
-const std::string& Artist::getName() const {return name;}
+const std::string& Artist::getTitle() const {return name;}
 
 const std::string& Artist::getID() const {return id;}
 

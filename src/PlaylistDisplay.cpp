@@ -133,7 +133,7 @@ void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& ev
             }
             if (mousePos.y >= boxTop && mousePos.y <= boxBottom && mousePos.x > 200 && mousePos.x <= 260) {
                 menuActive = false;
-                TextBoxDelete::clickedPlaylist(playlists, playlistIndex);
+                TextBoxDelete::clickedItem(playlists, playlistIndex);
                 break;
             }
             if (mousePos.y >= boxTop && mousePos.y <= boxBottom && mousePos.x > 260 && mousePos.x <= 340) {

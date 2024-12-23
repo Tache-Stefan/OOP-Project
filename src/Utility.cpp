@@ -4,11 +4,9 @@
 #include <filesystem>
 #include <iostream>
 #include <fstream>
-#include <array>
 #include <nlohmann/json.hpp>
 
 #include "../headers/MusicPlayer.h"
-#include "../headers/TextBoxButton.h"
 
 namespace Utils {
     std::vector<std::string> split(const std::string& s, const char delimiter) {

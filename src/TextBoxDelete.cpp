@@ -1,9 +1,7 @@
 #include "../headers/TextBoxDelete.h"
 
-#include <iostream>
 #include <memory>
 
-#include "../headers/PlaylistDisplay.h"
 #include "../headers/Song.h"
 
 TextBoxDelete::TextBoxDelete() = default;
@@ -14,21 +12,6 @@ TextBoxDelete::TextBoxDelete(sf::RectangleShape box_, const sf::Font& font_, sf:
     text.setCharacterSize(34);
     box.setOutlineThickness(0.5f);
     box.setOutlineColor(sf::Color::White);
-}
-
-void TextBoxDelete::clickedSong(std::vector<std::shared_ptr<Song>>& songs, const unsigned int songIndex) {
-    if (songIndex < songs.size()) {
-        std::cout << "delete" << std::endl;
-        songs.erase(songs.begin() + songIndex);
-        PlaylistDisplay::needChangeRemoveSong();
-    }
-}
-
-void TextBoxDelete::clickedPlaylist(std::vector<Playlist>& playlists, const unsigned int playlistIndex) {
-    if (playlistIndex < playlists.size()) {
-        std::cout << "delete" << std::endl;
-        playlists.erase(playlists.begin() + playlistIndex);
-    }
 }
 
 void TextBoxDelete::handleEvents(sf::RenderWindow &, const sf::Event &) {}
