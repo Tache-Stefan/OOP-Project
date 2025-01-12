@@ -2,6 +2,7 @@
 #include "../headers/TextBoxButton.h"
 #include "../headers/TextBoxTab.h"
 #include "../headers/TextBoxWrite.h"
+#include "../headers/MusicPlayer.h"
 
 std::unique_ptr<TextBox> TextBoxConcreteFactory::createButton(const sf::Font &font, const std::string &label) const {
     auto button = std::make_unique<TextBoxButton>(
@@ -22,6 +23,10 @@ std::unique_ptr<TextBox> TextBoxConcreteFactory::createVolButton(const sf::Font 
         sf::Text(label, font, 28),
         sf::Color::White
         );
+    volButton->setOnClickCallback(label == "VOL-" ?
+            [] { MusicPlayer::decreaseVolume(); } :
+            [] { MusicPlayer::increaseVolume(); }
+            );
     return volButton;
 }
 

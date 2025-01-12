@@ -65,13 +65,6 @@ void Application::createUI() {
         const float offsetY = 700 - 40;
 
         auto textBox = factory->createVolButton(fontButtons, volLabels[i]);
-        if (auto* button = dynamic_cast<TextBoxButton*>(textBox.get())) {
-            button->setOnClickCallback(volLabels[i] == "VOL-" ?
-            [] { MusicPlayer::decreaseVolume(); } :
-            [] { MusicPlayer::increaseVolume(); }
-            );
-        }
-
         textBox->positionShape(
                 sf::Vector2f(offsetX, offsetY),
                 sf::Vector2f(offsetX + 10, offsetY));
