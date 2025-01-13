@@ -4,7 +4,32 @@
 #include "../headers/TextBoxWrite.h"
 #include "../headers/MusicPlayer.h"
 
-std::unique_ptr<TextBox> TextBoxConcreteFactory::createButton(const sf::Font &font, const std::string &label) const {
+std::function<void()> TextBoxConcreteFactory::getButtonCallback(const std::string& label) const {
+    if (label == "|<") {
+        return [] { MusicPlayer::setSeekToStart(true); };
+    }
+    if (label == "<") {
+        return [] { MusicPlayer::setSkipBack(true); };
+    }
+    if (label == "| |") {
+        return [] {
+            if (MusicPlayer::getPaused()) {
+                MusicPlayer::setPaused(false);
+            } else {
+                MusicPlayer::setPaused(true);
+            }
+        };
+    }
+    if (label == ">") {
+        return [] { MusicPlayer::setSkipForward(true); };
+    }
+    if (label == ">|") {
+        return [] { MusicPlayer::setSeekToEnd(true); };
+    }
+    return [] {};
+}
+
+std::unique_ptr<TextBox> TextBoxConcreteFactory::createButton(const sf::Font &font, const std::string& label) const {
     auto button = std::make_unique<TextBoxButton>(
                 sf::RectangleShape(sf::Vector2f(60, 40)),
                 label == "| |" ? sf::Color::Red : sf::Color::Green,
@@ -12,6 +37,7 @@ std::unique_ptr<TextBox> TextBoxConcreteFactory::createButton(const sf::Font &fo
                 sf::Text(label, font, 30),
                 sf::Color::White
                 );
+    button->setOnClickCallback(getButtonCallback(label));
     return button;
 }
 

@@ -48,10 +48,6 @@ void Application::createUI() {
     const std::array<std::string, 5> buttonLabels = {"|<", "<", "| |", ">", ">|"};
     for (unsigned int i = 0; i < buttonLabels.size(); ++i) {
         auto textBox = factory->createButton(fontButtons, buttonLabels[i]);
-        if (auto* button = dynamic_cast<TextBoxButton*>(textBox.get())) {
-            button->setOnClickCallback(getButtonCallback(i));
-        }
-
         textBox->positionShape(
                 sf::Vector2f(1200 * 0.335 + i * 85, 700 * 0.615),
                 sf::Vector2f(1200 * 0.335 + 17 + i * 85, 700 * 0.615)
