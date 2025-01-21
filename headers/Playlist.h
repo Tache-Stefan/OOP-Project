@@ -19,7 +19,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const Playlist& playlist);
     Playlist(const Playlist &other);
     std::string getTitle() const override;
-    std::vector<std::shared_ptr<Song>> getSongs() const;
+    const std::vector<std::shared_ptr<Song>>& getSongs() const;
     void setSongs(const std::vector<std::shared_ptr<Song>>& songs_);
     void calculateLength();
     void play() const override;

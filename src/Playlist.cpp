@@ -31,7 +31,7 @@ Playlist::Playlist(const Playlist& other) = default;
 
 std::string Playlist::getTitle() const {return title;}
 
-std::vector<std::shared_ptr<Song>> Playlist::getSongs() const {return songs;}
+const std::vector<std::shared_ptr<Song>>& Playlist::getSongs() const {return songs;}
 
 void Playlist::setSongs(const std::vector<std::shared_ptr<Song>>& songs_) { songs = songs_;}
 
