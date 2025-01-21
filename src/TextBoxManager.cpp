@@ -16,10 +16,6 @@ void TextBoxManager::addVectorTextBox(std::vector<std::unique_ptr<TextBox>> text
 
 void TextBoxManager::draw(const int currentTab, sf::RenderWindow& window) {
     for (const auto& textBox : textBoxes) {
-        if (textBox->isTab()) {
-            textBox->draw(window);
-            continue;
-        }
         if (currentTab == 1) {
             if (auto* mainWrite = dynamic_cast<TextBoxWrite*>(textBox.get())) {
                 mainWrite->drawSearch(window);
@@ -27,6 +23,9 @@ void TextBoxManager::draw(const int currentTab, sf::RenderWindow& window) {
                 continue;
             }
             textBox->draw(window);
+        }
+        if (auto* tab = dynamic_cast<TextBoxTab*>(textBox.get())) {
+            tab->draw(window);
         }
     }
 }
@@ -53,8 +52,8 @@ void TextBoxManager::resizeUI(const sf::RenderWindow& window, const float window
 
 void TextBoxManager::handleEvents(const int currentTab, sf::RenderWindow& window, const sf::Event& event) {
     for (const auto& textBox : textBoxes) {
-        if (textBox->isTab()) {
-            textBox->handleEvents(window, event);
+        if (auto* tab = dynamic_cast<TextBoxTab*>(textBox.get())) {
+            tab->handleEvents(window, event);
             continue;
         }
         if (currentTab == 1) {

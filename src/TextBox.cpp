@@ -45,9 +45,6 @@ void TextBox::draw(sf::RenderWindow& window){
     extraDraw(window);
 }
 
-// cppcheck-suppress unusedFunction ; false positive
-bool TextBox::isTab() const { return false; }
-
 void swap(TextBox& t1, TextBox& t2) noexcept {
     using std::swap;
     swap(t1.font, t2.font);

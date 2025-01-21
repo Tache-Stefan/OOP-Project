@@ -22,6 +22,5 @@ public:
     void setText(const std::string& userInput);
     virtual void handleEvents(sf::RenderWindow&, const sf::Event&) = 0;
     virtual void draw(sf::RenderWindow& window);
-    virtual bool isTab() const;
     virtual TextBox* clone() const = 0;
 };
