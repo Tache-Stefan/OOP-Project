@@ -21,7 +21,8 @@ sf::Time MusicPlayer::elapsedTime = sf::Time::Zero;
 sf::Time MusicPlayer::totalTime = sf::Time::Zero;
 std::string MusicPlayer::filePath = "audio.mp3";
 
-[[maybe_unused]] MusicPlayer& MusicPlayer::getInstance() {
+// cppcheck-suppress unusedFunction ; false positive
+MusicPlayer& MusicPlayer::getInstance() {
     static MusicPlayer instance;
     return instance;
 }

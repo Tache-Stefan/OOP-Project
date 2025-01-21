@@ -101,6 +101,7 @@ void Application::render() {
 }
 
 void Application::run() {
+    MusicPlayer::getInstance();
     while (window.isOpen()) {
         handleEvents();
         render();
