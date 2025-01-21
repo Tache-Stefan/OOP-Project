@@ -22,10 +22,11 @@ private:
     static std::mutex songMutex;
     static sf::Time elapsedTime;
     static sf::Time totalTime;
+    MusicPlayer() = default;
 public:
-    MusicPlayer() = delete;
     MusicPlayer(const MusicPlayer&) = delete;
     MusicPlayer& operator=(const MusicPlayer&) = delete;
+    static MusicPlayer& getInstance();
     static void playMusic();
     static void increaseVolume();
     static void decreaseVolume();
