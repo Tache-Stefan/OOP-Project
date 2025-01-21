@@ -44,10 +44,14 @@ void TextBoxManager::resizeUI(const sf::RenderWindow& window, const float window
         sf::Vector2f(windowWidth - (i - 5) * 80, windowHeight - 40),
         sf::Vector2f(windowWidth + 10 - (i - 5) * 80, windowHeight - 40));
     }
-    textBoxes[textBoxes.size() - 1]->positionShape(
+    textBoxes[textBoxes.size() - 2]->positionShape(
         sf::Vector2f(0, 0),
         sf::Vector2f(window.getSize().x / 2.0f - bounds.width / 2.0f + 440,
                                window.getSize().y / 2.0f - bounds.height / 2.0f + 15));
+    textBoxes[textBoxes.size() - 1]->positionShape(
+        sf::Vector2f(0, 0),
+        sf::Vector2f(windowWidth * 0.9,
+                               windowHeight * 0.88));
 }
 
 void TextBoxManager::handleEvents(const int currentTab, sf::RenderWindow& window, const sf::Event& event) {

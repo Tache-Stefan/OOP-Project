@@ -12,4 +12,6 @@ public:
     std::unique_ptr<TextBox> createVolButton(const sf::Font &font, const std::string &label) const override;
     std::unique_ptr<TextBox> createTab(const sf::Font &font, const std::string &label) const override;
     std::unique_ptr<TextBox> createWrite(const sf::Font &font) const override;
+    std::unique_ptr<TextBox> createTimer(const sf::Font &font) const override;
+    std::unique_ptr<TextBox> createVolShow(const sf::Font &font) const override;
 };

@@ -9,7 +9,7 @@ std::atomic<bool> MusicPlayer::paused = false;
 std::atomic<bool> MusicPlayer::stopPlayback = false;
 std::atomic<bool> MusicPlayer::isMusicPlaying = false;
 std::atomic<bool> MusicPlayer::loadingMusic = false;
-std::atomic<int> MusicPlayer::volume = 100;
+std::atomic<int> MusicPlayer::volume = 50;
 std::atomic<bool> MusicPlayer::seekToStart = false;
 std::atomic<bool> MusicPlayer::seekToEnd = false;
 std::atomic<bool> MusicPlayer::skipBack = false;
@@ -173,3 +173,5 @@ sf::Time MusicPlayer::getElapsedTime() { return elapsedTime; }
 
 // cppcheck-suppress unusedFunction ; false positive
 sf::Time MusicPlayer::getTotalTime() { return totalTime; }
+
+int MusicPlayer::getVolume() { return volume.load(); }

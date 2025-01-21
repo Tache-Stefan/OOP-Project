@@ -3,6 +3,8 @@
 #include "../headers/TextBoxTab.h"
 #include "../headers/TextBoxWrite.h"
 #include "../headers/MusicPlayer.h"
+#include "../headers/TextBoxTimer.h"
+#include "../headers/TextBoxVolume.h"
 
 std::function<void()> TextBoxConcreteFactory::getButtonCallback(const std::string& label) const {
     if (label == "|<") {
@@ -74,4 +76,24 @@ std::unique_ptr<TextBox> TextBoxConcreteFactory::createWrite(const sf::Font &fon
         sf::Text("", font, 24),
         sf::Color::Black);
     return write;
+}
+
+std::unique_ptr<TextBox> TextBoxConcreteFactory::createTimer(const sf::Font &font) const {
+    auto timer = std::make_unique<TextBoxTimer>(
+        sf::RectangleShape(sf::Vector2f(0, 0)),
+        sf::Color::Black,
+        font,
+        sf::Text("", font, 24),
+        sf::Color::Yellow);
+    return timer;
+}
+
+std::unique_ptr<TextBox> TextBoxConcreteFactory::createVolShow(const sf::Font &font) const {
+    auto vol = std::make_unique<TextBoxVolume>(
+        sf::RectangleShape(sf::Vector2f(0, 0)),
+        sf::Color::Black,
+        font,
+        sf::Text("", font, 24),
+        sf::Color::Yellow);
+    return vol;
 }

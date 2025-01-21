@@ -141,6 +141,8 @@ add_executable(${PROJECT_NAME}
         src/TextBoxConcreteFactory.cpp
         headers/TextBoxTimer.h
         src/TextBoxTimer.cpp
+        headers/TextBoxVolume.h
+        src/TextBoxVolume.cpp
 )
 
 include(cmake/CompilerFlags.cmake)

@@ -47,4 +47,5 @@ public:
     static std::string getCurrentSong();
     static sf::Time getElapsedTime();
     static sf::Time getTotalTime();
+    static int getVolume();
 };

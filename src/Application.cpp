@@ -66,13 +66,17 @@ void Application::createUI() {
         textBoxManager.addTextBox(std::move(textBox));
     }
 
-    auto timer = std::make_unique<TextBoxTimer>(
-        sf::RectangleShape(sf::Vector2f(0, 0)),
-        sf::Color::Black, fontButtons, sf::Text("", fontButtons, 24), sf::Color::Yellow);
+    auto timer = factory->createTimer(fontButtons);
     timer->positionShape(
         sf::Vector2f(0, 0),
         sf::Vector2f(845, 340));
     textBoxManager.addTextBox(std::move(timer));
+
+    auto volShow = factory->createVolShow(fontButtons);
+    volShow->positionShape(
+        sf::Vector2f(0, 0),
+        sf::Vector2f(1200 * 0.9, 700 * 0.88));
+    textBoxManager.addTextBox(std::move(volShow));
 }
 
 void Application::handleEvents() {
