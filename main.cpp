@@ -1,5 +1,6 @@
 #include <iostream>
 #include "headers/Application.h"
+#include "headers/Exceptions.h"
 
 int main() {
     sf::Font font;
@@ -7,7 +8,10 @@ int main() {
         std::cerr << "Failed to load font." << std::endl;
     }
 
-    Application app(font);
-
-    app.run();
+    try {
+        Application app(font);
+        app.run();
+    } catch (const EnvironmentException& e) {
+        std::cerr << e.what() << std::endl;
+    }
 }

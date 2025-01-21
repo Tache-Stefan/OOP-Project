@@ -1,6 +1,7 @@
 #include "../headers/EnvironmentSetup.h"
 #include "../headers/API.h"
 #include "../headers/Utility.h"
+#include "../headers/Exceptions.h"
 
 #include <iostream>
 
@@ -18,29 +19,18 @@ EnvironmentSetup::EnvironmentSetup() : envSet(false) {
     const char* youtube_api_env = getenv("YOUTUBE_DATA_API");
 
     if(!client_id_env || !client_secret_env || !youtube_api_env) {
-        std::cerr << "Error: Spotify or Youtube API keys missing!" << std::endl;
-        client_id = "";
-        client_secret = "";
-        youtube_api = "";
+        throw EnvironmentException("Spotify or Youtube API keys missing!");
     }
-    else {
-        client_id = client_id_env;
-        client_secret = client_secret_env;
-        youtube_api = youtube_api_env;
-        envSet = true;
-    }
+    client_id = client_id_env;
+    client_secret = client_secret_env;
+    youtube_api = youtube_api_env;
 
-    if(envSet) {
-        access_token = API::getSpotifyAccessToken(client_id, client_secret);
-        if(!access_token.empty()) {
-            std::cout << "Access token retrieved successfully." << std::endl;
-        }
-        else {
-            std::cerr << "Error: Failed to retrieve access token." << std::endl;
-        }
+    access_token = API::getSpotifyAccessToken(client_id, client_secret);
+    if(!access_token.empty()) {
+        std::cout << "Access token retrieved successfully." << std::endl;
     }
     else {
-        std::cerr << "Error: Environment variables not set up correctly." << std::endl;
+        throw EnvironmentException("Failed to retrieve access token!");
     }
 }
 

@@ -4,6 +4,7 @@
 #include <string>
 
 class BasicException : public std::runtime_error {
+public:
     using std::runtime_error::runtime_error;
 };
 
@@ -20,4 +21,9 @@ public:
 class JsonException : public BasicException {
 public:
     JsonException();
+};
+
+class EnvironmentException : public BasicException {
+public:
+    using BasicException::BasicException;
 };

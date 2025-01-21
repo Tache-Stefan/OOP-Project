@@ -13,7 +13,6 @@ private:
     sf::Font font;
     int currentTab;
     sf::RenderWindow window;
-    std::function<void()> getButtonCallback(unsigned int i);
     void createUI();
     void handleEvents();
     void render();

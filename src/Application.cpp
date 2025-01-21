@@ -20,23 +20,6 @@ Application::Application(const sf::Font& font_) : font(font_), currentTab(1),
     createUI();
 }
 
-std::function<void()> Application::getButtonCallback(const unsigned int i) {
-    switch (i) {
-        case 0: return [] { MusicPlayer::setSeekToStart(true); };
-        case 1: return [] { MusicPlayer::setSkipBack(true); };
-        case 2: return [] {
-            if (MusicPlayer::getPaused()) {
-                MusicPlayer::setPaused(false);
-            } else {
-                MusicPlayer::setPaused(true);
-            }
-        };
-        case 3: return [] { MusicPlayer::setSkipForward(true); };
-        case 4: return [] { MusicPlayer::setSeekToEnd(true); };
-        default: return [] {};
-    }
-}
-
 void Application::createUI() {
     sf::Font fontButtons;
     if (!fontButtons.loadFromFile("fonts/Coolvetica.otf")) {
@@ -118,7 +101,6 @@ void Application::render() {
 }
 
 void Application::run() {
-    MusicPlayer::getInstance();
     while (window.isOpen()) {
         handleEvents();
         render();

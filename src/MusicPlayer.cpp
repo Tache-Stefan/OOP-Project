@@ -21,7 +21,7 @@ sf::Time MusicPlayer::elapsedTime = sf::Time::Zero;
 sf::Time MusicPlayer::totalTime = sf::Time::Zero;
 std::string MusicPlayer::filePath = "audio.mp3";
 
-MusicPlayer& MusicPlayer::getInstance() {
+[[maybe_unused]] MusicPlayer& MusicPlayer::getInstance() {
     static MusicPlayer instance;
     return instance;
 }
