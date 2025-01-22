@@ -11,13 +11,17 @@ private:
     TextBoxManager textBoxManager;
     DisplayManager displayManager;
     sf::Font font;
-    int currentTab;
+    static int currentTab;
     sf::RenderWindow window;
     void createUI();
     void handleEvents();
     void render();
-public:
     explicit Application(const sf::Font& font_);
+public:
+    Application(const Application&) = delete;
+    Application& operator=(const Application&) = delete;
+    static Application& getInstance(const sf::Font& font_);
+    static int getCurrentTab();
     void run();
     ~Application();
 };

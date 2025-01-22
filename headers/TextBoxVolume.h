@@ -7,6 +7,7 @@ private:
     const int maxVolume = 100;
     void extraDraw(sf::RenderWindow &window) override;
     void updateText();
+    void drawRequirement(sf::RenderWindow&, bool &ok) override;
 public:
     TextBoxVolume(const sf::RectangleShape &box_, const sf::Color &boxColor, const sf::Font &font_,
                            const sf::Text &text_, const sf::Color &textColor);

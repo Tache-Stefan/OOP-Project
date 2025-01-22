@@ -2,6 +2,7 @@
 
 #include <iostream>
 
+#include "../headers/Application.h"
 #include "../headers/MusicPlayer.h"
 
 TextBoxTimer::TextBoxTimer(const sf::RectangleShape &box_, const sf::Color &boxColor, const sf::Font &font_,
@@ -27,6 +28,11 @@ void TextBoxTimer::updateTime() {
 }
 
 void TextBoxTimer::handleEvents(sf::RenderWindow&, const sf::Event&) {}
+
+void TextBoxTimer::drawRequirement(sf::RenderWindow&, bool &ok) {
+    if (Application::getCurrentTab() != 1)
+        ok = false;
+}
 
 void TextBoxTimer::extraDraw(sf::RenderWindow&) {
     updateText();

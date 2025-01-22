@@ -3,8 +3,8 @@
 #include <iostream>
 
 #include "../headers/API.h"
+#include "../headers/Application.h"
 #include "../headers/EnvironmentSetup.h"
-#include "../headers/Exceptions.h"
 #include "../headers/TextBoxDelete.h"
 #include "../headers/TextBoxPlaylist.h"
 
@@ -36,6 +36,9 @@ void SongDisplay::setSongs(const std::vector<std::shared_ptr<Song>>& songs_) {so
 std::vector<std::shared_ptr<Song>> SongDisplay::getSongs() const {return songs;}
 
 void SongDisplay::draw(sf::RenderWindow& window) {
+    if (Application::getCurrentTab() != 2)
+        return;
+
     window.draw(songsText);
 
     for (unsigned int i = 0; i < visibleCount; ++i) {
@@ -56,10 +59,13 @@ void SongDisplay::draw(sf::RenderWindow& window) {
         deleteButton.draw(window);
     }
     window.draw(inputText);
-    inputBox.draw(window);
+    inputBox.drawDisplay(window);
 }
 
 void SongDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& event, Playlist* playlist) {
+    if (Application::getCurrentTab() != 2)
+        return;
+
     inputBox.handleEventsSongDisplay(window, event, playlist);
 
     const float boxLeft = windowWidth * 0.5f;

@@ -1,4 +1,5 @@
 #include "../headers/TextBoxVolume.h"
+#include "../headers/Application.h"
 #include "../headers/MusicPlayer.h"
 
 TextBoxVolume::TextBoxVolume(const sf::RectangleShape &box_, const sf::Color &boxColor, const sf::Font &font_,
@@ -10,6 +11,11 @@ void TextBoxVolume::updateText() {
     const std::string curVolString = std::to_string(currentVolume);
     const std::string maxVolString = std::to_string(maxVolume);
     text.setString(curVolString + " / " + maxVolString);
+}
+
+void TextBoxVolume::drawRequirement(sf::RenderWindow&, bool &ok) {
+    if (Application::getCurrentTab() != 1)
+        ok = false;
 }
 
 void TextBoxVolume::extraDraw(sf::RenderWindow&) {

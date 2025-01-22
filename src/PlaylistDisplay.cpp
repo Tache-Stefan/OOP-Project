@@ -8,6 +8,7 @@
 #include "../headers/Exceptions.h"
 #include "../headers/TextBoxDelete.h"
 #include "../headers/TextBoxPlaylist.h"
+#include "../headers/Application.h"
 
 unsigned int PlaylistDisplay::currentIndex = 0;
 int PlaylistDisplay::change = -1;
@@ -48,9 +49,12 @@ PlaylistDisplay::PlaylistDisplay(const sf::Font &font_) : Display(font_), songDi
 }
 
 void PlaylistDisplay::draw(sf::RenderWindow& window) {
+    if (Application::getCurrentTab() != 2)
+        return;
+
     window.draw(playlistsText);
     window.draw(inputText);
-    inputBox.draw(window);
+    inputBox.drawDisplay(window);
 
     for (unsigned int i = 0; i < visibleCount; ++i) {
         currentIndex = i + verticalOffset / itemHeight;
@@ -86,6 +90,9 @@ void PlaylistDisplay::draw(sf::RenderWindow& window) {
 }
 
 void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& event, Playlist* playlist) {
+    if (Application::getCurrentTab() != 2)
+        return;
+
     (void)playlist;
     if (menuActive) {
         songDisplay.handleEvents(window, event, &playlists[currentPlaylist]);

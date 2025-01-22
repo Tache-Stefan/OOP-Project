@@ -1,5 +1,11 @@
 #include "../headers/TextBoxButton.h"
+#include "../headers/Application.h"
 #include "../headers/MusicPlayer.h"
+
+void TextBoxButton::drawRequirement(sf::RenderWindow&, bool &ok) {
+    if (Application::getCurrentTab() != 1)
+        ok = false;
+}
 
 void TextBoxButton::extraDraw(sf::RenderWindow& window) {
     if (isActive) {
@@ -20,6 +26,9 @@ void TextBoxButton::setOnClickCallback(const std::function<void()>& callback) {
 }
 
 void TextBoxButton::handleEvents(sf::RenderWindow& window, const sf::Event& event) {
+    if (Application::getCurrentTab() != 1)
+        return;
+
     if (!MusicPlayer::getIsMusicPlaying()) {
         box.setFillColor(sf::Color(150, 150, 150));
         isActive = false;

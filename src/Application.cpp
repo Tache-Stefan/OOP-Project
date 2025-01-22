@@ -7,11 +7,10 @@
 #include "../headers/Utility.h"
 #include "../headers/PlaylistDisplay.h"
 #include "../headers/TextBoxButton.h"
-#include "../headers/TextBoxTimer.h"
 
-class TextBoxButton;
+int Application::currentTab = 1;
 
-Application::Application(const sf::Font& font_) : font(font_), currentTab(1),
+Application::Application(const sf::Font& font_) : font(font_),
                                                   window(sf::VideoMode(1200, 700), "Music Manager", sf::Style::Default) {
     window.setFramerateLimit(30);
 
@@ -41,7 +40,7 @@ void Application::createUI() {
     const std::array<std::string, 2> volLabels = {"VOL-", "VOL+"};
     for (unsigned int i = 0; i < volLabels.size(); ++i) {
         const float offsetX = 1200 - (80 + 80 * (1 - i));
-        const float offsetY = 700 - 40;
+        constexpr float offsetY = 700 - 40;
 
         auto textBox = factory->createVolButton(fontButtons, volLabels[i]);
         textBox->positionShape(
@@ -92,15 +91,15 @@ void Application::handleEvents() {
             textBoxManager.resizeUI(window, event.size.width, event.size.height);
         }
 
-        textBoxManager.handleEvents(currentTab, window, event);
-        displayManager.handleEvents(currentTab, window, event);
+        textBoxManager.handleEvents(window, event);
+        displayManager.handleEvents(window, event);
     }
 }
 
 void Application::render() {
     window.clear();
-    textBoxManager.draw(currentTab, window);
-    displayManager.draw(currentTab, window);
+    textBoxManager.draw(window);
+    displayManager.draw(window);
     window.display();
 }
 
@@ -111,6 +110,13 @@ void Application::run() {
         render();
     }
 }
+
+Application& Application::getInstance(const sf::Font& font_) {
+    static Application app(font_);
+    return app;
+}
+
+int Application::getCurrentTab() { return currentTab; }
 
 Application::~Application() {
     std::cout << "App closed." << std::endl;

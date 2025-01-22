@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "../headers/API.h"
+#include "../headers/Application.h"
 #include "../headers/EnvironmentSetup.h"
 #include "../headers/MusicPlayer.h"
 #include "../headers/PlaylistDisplay.h"
@@ -45,6 +46,9 @@ bool TextBoxWrite::containsClick(const sf::Vector2f& mousePosition) {
 }
 
 void TextBoxWrite::handleEvents(sf::RenderWindow& window, const sf::Event& event) {
+    if (Application::getCurrentTab() != 1)
+        return;
+
     handleEventsCommon(window, event);
 
     if (isActive && event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Enter) {
@@ -91,8 +95,12 @@ void TextBoxWrite::handleEventsPlaylistDisplay(sf::RenderWindow& window, const s
     }
 }
 
-void TextBoxWrite::drawSearch(sf::RenderWindow& window) {
-    TextBox::draw(window);
+void TextBoxWrite::drawRequirement(sf::RenderWindow &window, bool &ok) {
+    if (Application::getCurrentTab() != 1)
+        ok = false;
+}
+
+void TextBoxWrite::extraDraw(sf::RenderWindow &window) {
     sf::Text query("Enter the song name", font, 24);
     query.setFillColor(sf::Color::White);
     query.setPosition(box.getPosition().x + 60, box.getPosition().y - 50);
@@ -109,6 +117,12 @@ void TextBoxWrite::drawSearch(sf::RenderWindow& window) {
         playing.setPosition(box.getPosition().x, box.getPosition().y + 65);
         window.draw(playing);
     }
+    centerShape(window);
+}
+
+void TextBoxWrite::drawDisplay(sf::RenderWindow& window) const {
+    window.draw(box);
+    window.draw(text);
 }
 
 bool TextBoxWrite::getActive() const { return isActive; }

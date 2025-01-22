@@ -10,7 +10,7 @@ private:
 public:
     DisplayManager();
     void addDisplay(std::unique_ptr<Display> display);
-    void draw(const int currentTab, sf::RenderWindow& window);
-    void handleEvents(int currentTab, sf::RenderWindow &window, const sf::Event &event);
+    void draw(sf::RenderWindow& window);
+    void handleEvents(sf::RenderWindow &window, const sf::Event &event);
     ~DisplayManager();
 };

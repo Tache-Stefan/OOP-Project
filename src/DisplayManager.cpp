@@ -11,17 +11,15 @@ void DisplayManager::addDisplay(std::unique_ptr<Display> display) {
     displays.emplace_back(std::move(display));
 }
 
-void DisplayManager::draw(const int currentTab, sf::RenderWindow &window) {
+void DisplayManager::draw(sf::RenderWindow &window) {
     for (const auto &display : displays) {
-        if (currentTab == 2)
-            display->draw(window);
+        display->draw(window);
     }
 }
 
-void DisplayManager::handleEvents(const int currentTab, sf::RenderWindow &window, const sf::Event& event) {
+void DisplayManager::handleEvents(sf::RenderWindow &window, const sf::Event& event) {
     for (const auto &display : displays) {
-        if (currentTab == 2)
-            display->handleEvents(window, event, nullptr);
+        display->handleEvents(window, event, nullptr);
     }
 }
 

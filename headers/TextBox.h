@@ -4,6 +4,7 @@
 
 class TextBox {
 private:
+    virtual void drawRequirement([[maybe_unused]] sf::RenderWindow&, [[maybe_unused]] bool& ok) {}
     virtual void extraDraw([[maybe_unused]] sf::RenderWindow& window) {}
 protected:
     sf::Font font;

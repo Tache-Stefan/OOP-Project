@@ -40,6 +40,10 @@ void TextBox::positionShape(const sf::Vector2f& boxPosition, const sf::Vector2f&
 void TextBox::setText(const std::string& userInput) { text.setString(userInput); }
 
 void TextBox::draw(sf::RenderWindow& window){
+    bool ok = true;
+    drawRequirement(window, ok);
+    if (!ok)
+        return;
     window.draw(box);
     window.draw(text);
     extraDraw(window);

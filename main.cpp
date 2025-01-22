@@ -9,7 +9,7 @@ int main() {
     }
 
     try {
-        Application app(font);
+        auto& app = Application::getInstance(font);
         app.run();
     } catch (const EnvironmentException& e) {
         std::cerr << e.what() << std::endl;
