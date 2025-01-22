@@ -53,7 +53,7 @@ void Application::createUI() {
     for (unsigned int i = 0; i < tabLabels.size(); ++i) {
         auto textBox = factory->createTab(font, tabLabels[i]);
         if (auto* tab = dynamic_cast<TextBoxTab*>(textBox.get())) {
-            tab->setOnClickCallback([i, this] {
+            tab->setOnClickCallback([i] {
                     currentTab = i + 1;
                 });
         }
