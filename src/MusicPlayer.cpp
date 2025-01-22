@@ -152,8 +152,10 @@ void MusicPlayer::setCurrentSong(const std::string& currentSong_) {
     currentSong = currentSong_;
 }
 
+// cppcheck-suppress unusedFunction ; false positive
 bool MusicPlayer::getPaused() { return paused.load(); }
 
+// cppcheck-suppress unusedFunction ; false positive
 bool MusicPlayer::getIsMusicPlaying() { return isMusicPlaying.load(); }
 
 // cppcheck-suppress unusedFunction ; false positive
@@ -174,4 +176,5 @@ sf::Time MusicPlayer::getElapsedTime() { return elapsedTime; }
 // cppcheck-suppress unusedFunction ; false positive
 sf::Time MusicPlayer::getTotalTime() { return totalTime; }
 
+// cppcheck-suppress unusedFunction ; false positive
 int MusicPlayer::getVolume() { return volume.load(); }
