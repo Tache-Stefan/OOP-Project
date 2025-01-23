@@ -144,9 +144,12 @@ void PlaylistDisplay::handleEvents(sf::RenderWindow& window, const sf::Event& ev
                 break;
             }
             if (mousePos.y >= boxTop && mousePos.y <= boxBottom && mousePos.x > 260 && mousePos.x <= 340) {
-                playlists[playlistIndex].play();
+                std::vector<std::shared_ptr<Song>> aux_songs = playlists[playlistIndex].getSongs();
+                auto aux = std::make_shared<Playlist>("Aux", aux_songs);
+                aux->play(aux);
             }
             if (mousePos.y >= boxTop && mousePos.y <= boxBottom && mousePos.x > 340 && mousePos.x <= 450) {
+                if (playlistIndex >= playlists.size()) break;
                 playlists[playlistIndex].shuffle();
                 change = 3;
             }

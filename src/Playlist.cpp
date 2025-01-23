@@ -40,12 +40,12 @@ void Playlist::calculateLength() {
         length = Utils::addTimes(length, Utils::stringToTime(song->getLength()));
 }
 
-void Playlist::play() const {
+void Playlist::play(const std::shared_ptr<Playlist>& self) const {
     MusicPlayer::setStopPlayback(true);
     MusicPlayer::setPlaylistPlaying(true);
 
-    std::thread playlistThread([this]() {
-        for (const auto& song : songs) {
+    std::thread playlistThread([self]() {
+        for (const auto& song : self->songs) {
             song->play();
 
             while (MusicPlayer::getIsMusicPlaying() || MusicPlayer::getLoadingMusic()) {
@@ -61,8 +61,14 @@ void Playlist::play() const {
 }
 
 void Playlist::shuffle() {
-    const unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::ranges::shuffle(songs, std::default_random_engine(seed));
+    if (songs.size() <= 1) {
+        return;
+    }
+
+    const auto seed = static_cast<std::uint_fast64_t>(std::chrono::system_clock::now().time_since_epoch().count());
+    std::mt19937 rng(seed);
+    std::ranges::shuffle(songs, rng);
+
     std::cout << "Shuffled Playlist: " << title << "\n";
 }
 

@@ -8,7 +8,7 @@ class Artist;
 class Song : public MediaItem {
 private:
     std::shared_ptr<Artist> artist;
-    std::string id = "";
+    std::string id;
 public:
     Song();
     ~Song() override = default;
@@ -19,7 +19,7 @@ public:
     std::string getLength() const;
     std::string getTitle() const override;
     const std::string& getID() const;
-    void play() const override;
+    void play() const;
     friend void to_json(nlohmann::json& j, const Song& song);
     friend void from_json(nlohmann::json& j, Song& song);
     Song* clone() const override;

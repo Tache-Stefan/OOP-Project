@@ -22,7 +22,7 @@ public:
     const std::vector<std::shared_ptr<Song>>& getSongs() const;
     void setSongs(const std::vector<std::shared_ptr<Song>>& songs_);
     void calculateLength();
-    void play() const override;
+    void play(const std::shared_ptr<Playlist>& self) const;
     void shuffle();
     friend void to_json(nlohmann::json& j, const Playlist& playlist);
     friend void from_json(const nlohmann::json& j, Playlist& playlist);

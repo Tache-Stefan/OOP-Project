@@ -6,7 +6,7 @@
 
 class MediaItem {
 protected:
-    std::string title = "";
+    std::string title;
     struct tm length = {};
 public:
     MediaItem();
@@ -14,7 +14,6 @@ public:
     explicit MediaItem(std::string title_);
     MediaItem(const MediaItem& other);
     virtual std::string getTitle() const = 0;
-    virtual void play() const = 0;
     virtual MediaItem* clone() const = 0;
     virtual ~MediaItem() = default;
 };
