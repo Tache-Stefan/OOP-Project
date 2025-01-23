@@ -41,7 +41,7 @@ void TextBox::setText(const std::string& userInput) { text.setString(userInput);
 
 void TextBox::draw(sf::RenderWindow& window){
     bool ok = true;
-    drawRequirement(window, ok);
+    drawRequirement(ok);
     if (!ok)
         return;
     window.draw(box);
