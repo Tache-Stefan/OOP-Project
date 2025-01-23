@@ -9,8 +9,8 @@ class Song;
 
 class Artist {
 private:
-    std::string name = "";
-    std::string id = "";
+    std::string name;
+    std::string id;
     std::vector<std::shared_ptr<Song>> songs;
 public:
     Artist();
