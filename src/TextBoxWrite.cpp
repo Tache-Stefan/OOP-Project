@@ -95,7 +95,7 @@ void TextBoxWrite::handleEventsPlaylistDisplay(sf::RenderWindow& window, const s
     }
 }
 
-void TextBoxWrite::drawRequirement(sf::RenderWindow&, bool &ok) {
+void TextBoxWrite::drawRequirement(bool &ok) {
     if (Application::getCurrentTab() != 1)
         ok = false;
 }

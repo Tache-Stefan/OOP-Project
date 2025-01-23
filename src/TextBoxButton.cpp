@@ -2,7 +2,7 @@
 #include "../headers/Application.h"
 #include "../headers/MusicPlayer.h"
 
-void TextBoxButton::drawRequirement(sf::RenderWindow&, bool &ok) {
+void TextBoxButton::drawRequirement(bool &ok) {
     if (Application::getCurrentTab() != 1)
         ok = false;
 }

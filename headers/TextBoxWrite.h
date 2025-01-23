@@ -8,10 +8,10 @@
 class TextBoxWrite : public TextBox {
 private:
     bool isActive = false;
-    std::string userInput = "";
+    std::string userInput;
     void handleEventsCommon(sf::RenderWindow& window, const sf::Event& event);
     void extraDraw(sf::RenderWindow &window) override;
-    void drawRequirement(sf::RenderWindow&, bool &ok) override;
+    void drawRequirement(bool &ok) override;
 public:
     TextBoxWrite();
     TextBoxWrite(const sf::RectangleShape& box_, const sf::Color& boxColor, const sf::Font& font_, const sf::Text& text_, const sf::Color& textColor);

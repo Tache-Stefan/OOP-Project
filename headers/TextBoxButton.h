@@ -10,7 +10,7 @@ private:
     std::function<void()> onClickCallback;
     sf::Color originalColor;
     void extraDraw(sf::RenderWindow& window) override;
-    void drawRequirement(sf::RenderWindow&, bool &ok) override;
+    void drawRequirement(bool &ok) override;
 public:
     TextBoxButton(sf::RectangleShape box_, const sf::Color& boxColor, const sf::Font& font_, sf::Text text_,
                   const sf::Color& textColor);

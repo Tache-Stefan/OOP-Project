@@ -29,7 +29,7 @@ void TextBoxTimer::updateTime() {
 
 void TextBoxTimer::handleEvents(sf::RenderWindow&, const sf::Event&) {}
 
-void TextBoxTimer::drawRequirement(sf::RenderWindow&, bool &ok) {
+void TextBoxTimer::drawRequirement(bool &ok) {
     if (Application::getCurrentTab() != 1)
         ok = false;
 }

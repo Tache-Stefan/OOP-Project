@@ -9,7 +9,7 @@ private:
     std::string formatTime(const sf::Time& time) const;
     void updateText();
     void extraDraw(sf::RenderWindow &window) override;
-    void drawRequirement(sf::RenderWindow&, bool &ok) override;
+    void drawRequirement(bool &ok) override;
 public:
     TextBoxTimer(const sf::RectangleShape& box_, const sf::Color& boxColor, const sf::Font& font_, const sf::Text& text_,
                  const sf::Color& textColor);

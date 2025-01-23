@@ -13,7 +13,7 @@ void TextBoxVolume::updateText() {
     text.setString(curVolString + " / " + maxVolString);
 }
 
-void TextBoxVolume::drawRequirement(sf::RenderWindow&, bool &ok) {
+void TextBoxVolume::drawRequirement(bool &ok) {
     if (Application::getCurrentTab() != 1)
         ok = false;
 }
