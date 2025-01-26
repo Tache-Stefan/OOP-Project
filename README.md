@@ -6,6 +6,16 @@ while also enabling you to organize them in as many playlists as you want.
 The app comes complete with intuitive playback and volume controls. 
 Internet connection is required.
 
+<p align="center">
+<img src="https://github.com/Tache-Stefan/OOP-Project/blob/main/Img/Main.png" width="500" alt="Main">
+</p>
+<p align="center">
+<img src="https://github.com/Tache-Stefan/OOP-Project/blob/main/Img/Main_Playing.png" width="500" alt="Main_Playing">
+</p>
+<p align="center">
+<img src="https://github.com/Tache-Stefan/OOP-Project/blob/main/Img/Playlists.png" width="500" alt="Playlists">
+</p>
+
 ## Prerequisites
 
 Linux:
