@@ -1,11 +1,12 @@
-# Music manager
+# Music Manager
 
-### Descriere
-Acest proiect este un music manager care iti permite sa creezi playlist-uri, sa adaugi melodii sau artisti la favorite.
-Utilizatorii vor putea sa caute melodii dupa nume, artist sau gen. Playlist-urile au functionalitati de repeat si shuffle. Utilizatorul are un 
-profil cu informatii legate de ascultarile sale. Aplicatia are si o interfata grafica usoara de utilizat.
+## Description
+Music Manager is an app that allows you to play all of your favorite songs
+while also enabling you to organize them in as many playlists as you want. 
+The app comes complete with intuitive playback and volume controls. 
+Internet connection is required.
 
-## Instalari necesare
+## Prerequisites
 
 Linux:
 ```sh
@@ -25,24 +26,17 @@ winget install --id=yt-dlp.yt-dlp  -e
 winget install --id=Gyan.FFmpeg  -e
 ```
 
-## Obtinere chei API
+## API keys
 
-Cheile API se vor introduce in **envconfig.txt**.
+The API keys need to be placed in **envconfig.txt**. <br>
+- Spotify API keys are obtainable [here](https://developer.spotify.com/). <br>
+- Youtube Data API keys are obtainable [here](https://console.cloud.google.com/).
 
-Cheile pentru Spotify API se obtin de [aici](https://developer.spotify.com/). Este necesar un cont. Apoi,
-se intra in dashboard, se apasa create app si se copiaza client id si client secret in fisier.
+## Compilation instructions
 
-Cheile pentru Youtube Data API se obtin de [aici](https://console.cloud.google.com/).
-Se selecteaza sus din search create a project. Apoi la APIs se selecteaza Youtube Data API v3, se
-da enable si se copiaza cheia in fisier.
+The project is configured using CMake.
 
-## Instrucțiuni de compilare
-
-Proiectul este configurat cu CMake.
-
-Instrucțiuni pentru terminal:
-
-0. Biblioteci necesare pe Linux (presupunem sistem de operare bazat pe Debian)
+0. Required libraries for Linux:
 ```sh
 sudo apt-get update && \
   sudo apt-get install libxrandr-dev \
@@ -58,94 +52,32 @@ sudo apt-get update && \
     libfreetype6-dev
 ```
 
-Dacă lipsesc și alte biblioteci, ștergeți folder-ul de build de la pasul 1 și reconfigurați proiectul după ce ați instalat ce lipsea.
-
-1. Pasul de configurare
+1. Configuration step:
 ```sh
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
 ```
 
-Sau pe Windows cu GCC:
+or Windows:
 ```sh
 cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug -G Ninja
 ```
 
-La acest pas putem cere să generăm fișiere de proiect pentru diverse medii de lucru.
-
-
-2. Pasul de compilare
+2. Compilation step:
 ```sh
 cmake --build build --config Debug --parallel 6
 ```
 
-Cu opțiunea `parallel` specificăm numărul de fișiere compilate în paralel.
-
-3. Pasul de instalare (opțional)
+3. Installation step (optional):
 ```sh
 cmake --install build --config Debug --prefix install_dir
 ```
 
-Vezi și [`scripts/cmake.sh`](scripts/cmake.sh).
+Also see [`scripts/cmake.sh`](scripts/cmake.sh).
 
-## Tema 1
-
-#### Cerințe
-- [x] definirea a minim **3-4 clase** folosind compunere cu clasele definite de voi
-- [x] constructori de inițializare cu parametri
-- [x] pentru o aceeași (singură) clasă: constructor de copiere, `operator=` de copiere, destructor
-<!-- - [ ] pentru o altă clasă: constructor de mutare, `operator=` de mutare, destructor -->
-<!-- - [ ] pentru o altă clasă: toate cele 5 funcții membru speciale -->
-- [x] `operator<<` pentru toate clasele pentru afișare (std::ostream)
-- [x] cât mai multe `const` (unde este cazul)
-- [x] implementarea a minim 3 funcții membru publice pentru funcționalități specifice temei alese, dintre care cel puțin 1-2 funcții mai complexe
-  - nu doar citiri/afișări sau adăugat/șters elemente într-un/dintr-un vector
-- [x] scenariu de utilizare a claselor definite:
-  - crearea de obiecte și apelarea tuturor funcțiilor membru publice în main
-  - vor fi adăugate în fișierul `tastatura.txt` DOAR exemple de date de intrare de la tastatură (dacă există); dacă aveți nevoie de date din fișiere, creați alte fișiere separat
-- [x] tag de `git`: de exemplu `v0.1`
-- [x] serviciu de integrare continuă (CI); exemplu: GitHub Actions
-
-## Tema 2
-
-#### Cerințe
-- [x] separarea codului din clase în `.h` (sau `.hpp`) și `.cpp`
-- [x] moșteniri:
-  - minim o clasă de bază și **3 clase derivate** din aceeași ierarhie
-  - ierarhia trebuie să fie cu bază proprie, nu derivată dintr-o clasă predefinită
-  - [x] funcții virtuale (pure) apelate prin pointeri de bază din clasa care conține atributul de tip pointer de bază
-    - minim o funcție virtuală va fi **specifică temei** (e.g. nu simple citiri/afișări)
-    - constructori virtuali (clone): sunt necesari, dar nu se consideră funcții specifice temei
-    - afișare virtuală, interfață non-virtuală
-  - [x] apelarea constructorului din clasa de bază din constructori din derivate
-  - [x] clasă cu atribut de tip pointer la o clasă de bază cu derivate; aici apelați funcțiile virtuale prin pointer de bază, eventual prin interfața non-virtuală din bază
-    - [x] suprascris cc/op= pentru copieri/atribuiri corecte, copy and swap
-    - [x] `dynamic_cast`/`std::dynamic_pointer_cast` pentru downcast cu sens
-    - [x] smart pointers (recomandat, opțional)
-- [x] excepții
-  - [x] ierarhie proprie cu baza `std::exception` sau derivată din `std::exception`; minim **3** clase pentru erori specifice
-  - [x] utilizare cu sens: de exemplu, `throw` în constructor (sau funcție care întoarce un obiect), `try`/`catch` în `main`
-  - această ierarhie va fi complet independentă de ierarhia cu funcții virtuale
-- [x] funcții și atribute `static`
-- [x] STL
-- [x] cât mai multe `const`
-- [x] funcții *de nivel înalt*, de eliminat cât mai mulți getters/setters/funcții low-level
-- [x] la sfârșit: commit separat cu adăugarea unei noi clase derivate fără a modifica restul codului, **pe lângă cele 3 derivate deja adăugate** din aceeași ierarhie
-  - noua derivată nu poate fi una existentă care a fost ștearsă și adăugată din nou
-- [x] tag de `git`: de exemplu `v0.2`
-
-## Tema 3
-
-#### Cerințe
-- [x] 2 șabloane de proiectare (design patterns)
-- [x] o clasă șablon cu sens; minim **2 instanțieri**
-  - [x] preferabil și o funcție șablon (template) cu sens; minim 2 instanțieri
-<!-- - [ ] o specializare pe funcție/clasă șablon -->
-- [x] tag de `git`: de exemplu `v0.3` sau `v1.0`
-
-## Resurse
+## Resources
 
 - [SFML](https://github.com/SFML/SFML/tree/2.6.1) (Zlib)
-  - [OpenAL](https://openal-soft.org/) (LGPL): din cauza licenței, trebuie distribuită ca shared library
+  - [OpenAL](https://openal-soft.org/) (LGPL)
 - [CPR](https://github.com/libcpr/cpr)
 - [nlohmann/json](https://github.com/nlohmann/json)
 - [Spotify API](https://developer.spotify.com/)
